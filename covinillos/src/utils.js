@@ -65,12 +65,21 @@ export const calculateTooltipY = function(mouseY, windowHeight, offset) {
 
 export const monthToPixels = function(timeScale) {
   return timeScale(d3.timeMonth.offset(new Date(), 1)) - timeScale(new Date());
-}
+};
 
 export const dayToPixels = function(timeScale) {
   return timeScale(d3.timeDay.offset(new Date(), 1)) - timeScale(new Date());
-}
+};
 
 export const getShortDayName = function(d) {
   return ['S', 'M', 'T', 'W', 'R', 'F', 'U'][d.getDay()];
-}
+};
+
+export const setTime = function(date, hours, minutes = 0, seconds = 0) {
+  const newDate = new Date(date);
+  newDate.setHours(hours);
+  newDate.setMinutes(minutes);
+  newDate.setSeconds(seconds);
+
+  return newDate;
+};

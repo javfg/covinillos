@@ -5,9 +5,9 @@ import {
   calcChartDimensions,
   calculateTooltipX,
   clean,
-  getShortDayName,
   monthToPixels,
   dayToPixels,
+  setTime,
 } from '../utils';
 
 
@@ -233,8 +233,7 @@ class TimeSeriesChart extends React.Component {
     // line drawing
     const dataLine = d3.line()
       .x(d => xScale(d.date))
-      .y(d => yScale(d.value))
-      .curve(d3.curveCardinal);
+      .y(d => yScale(d.value));
 
 
     // DATA DRAWING
@@ -336,7 +335,7 @@ class TimeSeriesChart extends React.Component {
   eventDotMouseOut = d => {
     const { name } = this.props;
 
-    d3.select(d3.event.target)
+    d3.selectAll('.eventdot')
       .transition(t => lt).attr('fill', 'white');
 
     d3.select(`.${name}-eventstooltip`)
@@ -347,12 +346,21 @@ class TimeSeriesChart extends React.Component {
   // tooltip interactivity
   mouseMove = () => {
     const {
-      main, xScale, yScale, margin, dateFormat, st,
+      xScale, yScale, margin, dateFormat,
       props: { dataset, name },
     } = this;
 
     const mouseX = d3.mouse(this.node)[0] - margin.left;
-    const x0 = xScale.invert(mouseX);
+    const x0 = setTime(xScale.invert(mouseX), 11, 59, 59);
+    const bisectDate = d3.bisector(d => d.date).right;
+    const i = bisectDate(dataset[0].values, x0 - margin.left, 0);
+    const tooltip = d3.select(`.${name}-tooltip`);
+
+    const dataAtX = dataset.map(country => ({
+      country: country.country,
+      color: country.color,
+      value: country.values[i].value,
+    }));
 
     this.focus.select('line.focusline')
       .attr('x1', this.xScale(x0))
@@ -360,50 +368,11 @@ class TimeSeriesChart extends React.Component {
       .attr('y1', 0)
       .attr('y2', this.h);
 
-    const bisectDate = d3.bisector(d => d.date).right;
-    const i = bisectDate(dataset[0].values, x0 - margin.left) - 1;
-
-    const dataAtX = dataset.map(country => ({
-      country: country.country,
-      color: country.color,
-      value: country.values[i].value,
-    }));
-    const tooltip = d3.select(`.${name}-tooltip`);
-
     const focusGroups = this.focus.selectAll('.focusgroup')
       .data(dataset, d => d.country);
 
     focusGroups
-      .attr('transform', d => {
-        const countryLine = document.getElementById(`${clean(d.country)}-path`);
-
-        // look for the y coord in the line
-        let target = undefined;
-        let beginning = 0;
-        let end = countryLine.getTotalLength();
-        let pos = {x: 0, y: 0};
-
-        while (true) {
-          target = Math.floor((beginning + end) / 2);
-          pos = countryLine.getPointAtLength(target);
-
-          if ((target === end || target === beginning) && pos.x !== mouseX) {
-            break;
-          }
-
-          if (pos.x > mouseX) {
-            end = target;
-          } else if (pos.x < mouseX) {
-            beginning = target;
-          } else break;
-        }
-
-        dataAtX.find(
-          c => c.country === d.country
-        ).value = parseInt(yScale.invert(pos.y));
-
-        return `translate (${mouseX}, ${pos.y})`;
-      });
+      .attr('transform', d => `translate (${xScale(x0)}, ${yScale(d.values[i].value)})`);
 
     tooltip.style('opacity', .85);
     tooltip.html(
@@ -459,4 +428,3 @@ class TimeSeriesChart extends React.Component {
 }
 
 export default TimeSeriesChart;
-;

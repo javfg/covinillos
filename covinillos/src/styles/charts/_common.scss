@@ -71,7 +71,11 @@ div.tooltip {
 	font-weight: 700;
 }
 
-.day {
-	font-size: .5rem;
-	color: $light;
+.xaxis.day {
+	font-size: .4rem;
+	color: $mid;
+}
+
+.xaxis.month {
+	color: $mid;
 }

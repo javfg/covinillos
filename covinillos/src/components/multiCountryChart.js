@@ -4,7 +4,7 @@ import CountrySelector from './countrySelector';
 import DataSelector from './dataSelector';
 import TimeSeriesChart from './timeSeriesChart';
 
-import { calculateMaxY } from '../utils';
+import { calculateMaxY, setTime } from '../utils';
 
 
 class MultiCountryChart extends React.Component {
@@ -59,18 +59,21 @@ class MultiCountryChart extends React.Component {
       const color = colorMap[country];
 
       dataset[country].forEach(day => {
-        const date = new Date(day.date).setHours(12);
+        const date = setTime(day.date, 12);
         const value = day[datum];
         const captions = day.events;
 
         values.push({ date, value });
         if (captions.length) {
-          events.push({ country, color, date, captions, value });
+          const eventDate = new Date(date.getTime());
+          events.push({ country, color, date: eventDate, captions, value });
         }
       });
 
       formattedData.push({ country, color, values, events });
     });
+
+    console.log('formattedData', formattedData);
 
     return formattedData;
   }
