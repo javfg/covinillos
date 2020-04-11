@@ -1,7 +1,9 @@
-COVID-19
 .vscode
 .ipynb_checkpoints
 venv
 node_modules
 .cache
 dist
+oldstuff
+COVID-19
+
