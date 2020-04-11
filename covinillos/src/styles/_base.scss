@@ -1,0 +1,78 @@
+.fg { @include generator($colors, 'color'); }
+.fg { @include generator($fgcolors, 'color'); }
+.bg { @include generator($colors, 'background-color'); }
+
+.border { @include generator($colors, 'border', '1px solid'); }
+
+.m { @include generator($sizes, 'margin',); }
+.mx { @include generator($sizes, ('margin-left', 'margin-right')); }
+.my { @include generator($sizes, ('margin-top', 'margin-bottom')); }
+.mt { @include generator($sizes, 'margin-top'); }
+.mb { @include generator($sizes, 'margin-bottom'); }
+.ml { @include generator($sizes, 'margin-left'); }
+.mr { @include generator($sizes, 'margin-right'); }
+
+.p { @include generator($sizes, 'padding',); }
+.px { @include generator($sizes, ('padding-left', 'padding-right')); }
+.py { @include generator($sizes, ('padding-top', 'padding-bottom')); }
+.pt { @include generator($sizes, 'padding-top'); }
+.pb { @include generator($sizes, 'padding-bottom'); }
+.pl { @include generator($sizes, 'padding-left'); }
+.pr { @include generator($sizes, 'padding-right'); }
+
+.font { @include generator($fontsizes, 'font-size'); }
+.text { @include generator($aligns, 'text-align'); }
+.text-bold { font-weight: bold; }
+.text-capitalize { text-transform: capitalize; }
+.lh { @include generator($lineheights, 'line-height'); }
+
+.w { @include generator($percents, 'width'); }
+.h { @include generator($percents, 'height'); }
+
+.align-self { @include generator($aligns, 'align-self')}
+.d { @include generator($display, 'display'); }
+.flex-col { flex-direction: column; }
+.flex-grow-1 { flex-grow: 1; }
+.justify { @include generator($justify, 'justify-content'); }
+.position { @include generator($position, 'position'); }
+
+
+* {
+  box-sizing: border-box;
+  font-family: Noto Sans;
+}
+
+body {
+  margin: 0px;
+  overflow-y: scroll;
+}
+
+
+.singlecountrygroup-grid-container {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(959px, 1fr));
+  grid-gap: 0.1rem;
+}
+
+.countries-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 0.1rem;
+}
+
+.countries-container {
+  height: 100px;
+  overflow-y: scroll;
+}
+
+.country-container {
+  display: flex;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

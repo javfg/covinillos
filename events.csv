@@ -1,0 +1,59 @@
+country,date,description
+Austria,2020-03-16,case based self isolation mandated
+Belgium,2020-03-09,case based self isolation mandated
+Denmark,2020-03-12,case based self isolation mandated
+France,2020-03-16,case based self isolation mandated
+Germany,2020-03-06,case based self isolation mandated
+Italy,2020-03-08,case based self isolation mandated
+Norway,2020-03-15,case based self isolation mandated
+Spain,2020-03-17,case based self isolation mandated
+Sweden,2020-03-09,case based self isolation mandated
+Switzerland,2020-03-02,case based self isolation mandated
+United Kingdom,2020-03-12,case based self isolation mandated
+
+Austria,2020-03-16,social distancing encouraged
+Belgium,2020-03-14,social distancing encouraged
+Denmark,2020-03-13,social distancing encouraged
+France,2020-03-16,social distancing encouraged
+Germany,2020-03-12,social distancing encouraged
+Italy,2020-03-08,social distancing encouraged
+Norway,2020-03-16,social distancing encouraged
+Spain,2020-03-08,social distancing encouraged
+Sweden,2020-03-16,social distancing encouraged
+Switzerland,2020-03-16,social distancing encouraged
+United Kingdom,2020-03-16,social distancing encouraged
+
+Austria,2020-03-10,public events banned
+Belgium,2020-03-12,public events banned
+Denmark,2020-03-12,public events banned
+France,2020-03-13,public events banned
+Germany,2020-03-22,public events banned
+Italy,2020-03-09,public events banned
+Norway,2020-03-12,public events banned
+Spain,2020-03-14,public events banned
+Sweden,2020-03-12,public events banned
+Switzerland,2020-03-13,public events banned
+United Kingdom,2020-03-24,public events banned
+
+Austria,2020-03-14,school closure ordered
+Belgium,2020-03-14,school closure ordered
+Denmark,2020-03-13,school closure ordered
+France,2020-03-14,school closure ordered
+Germany,2020-03-14,school closure ordered
+Italy,2020-03-05,school closure ordered
+Norway,2020-03-13,school closure ordered
+Spain,2020-03-13,school closure ordered
+Sweden,2020-03-18,school closure ordered
+Switzerland,2020-03-14,school closure ordered
+United Kingdom,2020-03-21,school closure ordered
+
+Austria,2020-03-16,lockdown
+Belgium,2020-03-18,lockdown
+Denmark,2020-03-18,lockdown
+France,2020-03-17,lockdown
+Germany,2020-03-22,lockdown
+Italy,2020-03-11,lockdown
+Norway,2020-03-24,lockdown
+Spain,2020-03-14,lockdown
+Switzerland,2020-03-20,lockdown
+United Kingdom,2020-03-24,lockdown
