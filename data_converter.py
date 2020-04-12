@@ -55,9 +55,10 @@ recovered_total = aggregate_countries(fix_data(pd.read_csv(recovered_total, sep=
 recovered_total = recovered_total.loc[country_order]
 recovered_daily = recovered_total.diff(axis=1).fillna(recovered_total).clip(lower=0).astype(int)
 
-dataset = {}
 
 events = pd.read_csv(f"{covid_root_path}/events.csv", skip_blank_lines=True)
+
+dataset = {}
 
 for country in country_order:
     dataset[country] = []
