@@ -43,23 +43,10 @@
 }
 
 body {
-  margin: 0px;
   overflow-y: scroll;
+  margin: 0px;
 }
 
-
-.singlecountrygroup-grid-container {
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(959px, 1fr));
-  grid-gap: 0.1rem;
-}
-
-.countries-grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: 0.1rem;
-}
 
 .countries-container {
   height: 100px;

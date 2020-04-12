@@ -18,6 +18,10 @@ const useStyles = makeStyles({
       fontSize: 18,
     },
   },
+  input: props => ({
+    color: props.colorMap[props.selection],
+    padding: 0,
+  }),
 });
 
 
@@ -62,7 +66,7 @@ function CountrySelector(props) {
   }
 
   else if (selectorType === 'dropdown') {
-    const classes = useStyles();
+    const classes = useStyles(props);
 
     return (
       <Autocomplete
@@ -74,7 +78,16 @@ function CountrySelector(props) {
         value={selection}
         classes={{ option: classes.option, }}
         // getOptionLabel={(option) => option}
-        renderOption={(c) => (<><span>{countryToFlag(c)}</span>{c}</>)}
+        renderOption={c => (
+          <>
+            <span>{countryToFlag(c)}</span>{' '}
+            <span
+              style={{color: colorMap[c]}}
+            >
+              {c}
+            </span>
+          </>
+        )}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -83,7 +96,9 @@ function CountrySelector(props) {
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',
+              className: classes.input,
             }}
+
           />
         )}
       />

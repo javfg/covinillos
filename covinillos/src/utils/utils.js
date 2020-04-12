@@ -16,7 +16,9 @@ import { Config } from '../config';
  * (It also keeps in account 1 pixel per chart per row)
  */
 export const calcChartDimensions = function(heightDivisor, widthDivisor) {
-  const windowWidth = document.body.clientWidth - 15;
+  const windowWidth = document.body.clientWidth;
+  console.log('windowWidth', windowWidth);
+
   let width = windowWidth;
 
   if (windowWidth >= (Config.chartSize + widthDivisor)) {

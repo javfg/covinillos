@@ -69,8 +69,12 @@ class SingleCountryGroup extends React.Component {
     } = this;
 
     return (
-      <Grid container spacing={3} justify="flex-end">
-        <Grid item xs={6} lg={3}>
+      <Grid
+        container
+        spacing={3}
+        style={{margin: 0,width: '100%',}}
+      >
+        <Grid item xs={6}>
           <DataSelector
             name="singlecountrychart-data"
             items={['confirmed', 'deaths', 'recovered']}
@@ -78,7 +82,7 @@ class SingleCountryGroup extends React.Component {
             selection={showData}
           />
         </Grid>
-        <Grid item xs={6} lg={3}>
+        <Grid item xs={6}>
           <DataSelector
             name="singlecountrychart-type"
             items={['daily', 'total']}
@@ -88,28 +92,33 @@ class SingleCountryGroup extends React.Component {
         </Grid>
 
         {selection.map((c, i) =>
-          <React.Fragment key={`singlecountry-${c}-${i}`}>
-            <Grid item xs={10}>
-              <BarChart
-                country={c}
-                data={dataset[c]}
-                color={colorMap[c]}
-                maxY={maxY}
-                showType={showType}
-                showData={showData}
-              />
-            </Grid>
+          <Grid
+            item
+            container
+            justify="flex-end"
+            xs={12}
+            xl={6}
+            key={`singlecountry-${c}-${i}`}
+          >
             <Grid item xs={2}>
-              <CountrySelector
-                name={`singlecountrychart-${i}`}
-                countries={countries}
-                colorMap={colorMap}
-                handleChangeCountry={(e, value) => handleChangeSelection(e, i, value)}
-                selection={c}
-                selectorType="dropdown"
-              />
+                <CountrySelector
+                  name={`singlecountrychart-${i}`}
+                  countries={countries}
+                  colorMap={colorMap}
+                  handleChangeCountry={(e, v) => handleChangeSelection(e, i, v)}
+                  selection={c}
+                  selectorType="dropdown"
+                />
             </Grid>
-          </React.Fragment>
+            <BarChart
+              country={c}
+              data={dataset[c]}
+              color={colorMap[c]}
+              maxY={maxY}
+              showType={showType}
+              showData={showData}
+            />
+          </Grid>
         )}
       </Grid>
     );
