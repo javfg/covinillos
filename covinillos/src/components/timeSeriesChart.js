@@ -260,7 +260,8 @@ class TimeSeriesChart extends React.Component {
       .style('stroke', d => d.color)
       .style('stroke-width', '1.66px')
       .style('fill', 'none')
-      .attr('d', d => dataLine(d.values));
+      .attr('d', d => dataLine(d.values))
+      .attr('pointer-events', 'none');
 
     // update paths for countries that are already there when data changes
     countryAll.selectAll('.countryline')
@@ -315,15 +316,14 @@ class TimeSeriesChart extends React.Component {
       .style('top', `${d3.event.pageY + 5}px`)
       .style('left', `${calculateTooltipX(
         d3.event.pageX,
-        window.innerWidth,
-        this.margin.left
+        window.innerWidth
       )}px`)
       .html(
         '<div class="tooltip-date">' +
           dateFormat(d.date) +
-        '</div><div class="tooltip-content mt-xs">' +
+        '</div><div class="tooltip-content mt-xs"><div class="mb-xs">' +
         `<strong style="color:${d.color}" class="event"}>${d.country}</strong>` +
-        `<small> at ${d.value} ${showType} ${showData}</small>` +
+        `<small> at ${d.value} ${showType} ${showData}</small></div>` +
         d.captions.map(c => `<div class="event">${c}</div>`).join('') +
         '</div>'
       )
@@ -390,6 +390,7 @@ class TimeSeriesChart extends React.Component {
           `
         ).join('') + '</table></div>'
     )
+    .transition().duration(25)
     .style('left', `${calculateTooltipX(
       d3.event.pageX,
       window.innerWidth,
