@@ -1,9 +1,13 @@
 import React from 'react';
 
+import { Grid } from '@material-ui/core';
+
 import DataSelector from './dataSelector';
-import SingleCountryChart from './singleCountryChart';
+import CountrySelector from './countrySelector';
+import BarChart from './barChart';
 
 import { calculateMaxY } from '../utils/utils';
+import { Config } from '../config';
 
 
 class SingleCountryGroup extends React.Component {
@@ -25,7 +29,11 @@ class SingleCountryGroup extends React.Component {
 
 
   // handlers
-  handleChangeSelection = (index, newCountry, value) => {
+  handleChangeSelection = (e, index, value) => {
+    if (!value) {
+      value = Config.startingSingleCountriesSelection[0];
+    }
+
     this.setStateAndScale({
       selection: this.state.selection.map((c, i) => i !== index ? c : value)
     });
@@ -61,39 +69,49 @@ class SingleCountryGroup extends React.Component {
     } = this;
 
     return (
-      <>
-        <div className="d-flex justify">
+      <Grid container spacing={3} justify="flex-end">
+        <Grid item xs={6} lg={3}>
           <DataSelector
             name="singlecountrychart-data"
             items={['confirmed', 'deaths', 'recovered']}
             handleChange={handleChangeShowData}
             selection={showData}
           />
+        </Grid>
+        <Grid item xs={6} lg={3}>
           <DataSelector
             name="singlecountrychart-type"
             items={['daily', 'total']}
             handleChange={handleChangeShowType}
             selection={showType}
           />
-        </div>
+        </Grid>
 
-        <div className="singlecountrygroup-grid-container">
-          {selection.map((c, i) =>
-            <SingleCountryChart
-              key={`singlecountry-${c}-${i}`}
-              countries={countries}
-              colorMap={colorMap}
-              selection={c}
-              data={dataset[c]}
-              index={i}
-              showData={showData}
-              showType={showType}
-              maxY={maxY}
-              handleChangeCountry={handleChangeSelection}
-            />
-          )}
-        </div>
-      </>
+        {selection.map((c, i) =>
+          <React.Fragment key={`singlecountry-${c}-${i}`}>
+            <Grid item xs={10}>
+              <BarChart
+                country={c}
+                data={dataset[c]}
+                color={colorMap[c]}
+                maxY={maxY}
+                showType={showType}
+                showData={showData}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <CountrySelector
+                name={`singlecountrychart-${i}`}
+                countries={countries}
+                colorMap={colorMap}
+                handleChangeCountry={(e, value) => handleChangeSelection(e, i, value)}
+                selection={c}
+                selectorType="dropdown"
+              />
+            </Grid>
+          </React.Fragment>
+        )}
+      </Grid>
     );
   }
 }
