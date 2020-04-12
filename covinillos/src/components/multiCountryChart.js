@@ -71,8 +71,6 @@ class MultiCountryChart extends React.Component {
       formattedData.push({ country, color, values, events });
     });
 
-    console.log('formattedData', formattedData);
-
     return formattedData;
   }
 
