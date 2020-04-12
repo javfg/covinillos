@@ -37,29 +37,17 @@ export const calculateMaxY = function(dataset, selection, data, type) {
 };
 
 
-const getScrollbarWidth = () => window.innerWidth - document.documentElement.clientWidth;
-
 export const clean = (str) => str.replace(/\s/g, '').toLowerCase();
 
-export const calculateTooltipX = function(mouseX, windowWidth, offset) {
+
+export const calculateTooltipX = function(mouseX, windowWidth, offset = 0) {
   const mouseOffset = 15;
-  const maxX = windowWidth - offset - getScrollbarWidth() - mouseOffset;
+  const maxX = windowWidth - offset;
 
   return mouseX + Config.tooltipWidth < maxX ?
     mouseX + mouseOffset
   :
-    mouseX - Config.tooltipWidth - offset - mouseOffset;
-};
-
-
-export const calculateTooltipY = function(mouseY, windowHeight, offset) {
-  const mouseOffset = 15;
-  const maxY = windowHeight - offset - getScrollbarWidth() - mouseOffset;
-
-  return Config.tooltipHeight < maxY ?
-  mouseY + mouseOffset
-:
-  mouseY - Config.tooltipHeight - offset - mouseOffset;
+    mouseX - Config.tooltipWidth - mouseOffset;
 };
 
 
@@ -71,9 +59,6 @@ export const dayToPixels = function(timeScale) {
   return timeScale(d3.timeDay.offset(new Date(), 1)) - timeScale(new Date());
 };
 
-export const getShortDayName = function(d) {
-  return ['S', 'M', 'T', 'W', 'R', 'F', 'U'][d.getDay()];
-};
 
 export const setTime = function(date, hours, minutes = 0, seconds = 0) {
   const newDate = new Date(date);
