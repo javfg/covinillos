@@ -17,7 +17,7 @@ function SingleCountryChart(props) {
     handleChangeCountry
   } = props;
 
-  const handleSelectCountry = (e) => {handleChangeCountry(index, e.target.value); };
+  const handleSelectCountry = (e, values) => {handleChangeCountry(index, e.target.value, values); };
 
   return (
     <div>

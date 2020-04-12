@@ -25,9 +25,9 @@ class SingleCountryGroup extends React.Component {
 
 
   // handlers
-  handleChangeSelection = (index, newCountry) => {
+  handleChangeSelection = (index, newCountry, value) => {
     this.setStateAndScale({
-      selection: this.state.selection.map((c, i) => i !== index ? c : newCountry)
+      selection: this.state.selection.map((c, i) => i !== index ? c : value)
     });
   };
 
