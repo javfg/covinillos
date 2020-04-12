@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import SingleCountryGroup from './singleCountryGroup';
 import MultiCountryChart from './multiCountryChart';
 

@@ -6,6 +6,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
+import { countryToFlag } from '../utils/utils';
+
 
 function CountrySelector(props) {
   const {
@@ -49,17 +51,27 @@ function CountrySelector(props) {
 
   else if (selectorType === 'dropdown') {
     return (
-      <div className="d-flex justify-evenly">
-        <select
-          id={`${name}-${selectorType}`}
-          value={selection}
-          onChange={e => handleChangeCountry(e)}
-        >
-          {countries.map(c =>
-            <option key={`${selectorType}-${c}`}>{c}</option>
-          )}
-        </select>
-      </div>
+      <Autocomplete
+        id={`${name}-${selectorType}`}
+        onChange={handleChangeCountry}
+        style={{ width: 300 }}
+        options={countries}
+        autoHighlight
+        // classes={{ option: classes.option, }}
+        // getOptionLabel={(option) => option}
+        renderOption={(c) => (<><span>{countryToFlag(c)}</span>{c}</>)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Choose a country"
+            variant="outlined"
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: 'new-password',
+            }}
+          />
+        )}
+      />
     );
   }
 }

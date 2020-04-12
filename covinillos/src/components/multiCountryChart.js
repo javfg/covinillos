@@ -4,7 +4,7 @@ import CountrySelector from './countrySelector';
 import DataSelector from './dataSelector';
 import TimeSeriesChart from './timeSeriesChart';
 
-import { calculateMaxY, setTime } from '../utils';
+import { calculateMaxY, setTime } from '../utils/utils';
 
 import { Config } from '../config';
 

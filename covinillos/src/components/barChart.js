@@ -1,7 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-import { calcChartDimensions } from '../utils';
+import { calcChartDimensions } from '../utils/utils';
 
 
 class BarChart extends React.Component {

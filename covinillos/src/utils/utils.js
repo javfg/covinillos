@@ -1,6 +1,8 @@
 import * as d3 from 'd3';
 
-import { Config } from './config';
+import { countryMapping } from "./countryMapping";
+
+import { Config } from '../config';
 
 /*
  * Calculate chart width.
@@ -68,3 +70,14 @@ export const setTime = function(date, hours, minutes = 0, seconds = 0) {
 
   return newDate;
 };
+
+
+export const countryToFlag = function(country) {
+  const isoCode = countryMapping[country];
+
+  return typeof String.fromCodePoint !== 'undefined'
+    ? isoCode
+        .toUpperCase()
+        .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
+    : isoCode;
+}

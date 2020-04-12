@@ -8,7 +8,7 @@ import {
   monthToPixels,
   dayToPixels,
   setTime,
-} from '../utils';
+} from '../utils/utils';
 
 
 class TimeSeriesChart extends React.Component {

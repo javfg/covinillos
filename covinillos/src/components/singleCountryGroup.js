@@ -3,7 +3,7 @@ import React from 'react';
 import DataSelector from './dataSelector';
 import SingleCountryChart from './singleCountryChart';
 
-import { calculateMaxY } from '../utils';
+import { calculateMaxY } from '../utils/utils';
 
 
 class SingleCountryGroup extends React.Component {
