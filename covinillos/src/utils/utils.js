@@ -74,6 +74,11 @@ export const setTime = function(date, hours, minutes = 0, seconds = 0) {
 
 export const countryToFlag = function(country) {
   const isoCode = countryMapping[country];
+  console.log('isoCode', country, isoCode);
+
+  if (typeof isoCode === "number") {
+    return String.fromCodePoint('128674');
+  }
 
   return typeof String.fromCodePoint !== 'undefined'
     ? isoCode
