@@ -9,5 +9,5 @@ export const Config = {
   ],
   startingMultiCountriesShowData: 'confirmed',
   startingMultiCountriesShowType: 'total',
-  startingSingleCountriesSelection: ['Spain'],
+  startingSingleCountriesSelection: ['Spain', 'Italy'],
 };
