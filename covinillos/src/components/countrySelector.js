@@ -1,5 +1,11 @@
 import React from 'react';
 
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
 
 function CountrySelector(props) {
   const {
@@ -7,39 +13,37 @@ function CountrySelector(props) {
   } = props;
 
   if (selectorType === 'checkbox' || selectorType === 'radio') {
-    return (
-      <div className="countries-grid-container countries-container flex-grow-1">
-        {countries.map(c => {
-          const selectorName = `${name}-${selectorType}-${c}`;
+    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+    const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-          return (
-            <div
-              key={selectorName}
-              className="country-container"
-            >
-              <input
-                id={selectorName}
-                type={selectorType}
-                name={c}
-                onChange={handleChangeCountry}
-                checked={
-                  selectorType === 'checkbox' ?
-                    selection.includes(c)
-                  :
-                    selection === c
-                }
-              />
-              <label
-                className="ellipsis"
-                htmlFor={selectorName}
-                style={{'color': colorMap[c]}}
-              >
-                {c}
-              </label>
-            </div>
-          );
-        })}
-      </div>
+    return (
+      <Autocomplete
+        multiple
+        disableCloseOnSelect
+        id={`${name}-${selectorType}`}
+        options={countries}
+        onChange={handleChangeCountry}
+        value={selection}
+        renderOption={(option, { selected }) => (
+          <>
+            <Checkbox
+              icon={icon}
+              checkedIcon={checkedIcon}
+              style={{ marginRight: 8 }}
+              checked={selected}
+            />
+            {option}
+          </>
+        )}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            label="Countries"
+            placeholder="Select countries..."
+          />
+        )}
+      />
     );
   }
 
@@ -49,7 +53,7 @@ function CountrySelector(props) {
         <select
           id={`${name}-${selectorType}`}
           value={selection}
-          onChange={handleChangeCountry}
+          onChange={e => handleChangeCountry(e)}
         >
           {countries.map(c =>
             <option key={`${selectorType}-${c}`}>{c}</option>

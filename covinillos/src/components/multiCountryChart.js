@@ -6,6 +6,8 @@ import TimeSeriesChart from './timeSeriesChart';
 
 import { calculateMaxY, setTime } from '../utils';
 
+import { Config } from '../config';
+
 
 class MultiCountryChart extends React.Component {
   constructor(props) {
@@ -30,16 +32,12 @@ class MultiCountryChart extends React.Component {
     );
   }
 
-  handleChangeSelection = (e) => {
-    const { selection } = this.state;
-    const tc = e.target.name;
-
-    if (selection.includes(tc)) {
-      if (selection.length <= 1) return;
-      this.setState({ selection: selection.filter(c => c !== tc) });
-    } else {
-      this.setState({ selection: [...selection, tc] });
+  handleChangeSelection = (e, selection) => {
+    if (!selection.length) {
+      selection = Config.startingMultiCountriesSelection;
     }
+
+    this.setState({ selection });
   }
 
 
