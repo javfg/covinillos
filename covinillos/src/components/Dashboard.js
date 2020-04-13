@@ -16,7 +16,9 @@ export default function Dashboard(props) {
   const [showType, setShowType] = useState(Config.defaultShowType);
 
   const handleChangeShowData = e => { setShowData(e.target.value); };
-  const handleChangeShowType = e => { setShowType(e.target.value); };
+  const handleChangeShowType = e => {
+    setShowType(e.target.checked ? 'total' : 'daily');
+  };
 
 
   return (
