@@ -33,6 +33,7 @@ function CountrySelector(props) {
   if (selectorType === 'checkbox' || selectorType === 'radio') {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
     const checkedIcon = <CheckBoxIcon fontSize="small" />;
+    const classes = useStyles(props);
 
     return (
       <Autocomplete
@@ -42,7 +43,8 @@ function CountrySelector(props) {
         options={countries}
         onChange={handleChangeCountry}
         value={selection}
-        renderOption={(option, { selected }) => (
+        classes={{ option: classes.option, }}
+        renderOption={(c, { selected }) => (
           <>
             <Checkbox
               icon={icon}
@@ -50,7 +52,8 @@ function CountrySelector(props) {
               style={{ marginRight: 8 }}
               checked={selected}
             />
-            {option}
+            <span>{countryToFlag(c)}</span>
+            <span style={{color: colorMap[c]}}>{c}</span>
           </>
         )}
         renderInput={(params) => (
@@ -81,15 +84,10 @@ function CountrySelector(props) {
         onChange={handleChangeCountry}
         value={selection}
         classes={{ option: classes.option, }}
-        // getOptionLabel={(option) => option}
         renderOption={c => (
           <>
-            <span>{countryToFlag(c)}</span>{' '}
-            <span
-              style={{color: colorMap[c]}}
-            >
-              {c}
-            </span>
+            <span>{countryToFlag(c)}</span>
+            <span style={{color: colorMap[c]}}>{c}</span>
           </>
         )}
         renderInput={(params) => (

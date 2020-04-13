@@ -18,6 +18,7 @@ div.tooltip {
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 	pointer-events: none;
 	width: auto;
+	z-index: 5;
 }
 
 .tooltip-narrow {
