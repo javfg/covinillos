@@ -43,13 +43,13 @@ export default function Dashboard(props) {
           />
         </Grid>
 
-        {/* <MultiCountryChart
+        <MultiCountryChart
           countries={countries}
           colorMap={colorMap}
           dataset={dataset}
           selection={Config.defaultMultiCountriesSelection}
           show={`${showData}_${showType}`}
-        /> */}
+        />
 
         <SingleCountryGroup
           countries={countries}

@@ -26,6 +26,7 @@ export default function SingleCountryGroup(props) {
     setMaxY(getMaxY(dataset, selection, show));
   }, [selection, show]);
 
+
   const prepareData = dataset => dataset.map(d => ({
     date: new Date(d.date),
     value: d[show],
@@ -38,7 +39,7 @@ export default function SingleCountryGroup(props) {
         const key = `singlecountry-${c}-${i}`;
 
         return (
-          <Grid item container justify="flex-end" xs={12} xl={6} key={key}>
+          <Grid item container xs={12} xl={6} justify="flex-end" key={key}>
             <Grid item xs={2}>
               <CountrySelector
                 name={`singlecountrychart-${i}`}
@@ -55,7 +56,6 @@ export default function SingleCountryGroup(props) {
                   dataset={prepareData(dataset[c])}
                   country={c}
                   color={colorMap[c]}
-                  show={show}
                   maxY={maxY}
                   />
                 </ChartWrapper>

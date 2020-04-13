@@ -229,7 +229,7 @@ function MultiLineChart(props) {
 
     // event dot mouse over function: show tooltip and color event dot
     const eventDotMouseOver = d => {
-      const { name, showType, showData } = props;
+      const { name, show } = props;
 
       d3.select(d3.event.target)
         .transition(t => ts).attr('fill', d => d.color);
@@ -247,7 +247,7 @@ function MultiLineChart(props) {
           `<strong style="color:${d.color}" class="event"}>
             ${d.country}
           </strong>` +
-          `<small> at ${d.value} ${showType} ${showData}</small></div>` +
+          `<small> at ${d.value} ${show}</small></div>` +
           d.captions.map(c => `<div class="event">${c}</div>`).join('') +
           '</div>'
         )
