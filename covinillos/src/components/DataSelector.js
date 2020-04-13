@@ -12,11 +12,7 @@ import Switch from '@material-ui/core/Switch';
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    ...theme.typography.button,
-    // backgroundColor: theme.palette.background.paper,
-    // padding: theme.spacing(1),
-  },
+  root: { ...theme.typography.button },
 }));
 
 
@@ -43,9 +39,8 @@ export default function DataSelector(props) {
     <RadioGroup name={name} onChange={handleChange}>
       <Grid container>
         {items.map((item, i) => (
-          <Grid item>
+          <Grid item key={`${name}-${item}-selector`}>
             <FormControlLabel
-              key={`${name}-${item}-selector`}
               control={<Radio />}
               label={<Typography className={classes.root}>{item}</Typography>}
               value={item}
