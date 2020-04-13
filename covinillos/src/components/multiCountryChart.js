@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Grid } from '@material-ui/core';
+
 import CountrySelector from './countrySelector';
 import DataSelector from './dataSelector';
 import TimeSeriesChart from './timeSeriesChart';
@@ -86,40 +88,46 @@ class MultiCountryChart extends React.Component {
     } = this;
 
     return (
-      <>
-        <TimeSeriesChart
-          countries={selection}
-          dataset={prepareData()}
-          maxY={calculateMaxY(dataset, selection, showData, showType)}
-          name="multicountrychart"
-          showType={showType}
-          showData={showData}
-        />
-
-        <div className="d-flex justify">
-          <DataSelector
-            name="multicountrychart-type"
-            items={['daily', 'total']}
-            handleChange={handleChangeShowType}
-            selection={showType}
+      <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
+        <Grid item xs={12}>
+          <TimeSeriesChart
+            countries={selection}
+            dataset={prepareData()}
+            maxY={calculateMaxY(dataset, selection, showData, showType)}
+            name="multicountrychart"
+            showType={showType}
+            showData={showData}
           />
-          <DataSelector
-            name="multicountrychart-data"
-            items={['confirmed', 'deaths', 'recovered']}
-            handleChange={handleChangeShowData}
-            selection={showData}
-          />
-        </div>
+        </Grid>
 
-        <CountrySelector
-          name="singlecountrychart"
-          countries={countries}
-          colorMap={colorMap}
-          handleChangeCountry={handleChangeSelection}
-          selection={selection}
-          selectorType="checkbox"
-        />
-      </>
+        <Grid item container xs={12}>
+          <Grid item xs={6}>
+            <DataSelector
+              name="multicountrychart-type"
+              items={['daily', 'total']}
+              handleChange={handleChangeShowType}
+              selection={showType}
+            />
+            <DataSelector
+              name="multicountrychart-data"
+              items={['confirmed', 'deaths', 'recovered']}
+              handleChange={handleChangeShowData}
+              selection={showData}
+            />
+        </Grid>
+
+          <Grid item xs={6}>
+            <CountrySelector
+              name="singlecountrychart"
+              countries={countries}
+              colorMap={colorMap}
+              handleChangeCountry={handleChangeSelection}
+              selection={selection}
+              selectorType="checkbox"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }

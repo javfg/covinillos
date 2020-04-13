@@ -27,25 +27,23 @@ class Dashboard extends React.Component {
           <h1>COVID-19 Pandemic stats</h1>
         </header>
 
-        <div className="mb-xl">
-          <MultiCountryChart
-            countries={countries}
-            colorMap={colorMap}
-            dataset={dataset}
-            selection={startingMultiCountriesSelection}
-            showData={startingMultiCountriesShowData}
-            showType={startingMultiCountriesShowType}
-          />
-        </div>
+        <MultiCountryChart
+          countries={countries}
+          colorMap={colorMap}
+          dataset={dataset}
+          selection={startingMultiCountriesSelection}
+          showData={startingMultiCountriesShowData}
+          showType={startingMultiCountriesShowType}
+        />
 
-        <div>
-          <SingleCountryGroup
-            countries={countries}
-            colorMap={colorMap}
-            dataset={dataset}
-            selection={startingSingleCountriesSelection}
-          />
-        </div>
+        <SingleCountryGroup
+          countries={countries}
+          colorMap={colorMap}
+          dataset={dataset}
+          selection={startingSingleCountriesSelection}
+        />
+
+        <div className="ass"></div>
       </>
     );
   }

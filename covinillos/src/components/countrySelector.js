@@ -56,9 +56,13 @@ function CountrySelector(props) {
         renderInput={(params) => (
           <TextField
             {...params}
-            variant="outlined"
             label="Countries"
+            variant="outlined"
             placeholder="Select countries..."
+            inputProps={{
+              ...params.inputProps,
+              autoComplete: 'new-password',
+            }}
           />
         )}
       />

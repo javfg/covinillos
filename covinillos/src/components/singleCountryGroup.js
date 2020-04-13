@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 
 import DataSelector from './dataSelector';
 import CountrySelector from './countrySelector';
+import ChartWrapper from './chartWrapper';
 import BarChart from './barChart';
 
 import { calculateMaxY } from '../utils/utils';
@@ -58,22 +59,25 @@ class SingleCountryGroup extends React.Component {
     this.setState({ ...state, selection, showData, showType, maxY });
   };
 
+  getValueField = () => `${this.state.showData}_${this.state.showType}`;
+  prepareData = (dataset) => dataset.map(d => ({
+    date: new Date(d.date),
+    value: d[this.getValueField()],
+  }));
+
 
   render() {
     const {
       handleChangeShowData,
       handleChangeShowType,
       handleChangeSelection,
+      prepareData,
       state: { selection, showData, showType, maxY },
       props: { countries, colorMap, dataset },
     } = this;
 
     return (
-      <Grid
-        container
-        spacing={3}
-        style={{margin: 0,width: '100%',}}
-      >
+      <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
         <Grid item xs={6}>
           <DataSelector
             name="singlecountrychart-data"
@@ -91,16 +95,12 @@ class SingleCountryGroup extends React.Component {
           />
         </Grid>
 
-        {selection.map((c, i) =>
-          <Grid
-            item
-            container
-            justify="flex-end"
-            xs={12}
-            xl={6}
-            key={`singlecountry-${c}-${i}`}
-          >
-            <Grid item xs={2}>
+        {selection.map((c, i) => {
+          const key = `singlecountry-${c}-${i}`;
+
+          return (
+            <Grid item container justify="flex-end" xs={12} xl={6} key={key}>
+              <Grid item xs={2}>
                 <CountrySelector
                   name={`singlecountrychart-${i}`}
                   countries={countries}
@@ -109,17 +109,22 @@ class SingleCountryGroup extends React.Component {
                   selection={c}
                   selectorType="dropdown"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <ChartWrapper>
+                  <BarChart
+                    country={c}
+                    dataset={prepareData(dataset[c])}
+                    color={colorMap[c]}
+                    maxY={maxY}
+                    showType={showType}
+                    showData={showData}
+                    />
+                  </ChartWrapper>
+              </Grid>
             </Grid>
-            <BarChart
-              country={c}
-              data={dataset[c]}
-              color={colorMap[c]}
-              maxY={maxY}
-              showType={showType}
-              showData={showData}
-            />
-          </Grid>
-        )}
+          );
+        })}
       </Grid>
     );
   }

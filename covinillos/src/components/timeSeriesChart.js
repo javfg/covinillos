@@ -406,7 +406,7 @@ class TimeSeriesChart extends React.Component {
       state: { height, width },
     } = this;
 
-    console.log(`TimeSeriesChart [${country}] rerender (${width}x${height})`);
+    // console.log(`TimeSeriesChart [${country}] rerender (${width}x${height})`);
 
     return (
       <>

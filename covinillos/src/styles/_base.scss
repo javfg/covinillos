@@ -47,14 +47,17 @@ body {
   margin: 0px;
 }
 
-
-.countries-container {
-  height: 100px;
-  overflow-y: scroll;
+svg {
+  display: block;
 }
 
-.country-container {
-  display: flex;
+.ass {
+  margin-bottom: 25rem;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 100%;
 }
 
 .ellipsis {

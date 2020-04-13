@@ -1,175 +1,95 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
-
-import { calcChartDimensions } from '../utils/utils';
-
-
-class BarChart extends React.Component {
-  constructor(props) {
-    super(props);
-
-    // globals
-    this.heightDivisor = 5;
-    this.widthDivisor = 2;
-
-    this.state = {
-      ...calcChartDimensions(this.heightDivisor, this.widthDivisor),
-    };
-
-    this.margin = {top: 20, right: 20, bottom: 40, left: 40};
-
-    this.h = undefined;
-    this.w = undefined;
-    this.updateMarginTransform();
-
-    this.xScale = undefined;
-    this.yScale = undefined;
-    this.updateScales();
-
-    this.svg = undefined;
-    this.main = undefined;
-    this.xAxisGroup = undefined;
-    this.yGridGroup = undefined;
-  }
-
-  // lifecycle functions
-  componentDidMount() {
-    this.createChart();
-    this.updateChart();
-    this.resizeListener = window.addEventListener('resize', this.updateChartSize);
-  }
-
-  componentDidUpdate() {
-    this.updateChart();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeListener);
-  }
+import { isEqual } from 'lodash';
 
 
-  // utils
-  updateChartSize = () => {
-    this.setState(
-      { ...calcChartDimensions(this.heightDivisor, this.widthDivisor) },
-      () => {
-        this.updateMarginTransform();
-        this.updateScales();
-        this.createChart();
-        this.updateChart();
-      }
-    );
-  };
+function BarChart(props) {
+  // globals
+  const svgRef = useRef();
+  const t = d3.transition().duration(250);
+  const width = props.dimensions.width;
+  const height = width / 4;
+  const margin = {top: 20, right: 20, bottom: 40, left: 40};
+  const w = width - (margin.left + margin.right);
+  const h = height - (margin.top + margin.bottom);
 
-  updateMarginTransform = () => {
-    const { state: { height, width }, margin } = this;
+  useEffect(() => {
+    const { dataset, color, maxY } = props;
+    const svg = d3.select(svgRef.current);
+    const main = svg.select('.main');
 
-    this.h = height - (margin.top + margin.bottom);
-    this.w = width - (margin.left + margin.right);
-  };
+    // scale domains
+    const xScale = d3.scaleBand()
+      .range([0, w])
+      .padding(0.4)
+      .domain(dataset.map(d => d.date));
 
+    const yScale = d3.scaleLinear()
+      .range([h, 0])
+      .domain([0, maxY]);
 
-  // chart drawing
-  createChart() {
-    this.svg = d3.select(this.node);
-    this.svg.selectAll('*').remove();
-
-    this.main = this.svg.append('g')
-      .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
-
-    this.xAxisGroup = this.main.append('g')
-      .attr('class', 'x axis')
-      .attr('transform', `translate(0, ${this.h})`);
-
-    this.yGridGroup = this.main.append('g')
-      .attr('class', 'grid');
-  }
-
-
-  updateScales() {
-    this.xScale = d3.scaleBand()
-      .range([0, this.w])
-      .paddingInner(0.4)
-      .paddingOuter(0.4);
-
-    this.yScale = d3.scaleLinear()
-      .range([this.h, 0]);
-  }
-
-  updateChart() {
-    const {
-      h, w, main, yScale, xScale, xAxisGroup, yGridGroup,
-      props: { color, data, maxY, showType, showData }
-    } = this;
-
-    // console.log('data', data, maxY);
-
-    const dataSource = `${showData}_${showType}`;
-    const t = d3.transition().duration(500);
-
-    // update scale domains
-    xScale.domain(data.map(d => new Date(d.date)));
-    yScale.domain([0, maxY]);
-
-    // update grid/axes
-    xAxisGroup.call(d3.axisBottom(xScale)
-      .ticks(1)
-      .tickFormat(d3.timeFormat('%-d-%-m')))
+    // grid/axes
+    main.select('.xaxis').call(d3.axisBottom(xScale)
+      .ticks(d3.timeDay, 1)
+      .tickSize(5)
+      .tickFormat(d3.timeFormat('%-d')))
     .selectAll('text')
-      .attr('dx', '-.8em')
-      .attr('dy', '-.6em')
-      .attr('text-anchor', 'end')
-      .attr('transform', 'rotate(-90)');
+      .attr('class', 'xaxis day')
+      .attr('text-anchor', 'center')
+      .attr('pointer-events', 'none');
 
-    yGridGroup.transition(t).call(d3.axisLeft(yScale)
+    main.select('.ygrid').transition(t).call(d3.axisLeft(yScale)
       .ticks(5)
       .tickSize(-w)
       .tickFormat(d3.format(".2s")))
-      .selectAll('line')
+    .selectAll('line')
       .attr('stroke-width', .33);
 
     // bars
-    const rects = main.selectAll('rect').data(data, d => new Date(d.date));
+    const rects = main.selectAll('rect')
+      .data(dataset, d => d.date);
 
     rects.exit()
       .attr('fill', 'red')
-    .transition(t)
-      .attr('y', yScale(0))
-      .attr('height', 0)
-      .remove();
+      .transition(t)
+        .attr('y', yScale(0))
+        .attr('height', 0)
+        .remove();
 
     rects.enter()
-      .append("rect")
-      .attr("fill", "grey")
-      .attr("y", yScale(0))
-      .attr("height", 0)
-      .attr('x', d => xScale(new Date(d.date)))
+      .append('rect')
+      .attr('fill', 'grey')
+      .attr('x', d => xScale(d.date))
+      .attr('y', yScale(0))
       .attr('width', xScale.bandwidth)
+      .attr('height', 0)
     .merge(rects)
     .transition(t)
-      .attr('y', d => yScale(d[dataSource]))
-      .attr('height', d => h - yScale(d[dataSource]))
+      .attr('x', d => xScale(d.date))
+      .attr('y', d => yScale(d.value))
+      .attr('width', xScale.bandwidth)
+      .attr('height', d => h - yScale(d.value))
       .attr('fill', color)
       .attr('fill-opacity', 1);
-  }
 
+    }, [props.dataset, props.maxY, props.dimensions]);
 
-  render() {
-    const {
-      props: { country },
-      state: { height, width },
-    } = this;
+  console.log(`Barchart [${props.country}] rerender (${w}x${h})`);
 
-    console.log(`Barchart [${country}] rerender (${width}x${height})`);
-
-    return (
-      <svg
-        ref={node => this.node = node}
-        height={height}
-        width={width}
-      />
-    );
-   }
+  return (
+    <svg ref={svgRef} height={height} width={width}>
+      <g className="main" transform={`translate(${margin.left}, ${margin.top})`}>
+        <g className="xaxis" transform={`translate(0, ${h})`} />
+        <g className="ygrid" />
+      </g>
+    </svg>
+  );
 }
 
-export default BarChart;
+function areEqual(prevProps, nextProps) {
+  console.log('isEq', isEqual(prevProps, nextProps));
+
+  return isEqual(prevProps, nextProps);
+}
+
+export default React.memo(BarChart, areEqual);
