@@ -5,17 +5,17 @@ import { countryMapping } from "./countryMapping";
 import { Config } from '../config';
 
 
-export const calculateMaxY = function(dataset, selection, data, type) {
+export const getMaxY = function(dataset, selection, show) {
   return Math.max(
     ...Object.keys(dataset)
       .filter(cn => selection.includes(cn))
-      .map(cn => dataset[cn].map(c => c[`${data}_${type}`]))
+      .map(cn => dataset[cn].map(c => c[show]))
       .flat()
   );
 };
 
 
-export const clean = (str) => str.replace(/\s/g, '').toLowerCase();
+export const cleanStr = (str) => str.replace(/\s/g, '').toLowerCase();
 
 
 export const getTooltipX = function(mouseX, windowWidth, offset = 0) {

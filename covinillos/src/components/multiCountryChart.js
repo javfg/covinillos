@@ -38,7 +38,7 @@ class MultiCountryChart extends React.Component {
 
   handleChangeSelection = (e, selection) => {
     if (!selection.length) {
-      selection = Config.startingMultiCountriesSelection;
+      selection = Config.multiCountriesSelection;
     }
 
     this.setState({ selection });

@@ -1,9 +1,11 @@
 import React, { useRef, useEffect } from 'react';
+
 import * as d3 from 'd3';
+
 import { isEqual } from 'lodash';
 
 import {
-  clean,
+  cleanStr,
   getTooltipX,
   monthToPixels,
   dayToPixels,
@@ -111,14 +113,14 @@ function MultiLineChart(props) {
     // add groups for countries that arrived
     const countryEnter = countryAll.enter()
       .append('g')
-      .attr('class', d => `countrygroup countrygroup-${clean(d.country)}`);
+      .attr('class', d => `countrygroup countrygroup-${cleanStr(d.country)}`);
 
 
     // 2. PATHS
     // add paths for countries that arrived
     countryEnter.append('path')
       .attr('class', 'countryline')
-      .attr('id', d => `${clean(d.country)}-path`)
+      .attr('id', d => `${cleanStr(d.country)}-path`)
       .style('stroke', d => d.color)
       .style('stroke-width', '1.66px')
       .style('fill', 'none')
