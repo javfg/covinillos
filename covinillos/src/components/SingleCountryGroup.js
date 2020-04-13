@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import CountrySelector from './countrySelector';
-import ChartWrapper from './chartWrapper';
-import BarChart from './barChart';
+import CountrySelector from './CountrySelector';
+import ChartWrapper from './ChartWrapper';
+import BarChart from './BarChart';
 
 import { getMaxY } from '../utils/utils';
 

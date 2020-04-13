@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import DataSelector from './dataSelector';
-import SingleCountryGroup from './singleCountryGroup';
-import MultiCountryChart from './multiCountryChart';
+import DataSelector from './DataSelector';
+import SingleCountryGroup from './SingleCountryGroup';
+import MultiCountryGroup from './MultiCountryGroup';
 
 import { Config } from '../config';
 
@@ -43,7 +43,7 @@ export default function Dashboard(props) {
           />
         </Grid>
 
-        <MultiCountryChart
+        <MultiCountryGroup
           countries={countries}
           colorMap={colorMap}
           dataset={dataset}

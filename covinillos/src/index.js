@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { schemeTableau10 as st } from 'd3';
 
-import Dashboard from './components/dashboard';
+import Dashboard from './components/Dashboard';
 
 import dataset from '../data/dataset.json';
 

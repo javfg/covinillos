@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 
 import { Grid } from '@material-ui/core';
 
-import CountrySelector from './countrySelector';
-import ChartWrapper from './chartWrapper';
-import MultiLineChart from './multiLineChart';
+import CountrySelector from './CountrySelector';
+import ChartWrapper from './ChartWrapper';
+import MultiLineChart from './MultiLineChart';
 
 import { getMaxY, setTime } from '../utils/utils';
 
 import { Config } from '../config';
 
 
-function SingleCountryGroup(props) {
+export default function MultiCountryGroup(props) {
   const { countries, colorMap, dataset, show } = props;
 
   const [selection, setSelection] = useState(props.selection);
@@ -75,6 +75,3 @@ function SingleCountryGroup(props) {
     </Grid>
   );
 }
-
-
-export default SingleCountryGroup;

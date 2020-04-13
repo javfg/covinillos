@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { makeStyles } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
@@ -27,7 +27,12 @@ const useStyles = makeStyles({
 
 export default function CountrySelector(props) {
   const {
-    name, countries, colorMap, handleChangeCountry, selection, selectorType
+    name,
+    countries,
+    colorMap,
+    handleChangeCountry,
+    selection,
+    selectorType,
   } = props;
 
   if (selectorType === 'checkbox' || selectorType === 'radio') {
