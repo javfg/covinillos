@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-function DataSelector(props) {
+export default function DataSelector(props) {
   const { name = 'dataselector', items, handleChange, selection } = props;
 
   return (
@@ -26,6 +26,3 @@ function DataSelector(props) {
     </>
   );
 }
-
-
-export default DataSelector;

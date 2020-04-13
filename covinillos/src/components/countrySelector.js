@@ -25,7 +25,7 @@ const useStyles = makeStyles({
 });
 
 
-function CountrySelector(props) {
+export default function CountrySelector(props) {
   const {
     name, countries, colorMap, handleChangeCountry, selection, selectorType
   } = props;
@@ -107,6 +107,3 @@ function CountrySelector(props) {
     );
   }
 }
-
-
-export default CountrySelector;

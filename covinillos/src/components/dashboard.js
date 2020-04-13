@@ -6,7 +6,7 @@ import MultiCountryChart from './multiCountryChart';
 import { Config } from '../config';
 
 
-function Dashboard(props) {
+export default function Dashboard(props) {
   const { countries, colorMap, dataset } = props;
 
   return (
@@ -35,6 +35,3 @@ function Dashboard(props) {
     </>
   );
 }
-
-
-export default Dashboard;

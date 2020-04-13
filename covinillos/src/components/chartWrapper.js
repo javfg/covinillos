@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 
-function ChartWrapper(props) {
+export default function ChartWrapper(props) {
   const [dimensions, setDimensions] = useState(null);
   const wrapperRef = useRef();
 
@@ -26,6 +26,3 @@ function ChartWrapper(props) {
     </div>
   );
 }
-
-
-export default ChartWrapper;
