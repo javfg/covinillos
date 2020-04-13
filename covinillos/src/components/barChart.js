@@ -4,7 +4,6 @@ import { isEqual } from 'lodash';
 
 
 function BarChart(props) {
-  // globals
   const svgRef = useRef();
   const t = d3.transition().duration(250);
   const width = props.dimensions.width;
@@ -12,6 +11,7 @@ function BarChart(props) {
   const margin = {top: 20, right: 20, bottom: 40, left: 40};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
+
 
   useEffect(() => {
     const { dataset, color, maxY } = props;
@@ -74,7 +74,8 @@ function BarChart(props) {
 
     }, [props.dataset, props.maxY, props.dimensions]);
 
-  console.log(`Barchart [${props.country}] rerender (${w}x${h})`);
+  console.log(`BarChart [${props.country}] rerender (${w}x${h})`);
+
 
   return (
     <svg ref={svgRef} height={height} width={width}>
@@ -86,10 +87,10 @@ function BarChart(props) {
   );
 }
 
-function areEqual(prevProps, nextProps) {
-  console.log('isEq', isEqual(prevProps, nextProps));
 
+function areEqual(prevProps, nextProps) {
   return isEqual(prevProps, nextProps);
 }
+
 
 export default React.memo(BarChart, areEqual);

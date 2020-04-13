@@ -4,32 +4,6 @@ import { countryMapping } from "./countryMapping";
 
 import { Config } from '../config';
 
-/*
- * Calculate chart width.
- *
- * The chart width will be either:
- * 1. If window is smaller than chart minimum size:
- *      window size
- * 2. If window is bigger than chart minimum size:
- *      window size / number of charts in that row
- *
- * (It also keeps in account 1 pixel per chart per row)
- */
-export const calcChartDimensions = function(heightDivisor, widthDivisor) {
-  const windowWidth = document.body.clientWidth - 24;
-
-  let width = windowWidth - 24;
-
-  if (windowWidth >= (Config.chartSize + widthDivisor)) {
-    width = parseInt((windowWidth - widthDivisor) / widthDivisor);
-  }
-
-  const height = parseInt(width / heightDivisor);
-
-
-  return { height, width };
-};
-
 
 export const calculateMaxY = function(dataset, selection, data, type) {
   return Math.max(
@@ -44,7 +18,7 @@ export const calculateMaxY = function(dataset, selection, data, type) {
 export const clean = (str) => str.replace(/\s/g, '').toLowerCase();
 
 
-export const calculateTooltipX = function(mouseX, windowWidth, offset = 0) {
+export const getTooltipX = function(mouseX, windowWidth, offset = 0) {
   const mouseOffset = 15;
   const maxX = windowWidth - offset;
 

@@ -4,7 +4,8 @@ import { Grid } from '@material-ui/core';
 
 import CountrySelector from './countrySelector';
 import DataSelector from './dataSelector';
-import TimeSeriesChart from './timeSeriesChart';
+import ChartWrapper from './chartWrapper';
+import MultiLineChart from './multiLineChart';
 
 import { calculateMaxY, setTime } from '../utils/utils';
 
@@ -90,14 +91,16 @@ class MultiCountryChart extends React.Component {
     return (
       <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
         <Grid item xs={12}>
-          <TimeSeriesChart
-            countries={selection}
-            dataset={prepareData()}
-            maxY={calculateMaxY(dataset, selection, showData, showType)}
-            name="multicountrychart"
-            showType={showType}
-            showData={showData}
-          />
+          <ChartWrapper>
+            <MultiLineChart
+              countries={selection}
+              dataset={prepareData()}
+              maxY={calculateMaxY(dataset, selection, showData, showType)}
+              name="multicountrychart"
+              showType={showType}
+              showData={showData}
+            />
+          </ChartWrapper>
         </Grid>
 
         <Grid item container xs={12}>
