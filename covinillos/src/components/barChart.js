@@ -52,9 +52,9 @@ function BarChart(props) {
     rects.exit()
       .attr('fill', 'red')
       .transition(t)
-        .attr('y', yScale(0))
-        .attr('height', 0)
-        .remove();
+      .attr('y', yScale(0))
+      .attr('height', 0)
+      .remove();
 
     rects.enter()
       .append('rect')
@@ -64,7 +64,7 @@ function BarChart(props) {
       .attr('width', xScale.bandwidth)
       .attr('height', 0)
     .merge(rects)
-    .transition(t)
+      .transition(t)
       .attr('x', d => xScale(d.date))
       .attr('y', d => yScale(d.value))
       .attr('width', xScale.bandwidth)

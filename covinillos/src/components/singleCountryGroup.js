@@ -11,6 +11,7 @@ import { calculateMaxY } from '../utils/utils';
 import { Config } from '../config';
 
 
+// TODO: Convert to hooks.
 class SingleCountryGroup extends React.Component {
   constructor(props) {
     super(props);

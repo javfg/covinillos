@@ -12,6 +12,7 @@ import { calculateMaxY, setTime } from '../utils/utils';
 import { Config } from '../config';
 
 
+// TODO: Convert to hooks.
 class MultiCountryChart extends React.Component {
   constructor(props) {
     super(props);

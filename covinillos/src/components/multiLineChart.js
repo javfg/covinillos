@@ -156,7 +156,7 @@ function MultiLineChart(props) {
       .attr('cy', d => yScale(d.value))
       // update event dots for countries alredy there
     .merge(eventDots)
-    .transition(t => tl)
+      .transition(t => tl)
       .attr('r', 4.5)
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.value))
@@ -171,14 +171,17 @@ function MultiLineChart(props) {
 
     const overlayMouseOut = () => {
       focus.transition(t => ts).style('opacity', 0);
+
+      d3.select(`.${props.name}-tooltip`)
+        .transition(t => ts)
+        .style('opacity', 0);
     };
 
     const overlayMouseMove = () => {
       const { name, dataset } = props;
-      const x = setTime(xScale.invert(d3.event.x - margin.left - 15), 11);
+      const x = setTime(xScale.invert(d3.event.x - margin.left - 15), 11, 59);
       const bisectDate = d3.bisector(d => d.date).left;
       const i = bisectDate(dataset[0].values, x, 1);
-      const tooltip = d3.select(`.${name}-tooltip`);
       const dataAtX = dataset.map(country => ({
         country: country.country,
         color: country.color,
@@ -198,8 +201,8 @@ function MultiLineChart(props) {
           d => `translate (${xScale(x)}, ${yScale(d.values[i].value)})`
         );
 
-      tooltip.style('opacity', .85);
-      tooltip.html(
+      d3.select(`.${name}-tooltip`)
+      .html(
         '<div class="tooltip-date">' +
           dateFormat(dataset[0].values[i].date) +
         '</div>' +
@@ -212,6 +215,7 @@ function MultiLineChart(props) {
         ).join('') + '</table></div>'
       )
       .transition().duration(25)
+      .style('opacity', .85)
       .style('left', `${getTooltipX(
         d3.event.pageX,
         window.innerWidth,
