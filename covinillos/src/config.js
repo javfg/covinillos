@@ -1,5 +1,4 @@
 export const Config = {
-  chartSize: 1900,
   tooltipHeight: 120,
   tooltipWidth: 200,
   defaultMultiCountriesSelection: [
