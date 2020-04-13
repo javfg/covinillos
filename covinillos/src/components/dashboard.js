@@ -3,50 +3,37 @@ import React from 'react';
 import SingleCountryGroup from './singleCountryGroup';
 import MultiCountryChart from './multiCountryChart';
 
-
-class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+import { Config } from '../config';
 
 
-  render() {
-    const {
-      countries,
-      colorMap,
-      dataset,
-      startingMultiCountriesSelection,
-      startingMultiCountriesShowData,
-      startingMultiCountriesShowType,
-      startingSingleCountriesSelection,
-    } = this.props;
+function Dashboard(props) {
+  const { countries, colorMap, dataset } = props;
 
-    return (
-      <>
-        <header>
-          <h1>COVID-19 Pandemic stats</h1>
-        </header>
+  return (
+    <>
+      <header>
+        <h1>COVID-19 Pandemic stats</h1>
+      </header>
 
-        <MultiCountryChart
-          countries={countries}
-          colorMap={colorMap}
-          dataset={dataset}
-          selection={startingMultiCountriesSelection}
-          showData={startingMultiCountriesShowData}
-          showType={startingMultiCountriesShowType}
-        />
+      <MultiCountryChart
+        countries={countries}
+        colorMap={colorMap}
+        dataset={dataset}
+        selection={Config.startingMultiCountriesSelection}
+        showData={Config.startingMultiCountriesShowData}
+        showType={Config.startingMultiCountriesShowType}
+      />
 
-        <SingleCountryGroup
-          countries={countries}
-          colorMap={colorMap}
-          dataset={dataset}
-          selection={startingSingleCountriesSelection}
-        />
+      <SingleCountryGroup
+        countries={countries}
+        colorMap={colorMap}
+        dataset={dataset}
+        selection={Config.startingSingleCountriesSelection}
+      />
 
-        <div className="ass"></div>
-      </>
-    );
-  }
+      <div className="ass"></div>
+    </>
+  );
 }
 
 
