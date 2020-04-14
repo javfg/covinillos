@@ -18,7 +18,7 @@ function MultiLineChart(props) {
   const tl = d3.transition().duration(250);
   const ts = d3.transition().duration(100);
   const width = props.dimensions.width;
-  const height = width / 4;
+  const height = width / 4.5;
   const margin = {top: 20, right: 20, bottom: 40, left: 40};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
