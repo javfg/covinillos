@@ -143,7 +143,7 @@ function MultiLineChart(props) {
       .attr('class', 'countryline')
       .attr('id', d => `${cleanStr(d.country)}-path`)
       .style('stroke', d => d.color)
-      .style('stroke-width', '1.66px')
+      .style('stroke-width', '2px')
       .style('fill', 'none')
       .attr('d', d => dataLine(d.values))
       .attr('pointer-events', 'none');
@@ -224,7 +224,10 @@ function MultiLineChart(props) {
         .data(dataset, d => d.country)
         .attr(
           'transform',
-          d => `translate (${xScale(x)}, ${yScale(d.values[i].value)})`
+          d => {
+            const y = d.values[i].value ? yScale(d.values[i].value) : -50;
+            return `translate (${xScale(x)}, ${y})`;
+          }
         );
 
       d3.select(`.${name}-tooltip`)

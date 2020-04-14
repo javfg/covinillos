@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Grid, Switch, FormControlLabel } from '@material-ui/core';
+import { Grid, Switch, makeStyles } from '@material-ui/core';
 
 import CountrySelector from './CountrySelector';
 import ChartWrapper from './ChartWrapper';
@@ -15,6 +15,11 @@ import {
 import config from '../config';
 
 
+const useStyles = makeStyles(theme => ({
+  root: { ...theme.typography.button },
+}));
+
+
 export default function MultiCountryGroup(props) {
   const { countries, colorMap, dataset, show } = props;
 
@@ -23,6 +28,7 @@ export default function MultiCountryGroup(props) {
 
   const handleChangeSelection = (_, selection) => {
     if (!selection.length) selection = config.defaultMultiCountriesSelection;
+    if (selection.length > 10) return;
     setSelection(selection);
   };
   const handleChangeStartAt100Selector = e => {
@@ -34,6 +40,8 @@ export default function MultiCountryGroup(props) {
     prepareMultiCountry100(dataset, colorMap, selection, show)
   :
     prepareMultiCountry(dataset, colorMap, selection, show);
+
+  const classes = useStyles();
 
 
   return (
@@ -52,16 +60,16 @@ export default function MultiCountryGroup(props) {
       </Grid>
 
       <Grid item xs={6}>
-      <FormControlLabel
-        control={
+        <Grid container justify="center" alignItems="center">
           <Switch
             name="startAt100Selector"
             checked={startAt100}
             onChange={handleChangeStartAt100Selector}
           />
-        }
-        label={`Start at 100 ${translate(show)}`}
-      />
+          <Grid item className={classes.root}>
+            Start at 100 {translate(show)}
+          </Grid>
+        </Grid>
       </Grid>
 
       <Grid item xs={6}>

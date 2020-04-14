@@ -40,16 +40,6 @@ export default function SingleCountryGroup(props) {
 
         return (
           <Grid item container xs={12} xl={6} justify="flex-end" key={key}>
-            <Grid item xs={2}>
-              <CountrySelector
-                name={`singlecountrychart-${i}`}
-                countries={countries}
-                colorMap={colorMap}
-                handleChangeCountry={(_, v) => handleChangeSelection(i, v)}
-                selection={c}
-                selectorType="dropdown"
-              />
-            </Grid>
             <Grid item xs={12}>
               <ChartWrapper>
                 <BarChart
@@ -59,6 +49,16 @@ export default function SingleCountryGroup(props) {
                   maxY={maxY}
                   />
                 </ChartWrapper>
+            </Grid>
+            <Grid item xs={2}>
+              <CountrySelector
+                name={`singlecountrychart-${i}`}
+                countries={countries}
+                colorMap={colorMap}
+                handleChangeCountry={(_, v) => handleChangeSelection(i, v)}
+                selection={c}
+                selectorType="dropdown"
+              />
             </Grid>
           </Grid>
         );
