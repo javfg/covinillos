@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Grid, Switch, FormControlLabel } from '@material-ui/core';
 
 import CountrySelector from './CountrySelector';
 import ChartWrapper from './ChartWrapper';
 import MultiLineChart from './MultiLineChart';
 
-import { getMaxY, setTime } from '../utils/utils';
+import { getMaxY, translate } from '../utils/utils';
+import {
+  prepareMultiCountry,
+  prepareMultiCountry100
+} from '../utils/dataPreparation';
 
 import config from '../config';
 
@@ -15,53 +19,49 @@ export default function MultiCountryGroup(props) {
   const { countries, colorMap, dataset, show } = props;
 
   const [selection, setSelection] = useState(props.selection);
+  const [startAt100, setStartAt100] = useState(false);
 
   const handleChangeSelection = (_, selection) => {
-    console.log('selection', selection);
-
     if (!selection.length) selection = config.defaultMultiCountriesSelection;
     setSelection(selection);
   };
+  const handleChangeStartAt100Selector = e => {
+    setStartAt100(e.target.checked)
+  };
 
 
-  const prepareData = () => {
-    const formattedData = [];
-
-    selection.forEach(country => {
-      const values = [];
-      const events = [];
-      const color = colorMap[country];
-
-      dataset[country].forEach(day => {
-        const date = setTime(day.date, 12);
-        const value = day[show];
-        const captions = day.events;
-
-        values.push({ date, value });
-        if (captions.length) {
-          events.push({ country, color, date, captions, value });
-        }
-      });
-
-      formattedData.push({ country, color, values, events });
-    });
-
-    return formattedData;
-  }
+  const pDataset = startAt100 ?
+    prepareMultiCountry100(dataset, colorMap, selection, show)
+  :
+    prepareMultiCountry(dataset, colorMap, selection, show);
 
 
   return (
-    <Grid item xs={12} container spacing={3} justify="flex-end">
+    <Grid item xs={12} container spacing={3}>
       <Grid item xs={12}>
         <ChartWrapper>
           <MultiLineChart
+            type={startAt100 ? 'startAt100' : 'normal'}
             countries={selection}
-            dataset={prepareData()}
+            dataset={pDataset}
             maxY={getMaxY(dataset, selection, show)}
             name="multicountrychart"
             show={show}
           />
         </ChartWrapper>
+      </Grid>
+
+      <Grid item xs={6}>
+      <FormControlLabel
+        control={
+          <Switch
+            name="startAt100Selector"
+            checked={startAt100}
+            onChange={handleChangeStartAt100Selector}
+          />
+        }
+        label={`Start at 100 ${translate(show)}`}
+      />
       </Grid>
 
       <Grid item xs={6}>

@@ -25,7 +25,7 @@ function MultiLineChart(props) {
 
 
   useEffect(() => {
-    const { dataset, maxY } = props;
+    const { dataset, maxY, type } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
     const focus = main.select('.focus');
@@ -49,20 +49,40 @@ function MultiLineChart(props) {
       .attr('pointer-events', 'none')
       .attr('transform', `translate(${monthToPixels(xScale) / 2}, 6)`);
 
-    main.select('.xaxisweek').call(d3.axisBottom(xScale)
-      .ticks(d3.timeWeek, 1)
-      .tickSize(12)
-      .tickFormat(''));
+    if (type === 'normal') {
+      main.selectAll('.x100').transition(ts).attr('opacity', 0);
+      main.selectAll('.xnormal').transition(ts).attr('opacity', 1);
 
-    main.select('.xaxisday').call(d3.axisBottom(xScale)
-      .ticks(d3.timeDay, 1)
-      .tickSize(5)
-      .tickFormat(d3.timeFormat('%-d')))
-    .selectAll('text')
-      .attr('class', 'xaxis day')
-      .attr('text-anchor', 'center')
-      .attr('pointer-events', 'none')
-      .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
+      main.select('.xaxisweek').call(d3.axisBottom(xScale)
+        .ticks(d3.timeWeek, 1)
+        .tickSize(12)
+        .tickFormat(''));
+
+      main.select('.xaxisday').call(d3.axisBottom(xScale)
+        .ticks(d3.timeDay, 1)
+        .tickSize(5)
+        .tickFormat(d3.timeFormat('%-d')))
+      .selectAll('text')
+        .attr('class', 'xaxis day')
+        .attr('text-anchor', 'center')
+        .attr('pointer-events', 'none')
+        .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
+    }
+
+    if (type === 'startAt100') {
+      main.selectAll('.xnormal').transition(ts).attr('opacity', 0);
+      main.selectAll('.x100').transition(ts).attr('opacity', 1);
+
+      main.select('.xaxiscount').call(d3.axisBottom(xScale)
+        .ticks(d3.timeDay, 1)
+        .tickSize(5)
+        .tickFormat((d, i) => i))
+      .selectAll('text')
+        .attr('class', 'xaxis day')
+        .attr('text-anchor', 'center')
+        .attr('pointer-events', 'none')
+        .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
+    }
 
     main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
       .ticks(5)
@@ -99,8 +119,9 @@ function MultiLineChart(props) {
     // DATA DRAWING
     // line definition
     const dataLine = d3.line()
+      .defined(d => d.value !== null)
       .x(d => xScale(d.date))
-      .y(d => yScale(d.value));
+      .y(d => yScale(d.value))
 
     // 1. GROUPS
     // add event groups for each country
@@ -180,15 +201,18 @@ function MultiLineChart(props) {
     };
 
     const overlayMouseMove = () => {
-      const { name, dataset } = props;
+      const { name, dataset, type } = props;
       const x = setTime(xScale.invert(d3.event.x - margin.left - 15), 11, 59);
       const bisectDate = d3.bisector(d => d.date).left;
       const i = bisectDate(dataset[0].values, x, 1);
-      const dataAtX = dataset.map(country => ({
-        country: country.country,
-        color: country.color,
-        value: country.values[i].value,
-      }));
+      const dataAtX = dataset
+        .map(c => ({
+          country: c.country,
+          color: c.color,
+          value: c.values[i].value,
+        }))
+        .filter(c => c.value !== null)
+        .sort((a, b) => b.value - a.value);
 
       focus.select('line.focusline')
         .attr('x1', xScale(x))
@@ -206,10 +230,11 @@ function MultiLineChart(props) {
       d3.select(`.${name}-tooltip`)
       .html(
         '<div class="tooltip-date">' +
-          dateFormat(dataset[0].values[i].date) +
+          (type === 'normal' ? dateFormat(dataset[0].values[i].date) : '') +
+          (type === 'startAt100' ? `day ${i}` : '') +
         '</div>' +
         '<div class="tooltip-content mt-xs"><table class="tooltip-table">' +
-        dataAtX.sort((a, b) => b.value - a.value).map(c =>
+        dataAtX.map(c =>
           `<tr>
             <td><strong style="color:${c.color}"}>${c.country}</strong></td>
             <td class="text-right">${c.value}</td>
@@ -279,9 +304,10 @@ function MultiLineChart(props) {
           transform={`translate(${margin.left}, ${margin.top})`}
         >
           <rect className='overlay' height={h} width={w} fill="white" />
-          <g className="xaxismonth" transform={`translate(0, ${h})`} />
-          <g className="xaxisweek" transform={`translate(0, ${h})`} />
-          <g className="xaxisday" transform={`translate(0, ${h})`} />
+          <g className="xaxismonth xnormal" transform={`translate(0, ${h})`} />
+          <g className="xaxisweek xnormal" transform={`translate(0, ${h})`} />
+          <g className="xaxisday xnormal" transform={`translate(0, ${h})`} />
+          <g className="xaxiscount x100" transform={`translate(0, ${h})`} />
           <g className="ygrid" />
           <g className="focus">
             <line

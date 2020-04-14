@@ -37,7 +37,6 @@ export const dayToPixels = function(timeScale) {
   return timeScale(d3.timeDay.offset(new Date(), 1)) - timeScale(new Date());
 };
 
-
 export const setTime = function(date, hours, minutes = 0, seconds = 0) {
   const newDate = new Date(date);
   newDate.setHours(hours);
@@ -62,3 +61,35 @@ export const countryToFlag = function(country) {
         .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
     : isoCode;
 }
+
+// Add days in Date proto.
+// https://stackoverflow.com/questions/563406/add-days-to-javascript-date
+Date.prototype.addDays = function(d){return new Date(this.valueOf()+864E5*d);};
+
+
+// finds the index of the longest array in a dataset using a key
+export const longest = (dataset, field) => {
+  let maxLength = 0;
+  let indexOfLongest = 0;
+
+  dataset.forEach((d, i) => {
+    if (d[field].length > maxLength) {
+      maxLength = d[field].length;
+      indexOfLongest = i;
+    }
+  });
+
+  return indexOfLongest;
+};
+
+
+const translate_map = {
+  confirmed_total: 'confirmed cases',
+  deaths_total: 'total deaths',
+  recovered_total: 'total recovered',
+  confirmed_daily: 'daily confirmed cases',
+  deaths_daily: 'daily deaths',
+  recovered_daily: 'daily recovered',
+};
+
+export const translate = (str) => translate_map[str];
