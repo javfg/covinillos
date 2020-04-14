@@ -5,6 +5,7 @@ import { schemeTableau10 as st } from 'd3';
 import Dashboard from './components/Dashboard';
 
 import dataset from '../data/dataset.json';
+import events from '../data/events.json';
 
 import './styles/main.scss';
 
@@ -20,5 +21,6 @@ ReactDOM.render(
     countries={countries}
     colorMap={colorMap}
     dataset={dataset}
+    events={events}
   />
 , document.getElementById("app"));

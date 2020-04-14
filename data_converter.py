@@ -77,3 +77,9 @@ for country in country_order:
 
 with open(f"{covid_root_path}/covinillos/data/dataset.json", "w") as data_file:
     json.dump(dataset, data_file)
+
+
+events_dict = events.to_dict(orient="records")
+
+with open(f"{covid_root_path}/covinillos/data/events.json", "w") as events_file:
+    json.dump(events_dict, events_file)

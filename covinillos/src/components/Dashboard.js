@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 
 export default function Dashboard(props) {
-  const { countries, colorMap, dataset } = props;
+  const { countries, colorMap, dataset, events } = props;
 
   const [showData, setShowData] = useState(config.defaultShowData);
   const [showType, setShowType] = useState(config.defaultShowType);
@@ -98,7 +98,7 @@ export default function Dashboard(props) {
           show={`${showData}_${showType}`}
         />
 
-        <ReferenceList dataset={dataset} />
+        <ReferenceList rows={events} />
       </Grid>
     </ThemeProvider>
   );
