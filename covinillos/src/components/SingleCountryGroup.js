@@ -8,7 +8,7 @@ import BarChart from './BarChart';
 
 import { getMaxY } from '../utils/utils';
 
-import { Config } from '../config';
+import config from '../config';
 
 
 export default function SingleCountryGroup(props) {
@@ -18,7 +18,7 @@ export default function SingleCountryGroup(props) {
   const [maxY, setMaxY] = useState(0);
 
   const handleChangeSelection = (index, value) => {
-    if (!value) value = Config.singleCountriesSelection[i];
+    if (!value) value = config.singleCountriesSelection[i];
     setSelection(selection.map((c, i) => i !== index ? c : value));
   };
 

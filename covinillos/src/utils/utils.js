@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 
 import { countryMapping } from "./countryMapping";
 
-import { Config } from '../config';
+import config from '../config';
 
 
 export const getMaxY = function(dataset, selection, show) {
@@ -22,10 +22,10 @@ export const getTooltipX = function(mouseX, windowWidth, offset = 0) {
   const mouseOffset = 15;
   const maxX = windowWidth - offset;
 
-  return mouseX + Config.tooltipWidth < maxX ?
+  return mouseX + config.tooltipWidth < maxX ?
     mouseX + mouseOffset
   :
-    mouseX - Config.tooltipWidth - mouseOffset;
+    mouseX - config.tooltipWidth - mouseOffset;
 };
 
 

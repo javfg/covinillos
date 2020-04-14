@@ -8,7 +8,7 @@ import MultiLineChart from './MultiLineChart';
 
 import { getMaxY, setTime } from '../utils/utils';
 
-import { Config } from '../config';
+import config from '../config';
 
 
 export default function MultiCountryGroup(props) {
@@ -17,7 +17,9 @@ export default function MultiCountryGroup(props) {
   const [selection, setSelection] = useState(props.selection);
 
   const handleChangeSelection = (_, selection) => {
-    if (!selection) selection = Config.defaultMultiCountriesSelection;
+    console.log('selection', selection);
+
+    if (!selection.length) selection = config.defaultMultiCountriesSelection;
     setSelection(selection);
   };
 
