@@ -12,7 +12,7 @@ export const prepareMultiCountry = (dataset, colorMap, selection, show) => {
     dataset[country].forEach(day => {
       const date = setTime(day.date, 12);
       const value = day[show];
-      const captions = day.events;
+      const captions = day.events.map(e => e.description);
 
       values.push({ date, value });
       if (captions.length) {
