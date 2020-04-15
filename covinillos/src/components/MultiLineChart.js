@@ -19,7 +19,7 @@ function MultiLineChart(props) {
   const ts = d3.transition().duration(100);
   const width = props.dimensions.width;
   const height = width / 4.5;
-  const margin = {top: 20, right: 20, bottom: 40, left: 40};
+  const margin = {top: 10, right: 0, bottom: 40, left: 20};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
 
@@ -295,6 +295,8 @@ function MultiLineChart(props) {
         .transition(t => tl)
         .style('opacity', 0);
     };
+
+  console.log(`MultiLineChart rerender (${width}x${height})`);
 
   }, [props.dataset, props.maxY, props.dimensions]);
 

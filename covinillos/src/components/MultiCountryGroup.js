@@ -55,7 +55,7 @@ export default function MultiCountryGroup(props) {
 
   return (
     <Paper className={classes.paper}>
-      <Grid item xs={12} container spacing={3}>
+      <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
         <Grid item xs={12}>
           <ChartWrapper>
             <MultiLineChart

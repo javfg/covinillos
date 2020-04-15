@@ -10,7 +10,7 @@ function BarChart(props) {
   const t = d3.transition().duration(250);
   const width = props.dimensions.width;
   const height = width / 5;
-  const margin = {top: 20, right: 20, bottom: 40, left: 40};
+  const margin = {top: 10, right: 0, bottom: 40, left: 20};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
 
@@ -76,7 +76,7 @@ function BarChart(props) {
 
     }, [props.dataset, props.maxY, props.dimensions]);
 
-  console.log(`BarChart [${props.country}] rerender (${w}x${h})`);
+  console.log(`BarChart [${props.country}] rerender (${width}x${height})`);
 
 
   return (

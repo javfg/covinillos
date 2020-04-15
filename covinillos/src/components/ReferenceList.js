@@ -194,83 +194,79 @@ export default function ReferenceList(props) {
 
 
   return (
-    <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
-      <Grid item xs={12}>
-        <Typography variant="h5">Reference list</Typography>
-      </Grid>
+    <>
+      <Typography variant="h5">Reference list</Typography>
 
-      <Grid item xs={12}>
-        <TableContainer className={classes.root} component={Paper}>
-          <Table className={classes.table} size="small">
-              <EnhancedTableHead
-                classes={classes}
-                order={order}
-                orderBy={orderBy}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
-                  <TableRow key={`${row.country}-${row.date}-${row.description}`}>
-                    <TableCell
-                      className={classes.cellsm}
-                      component="th"
-                      scope="row"
+      <TableContainer className={classes.root} component={Paper}>
+        <Table className={classes.table} size="small">
+            <EnhancedTableHead
+              classes={classes}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
+          <TableBody>
+            {stableSort(rows, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => (
+                <TableRow key={`${row.country}-${row.date}-${row.description}`}>
+                  <TableCell
+                    className={classes.cellsm}
+                    component="th"
+                    scope="row"
+                  >
+                    {countryToFlag(row.country)} {row.country}
+                  </TableCell>
+                  <TableCell
+                    className={classes.cellsm}
+                  >
+                    {row.date}
+                  </TableCell>
+                  <TableCell
+                    className={classes.cellsm}
+                    >{row.description}</TableCell>
+                  <TableCell
+                    className={classes.cellsm}
+                    align="center"
+                  >
+                    <Link
+                      href={row.reference}
+                      target="blank"
                     >
-                      {countryToFlag(row.country)} {row.country}
-                    </TableCell>
-                    <TableCell
-                      className={classes.cellsm}
-                    >
-                      {row.date}
-                    </TableCell>
-                    <TableCell
-                      className={classes.cellsm}
-                      >{row.description}</TableCell>
-                    <TableCell
-                      className={classes.cellsm}
-                      align="center"
-                    >
-                      <Link
-                        href={row.reference}
-                        target="blank"
-                      >
-                        <OpenInNewIcon />
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                ))
-              }
-
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 30 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                      <OpenInNewIcon />
+                    </Link>
+                  </TableCell>
                 </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  colSpan={3}
-                  count={rows.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: { 'aria-label': 'rows per page' },
-                    native: true,
-                  }}
-                  onChangePage={handleChangePage}
-                  onChangeRowsPerPage={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
+              ))
+            }
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 30 * emptyRows }}>
+                <TableCell colSpan={6} />
               </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Grid>
-    </Grid>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
+                  native: true,
+                }}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
