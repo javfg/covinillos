@@ -40,6 +40,7 @@ export default function CountrySelector(props) {
 
     return (
       <Autocomplete
+        size="small"
         multiple
         disableCloseOnSelect
         id={`${name}-${selectorType}`}
