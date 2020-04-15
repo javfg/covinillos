@@ -102,7 +102,7 @@ function MultiLineChart(props) {
 
     focusAll.exit().remove();
 
-    const focusGroups = focusAll.enter().append('g')
+    focusAll.enter().append('g')
       .attr('class', 'focusgroup')
       .attr('pointer-events', 'none')
       .append('circle')
