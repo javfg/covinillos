@@ -38,7 +38,7 @@ export default function Dashboard(props) {
     setShowType(e.target.checked ? 'total' : 'daily');
   };
   const handleClickSuggestEvent = () => {
-    console.log('suggest event');
+    alert('coming soon');
   };
 
   const classes = useStyles();
@@ -63,7 +63,7 @@ export default function Dashboard(props) {
       </AppBar>
 
       <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
-        <Grid item xs={6}>
+        <Grid item xs={4} xl={3}>
           <DataSelector
             name="singlecountrychart-data"
             title="Data to show"
@@ -72,7 +72,7 @@ export default function Dashboard(props) {
             selection={showData}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={2}>
           <DataSelector
             name="singlecountrychart-type"
             title="Aggregate"

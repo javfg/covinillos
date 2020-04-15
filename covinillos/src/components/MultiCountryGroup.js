@@ -25,6 +25,7 @@ export default function MultiCountryGroup(props) {
   const { countries, colorMap, dataset, show } = props;
 
   const [selection, setSelection] = useState(props.selection);
+  const [prevSelection, setPrevSelection] = useState([]);
   const [startAt100, setStartAt100] = useState(false);
 
   const handleChangeSelection = (_, selection) => {
@@ -33,7 +34,14 @@ export default function MultiCountryGroup(props) {
     setSelection(selection);
   };
   const handleChangeStartAt100Selector = e => {
-    setStartAt100(e.target.checked)
+    setStartAt100(e.target.checked);
+
+    if (e.target.checked) {
+      setPrevSelection(selection);
+      setSelection(config.defaultMultiCountries100Selection);
+    } else {
+      setSelection(prevSelection);
+    }
   };
 
 

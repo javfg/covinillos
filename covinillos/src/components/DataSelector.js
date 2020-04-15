@@ -7,66 +7,50 @@ import {
   RadioGroup,
   Radio,
   Typography,
-  Card,
-  CardHeader,
-  CardContent,
+  Paper,
 } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 
 
 const useStyles = makeStyles(theme => ({
-  root: { ...theme.typography.button },
-  fullHeightCard: { height: '100%' },
-  cardPadding: { padding: '.5rem 0 0 1rem' },
+  lbl: { ...theme.typography.button },
+  fg: { flexDirection: 'row', justifyContent: 'center' },
+  paper: { height: '100%', padding: '.5rem' },
+  center: { textAlign: 'center' }
 }));
 
 
 export default function DataSelector(props) {
-  const {
-    title,
-    name = 'dataselector',
-    items,
-    handleChange,
-    selection
-  } = props;
+  const { title, name = 'ds', items, handleChange, selection } = props;
 
   const classes = useStyles();
 
   return (
-    <Card className={classes.fullHeightCard}>
-    <CardHeader className={classes.cardPadding} title={title} />
-    <CardContent className={classes.cardPadding}>
-      {
-        items.length === 2 ? (
-          <Grid container alignItems="center">
-            <Grid item className={classes.root}>{items[0]}</Grid>
-            <Grid item>
-              <Switch
-                name="itemName"
-                checked={selection === items[1]}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item className={classes.root}>{items[1]}</Grid>
-          </Grid>
-        ) : (
-          <RadioGroup name={name} onChange={handleChange}>
-            <Grid container>
-              {items.map((item, i) => (
-                <Grid item key={`${name}-${item}-selector`}>
-                  <FormControlLabel
-                    control={<Radio />}
-                    label={<Typography className={classes.root}>{item}</Typography>}
-                    value={item}
-                    checked={selection === item}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </RadioGroup>
-        )
-      }
-    </CardContent>
-    </Card>
+    <Paper className={classes.paper} justify="center">
+      <Typography variant="h6">{title}</Typography>
+      {items.length === 2 ? (
+        <div className={classes.center}>
+          <span className={classes.lbl}>{items[0]}</span>
+          <Switch
+            name="itemName"
+            checked={selection === items[1]}
+            onChange={handleChange}
+          />
+          <span className={classes.lbl}>{items[1]}</span>
+        </div>
+      ) : (
+        <RadioGroup name={name} onChange={handleChange} className={classes.fg}>
+          {items.map((item, i) => (
+            <FormControlLabel
+              key={`${name}-${item}-selector`}
+              control={<Radio />}
+              label={<Typography className={classes.lbl}>{item}</Typography>}
+              value={item}
+              checked={selection === item}
+            />
+          ))}
+        </RadioGroup>
+      )}
+    </Paper>
   );
 }
