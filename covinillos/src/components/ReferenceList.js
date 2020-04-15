@@ -23,6 +23,8 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { countryToFlag } from '../utils/utils';
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -217,7 +219,7 @@ export default function ReferenceList(props) {
                       component="th"
                       scope="row"
                     >
-                      {row.country}
+                      {countryToFlag(row.country)} {row.country}
                     </TableCell>
                     <TableCell
                       className={classes.cellsm}

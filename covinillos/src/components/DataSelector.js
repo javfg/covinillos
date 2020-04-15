@@ -16,9 +16,8 @@ import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles(theme => ({
   root: { ...theme.typography.button },
-  fullHeightCard: {
-    height: "100%",
-  },
+  fullHeightCard: { height: '100%' },
+  cardPadding: { padding: '.5rem 0 0 1rem' },
 }));
 
 
@@ -35,8 +34,8 @@ export default function DataSelector(props) {
 
   return (
     <Card className={classes.fullHeightCard}>
-    <CardHeader title={title} />
-    <CardContent>
+    <CardHeader className={classes.cardPadding} title={title} />
+    <CardContent className={classes.cardPadding}>
       {
         items.length === 2 ? (
           <Grid container alignItems="center">
