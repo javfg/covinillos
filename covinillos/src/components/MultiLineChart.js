@@ -259,6 +259,9 @@ function MultiLineChart(props) {
     const eventDotMouseOver = d => {
       const { name, show } = props;
 
+      console.log('d', d);
+
+
       d3.select(d3.event.target)
         .transition(t => ts).attr('fill', d => d.color);
 

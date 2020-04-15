@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Grid } from '@material-ui/core';
+import { Grid, Paper, makeStyles, Box } from '@material-ui/core';
 
 import CountrySelector from './CountrySelector';
 import ChartWrapper from './ChartWrapper';
@@ -9,6 +9,11 @@ import BarChart from './BarChart';
 import { getMaxY } from '../utils/utils';
 
 import config from '../config';
+
+
+const useStyles = makeStyles({
+  paper: { width: '100%', height: '100%', padding: '.5rem', margin: '.5rem' },
+});
 
 
 export default function SingleCountryGroup(props) {
@@ -32,37 +37,41 @@ export default function SingleCountryGroup(props) {
     value: d[show],
   }));
 
+  const classes = useStyles();
+
 
   return (
-    <Grid item xs={12} container spacing={3}>
-      {selection.map((c, i) => {
-        const key = `singlecountry-${c}-${i}`;
+    <Paper className={classes.paper}>
+      <Grid item xs={12} container spacing={3} style={{margin: 0, width: '100%'}}>
+        {selection.map((c, i) => {
+          const key = `singlecountry-${c}-${i}`;
 
-        return (
-          <Grid item container xs={12} xl={6} justify="flex-end" key={key}>
-            <Grid item xs={12}>
-              <ChartWrapper>
-                <BarChart
-                  dataset={prepareData(dataset[c])}
-                  country={c}
-                  color={colorMap[c]}
-                  maxY={maxY}
-                  />
-                </ChartWrapper>
+          return (
+            <Grid item container xs={12} xl={6} justify="flex-end" key={key}>
+              <Grid item xs={12}>
+                <ChartWrapper>
+                  <BarChart
+                    dataset={prepareData(dataset[c])}
+                    country={c}
+                    color={colorMap[c]}
+                    maxY={maxY}
+                    />
+                  </ChartWrapper>
+              </Grid>
+              <Grid item xs={2}>
+                <CountrySelector
+                  name={`singlecountrychart-${i}`}
+                  countries={countries}
+                  colorMap={colorMap}
+                  handleChangeCountry={(_, v) => handleChangeSelection(i, v)}
+                  selection={c}
+                  selectorType="dropdown"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={2}>
-              <CountrySelector
-                name={`singlecountrychart-${i}`}
-                countries={countries}
-                colorMap={colorMap}
-                handleChangeCountry={(_, v) => handleChangeSelection(i, v)}
-                selection={c}
-                selectorType="dropdown"
-              />
-            </Grid>
-          </Grid>
-        );
-      })}
-    </Grid>
+          );
+        })}
+      </Grid>
+    </Paper>
   );
 }
