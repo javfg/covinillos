@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Chip } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -38,6 +38,7 @@ export default function CountrySelector(props) {
   if (selectorType === 'checkbox' || selectorType === 'radio') {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
     const checkedIcon = <CheckBoxIcon fontSize="small" />;
+
     const classes = useStyles(props);
 
     return (
@@ -73,6 +74,16 @@ export default function CountrySelector(props) {
             }}
           />
         )}
+        renderTags={(value, getTagProps) =>
+          value.map((c, index) => (
+            <Chip
+              style={{backgroundColor: colorMap[c]}}
+              className={classes.chip}
+              label={<span>{countryToFlag(c)} {c}</span>}
+              {...getTagProps({ index })}
+            />
+          ))
+        }
       />
     );
   }
