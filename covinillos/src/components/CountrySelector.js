@@ -12,11 +12,8 @@ import { countryToFlag } from '../utils/utils';
 
 const useStyles = makeStyles({
   option: {
-    fontSize: 15,
-    '& > span': {
-      marginRight: 10,
-      fontSize: 18,
-    },
+    padding: 2,
+    '& > span': { marginRight: 10 },
   },
   input: props => ({
     color: props.colorMap[props.selection],
@@ -55,7 +52,7 @@ export default function CountrySelector(props) {
             <Checkbox
               icon={icon}
               checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
+              style={{ marginRight: 8, padding: 0 }}
               checked={selected}
             />
             <span>{countryToFlag(c)}</span>
@@ -68,6 +65,7 @@ export default function CountrySelector(props) {
             label="Countries"
             variant="outlined"
             placeholder="Select countries..."
+            style={{ padding: 3 }}
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',
@@ -77,7 +75,11 @@ export default function CountrySelector(props) {
         renderTags={(value, getTagProps) =>
           value.map((c, index) => (
             <Chip
-              style={{backgroundColor: colorMap[c]}}
+              style={{
+                backgroundColor: colorMap[c],
+                color: 'white',
+                textShadow: '0px 0px 4px black'
+              }}
               className={classes.chip}
               label={<span>{countryToFlag(c)} {c}</span>}
               {...getTagProps({ index })}

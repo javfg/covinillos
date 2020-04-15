@@ -76,7 +76,7 @@ function BarChart(props) {
 
     }, [props.dataset, props.maxY, props.dimensions]);
 
-  console.log(`BarChart [${props.country}] rerender (${width}x${height})`);
+  console.log(`BarChart [${props.country}] r (${width}x${parseInt(height)})`);
 
 
   return (

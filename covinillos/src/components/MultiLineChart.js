@@ -296,7 +296,7 @@ function MultiLineChart(props) {
         .style('opacity', 0);
     };
 
-  console.log(`MultiLineChart rerender (${width}x${height})`);
+  console.log(`MultiLineChart r (${width}x${parseInt(height)})`);
 
   }, [props.dataset, props.maxY, props.dimensions]);
 

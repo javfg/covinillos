@@ -168,7 +168,7 @@ export default function ReferenceList(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('country');
+  const [orderBy, setOrderBy] = React.useState('date');
 
   const emptyRows = rowsPerPage - Math.min(
     rowsPerPage, rows.length - page * rowsPerPage
