@@ -29,6 +29,10 @@ function MultiLineChart(props) {
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
     const focus = main.select('.focus');
+
+    // exit if no data
+    if (!dataset.length) return;
+
     const dateRange = d3.extent(dataset[0].values, d => d.date);
     const dateFormat = d3.timeFormat('%e-%m-%Y');
 
@@ -93,16 +97,15 @@ function MultiLineChart(props) {
 
 
     // add mouse focus groups
-    const focusAll = focus.selectAll('.focuscircle')
+    const focusAll = focus.selectAll('.focusgroup')
       .data(dataset, d => d.country);
 
     focusAll.exit().remove();
 
     const focusGroups = focusAll.enter().append('g')
       .attr('class', 'focusgroup')
-      .attr('pointer-events', 'none');
-
-    focusGroups.append('circle')
+      .attr('pointer-events', 'none')
+      .append('circle')
       .attr('class', 'focuscircle')
       .attr('r', 7)
       .attr('stroke', d => d.color)
@@ -114,7 +117,6 @@ function MultiLineChart(props) {
       .on('mouseover', () => overlayMouseOver())
       .on('mouseout', () => overlayMouseOut())
       .on('mousemove', () => overlayMouseMove());
-
 
     // DATA DRAWING
     // line definition

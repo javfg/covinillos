@@ -47,7 +47,7 @@ export const prepareMultiCountry100 = (dataset, colorMap, selection, show) => {
     pDataset.push({ country, color, values, events: [] });
   });
 
-  const dataLength = pDataset[longest(pDataset, 'values')].values.length;
+  const dataLength = pDataset[longest(pDataset, 'values')]?.values.length;
 
   // fill null values
   pDataset.forEach(c => {
