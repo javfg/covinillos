@@ -63,7 +63,7 @@ export default function Dashboard(props) {
       </AppBar>
 
       <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
-        <Grid item xs={4} xl={3}>
+        <Grid item sm={12} md={6} lg={4} xl={3}>
           <DataSelector
             name="singlecountrychart-data"
             title="Data to show"
@@ -72,7 +72,7 @@ export default function Dashboard(props) {
             selection={showData}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12} md={6} lg={2}>
           <DataSelector
             name="singlecountrychart-type"
             title="Aggregate"
