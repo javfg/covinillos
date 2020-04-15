@@ -10,8 +10,6 @@ export default function ChartWrapper(props) {
     const resizeObserver = new ResizeObserver(entries => {
       entries.forEach(entry => {
         // we only need the width, adding the height triggers a rerender
-        console.log('entry.contentRect.width', entry.contentRect.width);
-
         setDimensions({ width: entry.contentRect.width });
       });
     });
