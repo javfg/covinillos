@@ -18,13 +18,22 @@ export function getMaxY(dataset, selection, show) {
 export const cleanStr = (str) => str.replace(/\s/g, '').toLowerCase();
 
 
-export function getTooltipX(mouseX, windowWidth, offset = 0) {
+export function getTooltipX(mouseX, windowWidth, offset = 0, mid = false) {
   const mouseOffset = 15;
   const maxX = windowWidth - offset;
 
-  return mouseX + config.tooltipWidth < maxX
+  const result = mouseX + config.tooltipWidth < maxX
     ? mouseX + mouseOffset
     : mouseX - config.tooltipWidth - mouseOffset;
+
+  console.log('mid', mid);
+  console.log('result', result);
+  console.log('config.tooltipWidth', config.tooltipWidth / 2);
+
+
+
+
+  return mid ? result - config.tooltipWidth / 2 : result;
 }
 
 

@@ -260,16 +260,17 @@ function MultiLineChart(props) {
     // event dot mouse over function: show tooltip and color event dot
     const eventDotMouseOver = d => {
       const { name, show } = props;
+      console.log('', svgRef.current.getBoundingClientRect());
+
+      const tooltipX = `${getTooltipX(d3.event.pageX, window.innerWidth, 0, true)}px`;
+      const tooltipY = `${svgRef.current.getBoundingClientRect().bottom - 25}px`;
 
       d3.select(d3.event.target)
         .transition(t => ts).attr('fill', d => d.color);
 
       d3.select(`.${name}-eventstooltip`)
-        .style('top', `${d3.event.pageY + 5}px`)
-        .style('left', `${getTooltipX(
-          d3.event.pageX,
-          window.innerWidth
-        )}px`)
+        .style('left', tooltipX)
+        .style('top', tooltipY)
         .html(
           '<div class="tooltip-date">' +
             dateFormat(d.date) +
@@ -329,7 +330,7 @@ function MultiLineChart(props) {
         style={{'opacity': 0}}
       />
       <div
-        className={`${props.name}-eventstooltip tooltip`}
+        className={`${props.name}-eventstooltip tooltip tooltip-narrow`}
         style={{'opacity': 0}}
       />
     </>

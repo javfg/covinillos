@@ -17,26 +17,15 @@ div.tooltip {
 	border-radius: 5px;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 	pointer-events: none;
-	width: auto;
 	z-index: 5;
 }
 
 .tooltip-narrow {
-	width: 200px !important;
+	width: 200px;
 }
 
 .tooltip-wide {
 	width: 250px;
-}
-
-
-.focustext {
-	font-size:  8px;
-	paint-order: stroke;
-	stroke: #fff;
-	stroke-width: 4px;
-	stroke-linecap: butt;
-	stroke-linejoin: miter;
 }
 
 .tooltip-date {
@@ -79,4 +68,13 @@ div.tooltip {
 
 .xaxis.month {
 	color: $mid;
+}
+
+.focustext {
+	font-size:  8px;
+	paint-order: stroke;
+	stroke: #fff;
+	stroke-width: 4px;
+	stroke-linecap: butt;
+	stroke-linejoin: miter;
 }
