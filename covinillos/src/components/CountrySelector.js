@@ -65,7 +65,7 @@ export default function CountrySelector(props) {
             {...params}
             label="Countries"
             variant="outlined"
-            placeholder="Select countries..."
+            placeholder={selection.length < 10 ? 'Select countries...' : ''}
             style={{ padding: 3 }}
             inputProps={{
               ...params.inputProps,

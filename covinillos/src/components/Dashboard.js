@@ -86,7 +86,8 @@ export default function Dashboard(props) {
           countries={countries}
           colorMap={colorMap}
           dataset={dataset}
-          selection={config.defaultMultiCountriesSelection}
+          normalSelection={config.defaultMultiCountriesNormalSelection}
+          altSelection={config.defaultMultiCountriesAltSelection}
           show={`${showData}_${showType}`}
         />
 

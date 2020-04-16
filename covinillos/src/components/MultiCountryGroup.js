@@ -7,62 +7,49 @@ import ChartWrapper from './ChartWrapper';
 import MultiLineChart from './MultiLineChart';
 
 import { getMaxY, translate } from '../utils/utils';
-import {
-  prepareMultiCountry,
-  prepareMultiCountry100
-} from '../utils/dataPreparation';
-
-import config from '../config';
+import { prepareMultiCountry } from '../utils/dataPreparation';
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: { ...theme.typography.button },
   paper: { width: '100%', height: '100%', padding: '.5rem', margin: '.5rem' },
 }));
 
-
 export default function MultiCountryGroup(props) {
   const { countries, colorMap, dataset, show } = props;
 
-  const [selection, setSelection] = useState(props.selection);
-  const [prevSelection, setPrevSelection] = useState([]);
-  const [startAt100, setStartAt100] = useState(false);
+  const [normalSelection, setNormalSelection] = useState(props.normalSelection);
+  const [altSelection, setAltSelection] = useState(props.altSelection);
+  const [alt, setAlt] = useState(false);
 
   const handleChangeSelection = (_, selection) => {
-    if (!selection.length) selection = config.defaultMultiCountriesSelection;
-    if (selection.length > 10) return;
-    setSelection(selection);
-  };
-  const handleChangeStartAt100Selector = e => {
-    setStartAt100(e.target.checked);
-
-    if (e.target.checked) {
-      setPrevSelection(selection);
-      setSelection(config.defaultMultiCountries100Selection);
+    if (!selection.length || selection.length > 10) return;
+    if (alt) {
+      setAltSelection(selection);
     } else {
-      setSelection(prevSelection);
+      setNormalSelection(selection);
     }
   };
 
+  const handleChangeAlt = (e) => { setAlt(e.target.checked); };
 
-  const pDataset = startAt100 ?
-    prepareMultiCountry100(dataset, colorMap, selection, show)
-  :
-    prepareMultiCountry(dataset, colorMap, selection, show);
+  const selection = alt ? altSelection : normalSelection;
+  const type = alt ? 'startAt100' : 'normal';
+  const pDataset = prepareMultiCountry(dataset, colorMap, selection, show, alt);
+  const maxY = getMaxY(dataset, selection, show, alt);
 
   const classes = useStyles();
 
-
   return (
     <Paper className={classes.paper}>
-      <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
+      <Grid container spacing={3} style={{ margin: 0, width: '100%' }}>
         <Grid item xs={12}>
           <ChartWrapper>
             <MultiLineChart
-              type={startAt100 ? 'startAt100' : 'normal'}
+              type={type}
               countries={selection}
               dataset={pDataset}
-              maxY={getMaxY(dataset, selection, show)}
+              maxY={maxY}
               name="multicountrychart"
               show={show}
             />
@@ -71,11 +58,7 @@ export default function MultiCountryGroup(props) {
 
         <Grid item xs={6}>
           <Grid container justify="center" alignItems="center">
-            <Switch
-              name="startAt100Selector"
-              checked={startAt100}
-              onChange={handleChangeStartAt100Selector}
-            />
+            <Switch name="altSelector" checked={alt} onChange={handleChangeAlt} />
             <Grid item className={classes.root}>
               Start at 100 {translate(show)}
             </Grid>

@@ -5,66 +5,65 @@ import { countryMapping } from "./countryMapping";
 import config from '../config';
 
 
-export const getMaxY = function(dataset, selection, show) {
+export function getMaxY(dataset, selection, show) {
   return Math.max(
     ...Object.keys(dataset)
       .filter(cn => selection.includes(cn))
       .map(cn => dataset[cn].map(c => c[show]))
-      .flat()
+      .flat(),
   );
-};
+}
 
 
 export const cleanStr = (str) => str.replace(/\s/g, '').toLowerCase();
 
 
-export const getTooltipX = function(mouseX, windowWidth, offset = 0) {
+export function getTooltipX(mouseX, windowWidth, offset = 0) {
   const mouseOffset = 15;
   const maxX = windowWidth - offset;
 
-  return mouseX + config.tooltipWidth < maxX ?
-    mouseX + mouseOffset
-  :
-    mouseX - config.tooltipWidth - mouseOffset;
-};
+  return mouseX + config.tooltipWidth < maxX
+    ? mouseX + mouseOffset
+    : mouseX - config.tooltipWidth - mouseOffset;
+}
 
 
-export const monthToPixels = function(timeScale) {
+export function monthToPixels(timeScale) {
   return timeScale(d3.timeMonth.offset(new Date(), 1)) - timeScale(new Date());
-};
+}
 
-export const dayToPixels = function(timeScale) {
+export function dayToPixels(timeScale) {
   return timeScale(d3.timeDay.offset(new Date(), 1)) - timeScale(new Date());
-};
+}
 
-export const setTime = function(date, hours, minutes = 0, seconds = 0) {
+export function setTime(date, hours, minutes = 0, seconds = 0) {
   const newDate = new Date(date);
   newDate.setHours(hours);
   newDate.setMinutes(minutes);
   newDate.setSeconds(seconds);
 
   return newDate;
-};
+}
 
 
-export const countryToFlag = function(country) {
+export function countryToFlag(country) {
   const isoCode = countryMapping[country];
 
   // Ships.
-  if (typeof isoCode === "number") {
+  if (typeof isoCode === 'number') {
     return String.fromCodePoint('128674');
   }
 
   return typeof String.fromCodePoint !== 'undefined'
     ? isoCode
-        .toUpperCase()
-        .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
+      .toUpperCase()
+      .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
     : isoCode;
 }
 
 // Add days in Date proto.
 // https://stackoverflow.com/questions/563406/add-days-to-javascript-date
-Date.prototype.addDays = function(d){return new Date(this.valueOf()+864E5*d);};
+Date.prototype.addDays = function addDays(d) { return new Date(this.valueOf() + 864E5 * d); };
 
 
 // finds the index of the longest array in a dataset using a key
@@ -83,7 +82,7 @@ export const longest = (dataset, field) => {
 };
 
 
-const translate_map = {
+const translateMap = {
   confirmed_total: 'confirmed cases',
   deaths_total: 'total deaths',
   recovered_total: 'total recovered',
@@ -92,4 +91,4 @@ const translate_map = {
   recovered_daily: 'daily recovered',
 };
 
-export const translate = (str) => translate_map[str];
+export const translate = (str) => translateMap[str];

@@ -1,7 +1,13 @@
 import { setTime, longest } from './utils';
 
 
-export const prepareMultiCountry = (dataset, colorMap, selection, show) => {
+export const prepareMultiCountry = (dataset, colorMap, selection, show, alt) =>
+  !alt
+    ? prepareMultiCountryNormal(dataset, colorMap, selection, show)
+    : prepareMultiCountryAlt(dataset, colorMap, selection, show);
+
+
+function prepareMultiCountryNormal(dataset, colorMap, selection, show) {
   const pDataset = [];
 
   selection.forEach(country => {
@@ -24,10 +30,10 @@ export const prepareMultiCountry = (dataset, colorMap, selection, show) => {
   });
 
   return pDataset;
-};
+}
 
 
-export const prepareMultiCountry100 = (dataset, colorMap, selection, show) => {
+function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
   const pDataset = [];
 
   selection.forEach(country => {
@@ -61,4 +67,4 @@ export const prepareMultiCountry100 = (dataset, colorMap, selection, show) => {
   });
 
   return pDataset;
-};
+}
