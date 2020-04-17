@@ -283,7 +283,7 @@ function MultiLineChart(props) {
         ).join('') + '</table></div>'
       )
       .transition().duration(25)
-      .style('opacity', .85)
+      .style('opacity', 1)
       .style('left', `${getTooltipX(
         d3.event.pageX,
         window.innerWidth,
@@ -372,7 +372,7 @@ function MultiLineChart(props) {
         .style('left', tooltipX)
         .style('top', tooltipY)
         .html(tooltipHtml)
-        .transition(t => ts).style('opacity', .85);
+        .transition(t => ts).style('opacity', 1);
     }
 
 
@@ -411,7 +411,7 @@ function MultiLineChart(props) {
           <g className="focus">
             <line
               className="focusline"
-              opacity={.8}
+              opacity={1}
               stroke="black"
               strokeWidth=".1px"
               pointerEvents="none"
