@@ -72,7 +72,7 @@ for country in country_order:
             'confirmed_daily': int(confirmed_daily.loc[country, date]),
             'deaths_daily': int(deaths_daily.loc[country, date]),
             'recovered_daily': int(recovered_daily.loc[country, date]),
-            'events': events.loc[(events.country == country) & (events.date == date)][['description', 'reference']].to_dict(orient="records")
+            'events': events.loc[(events.country == country) & (events.date == date)][['description', 'group', 'reference']].to_dict(orient="records")
         })
 
 with open(f"{covid_root_path}/covinillos/data/dataset.json", "w") as data_file:
