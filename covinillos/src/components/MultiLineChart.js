@@ -45,182 +45,209 @@ function MultiLineChart(props) {
     const xScale = d3.scaleTime().range([0, w]).domain(dateRange);
     const yScale = d3.scaleLinear().range([h, 0]).domain([0, maxY]);
 
+    // this group contains all country lines and is below event dots (used in drawData 1)
+    const CountryLinesGroup = main.select('.allcountrylines');
 
-    // grids/axes
-    main.select('.xaxismonth').call(d3.axisBottom(xScale)
-      .ticks(d3.timeMonth, 1)
-      .tickSize(15)
-      .tickFormat(d3.timeFormat('%B')))
-    .selectAll('text')
-      .attr('class', 'xaxis month')
-      .attr('text-anchor', 'center')
-      .attr('pointer-events', 'none')
-      .attr('transform', `translate(${monthToPixels(xScale) / 2}, 6)`);
+    // this group contains all event dots and is above the country lines (used in drawData 2)
+    const countryEventsGroup = main.select('.allcountryevents');
 
-    if (type === 'normal') {
-      main.selectAll('.x100').transition(ts).attr('opacity', 0);
-      main.selectAll('.xnormal').transition(ts).attr('opacity', 1);
+    // brush
+    const xBrush = d3.brushX().extent([[0, 0], [width, height]]).on("end", () => brushEnd());
 
-      main.select('.xaxisweek').call(d3.axisBottom(xScale)
-        .ticks(d3.timeWeek, 1)
-        .tickSize(12)
-        .tickFormat(''));
+    CountryLinesGroup.select('.brush').remove();
+    CountryLinesGroup.append('g')
+      .attr('class', 'brush')
+      .call(xBrush);
 
-      main.select('.xaxisday').call(d3.axisBottom(xScale)
-        .ticks(d3.timeDay, 1)
-        .tickSize(5)
-        .tickFormat(d3.timeFormat('%-d')))
+    CountryLinesGroup.on('dblclick', () => resetZoom());
+
+
+    // DRAW AXES
+    const drawAxes = () => {
+      // grids/axes
+      main.select('.xaxismonth').call(d3.axisBottom(xScale)
+        .ticks(d3.timeMonth, 1)
+        .tickSize(15)
+        .tickFormat(d3.timeFormat('%B')))
       .selectAll('text')
-        .attr('class', 'xaxis day')
+        .attr('class', 'xaxis month')
         .attr('text-anchor', 'center')
         .attr('pointer-events', 'none')
-        .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
-    }
+        .attr('transform', `translate(${monthToPixels(xScale) / 2}, 6)`);
 
-    if (type === 'startAt100') {
-      main.selectAll('.xnormal').transition(ts).attr('opacity', 0);
-      main.selectAll('.x100').transition(ts).attr('opacity', 1);
+      if (type === 'normal') {
+        main.selectAll('.x100').transition(ts).attr('opacity', 0);
+        main.selectAll('.xnormal').transition(ts).attr('opacity', 1);
 
-      main.select('.xaxiscount').call(d3.axisBottom(xScale)
-        .ticks(d3.timeDay, 1)
-        .tickSize(5)
-        .tickFormat((d, i) => i))
-      .selectAll('text')
-        .attr('class', 'xaxis day')
-        .attr('text-anchor', 'center')
+        main.select('.xaxisweek').call(d3.axisBottom(xScale)
+          .ticks(d3.timeWeek, 1)
+          .tickSize(12)
+          .tickFormat(''));
+
+        main.select('.xaxisday').call(d3.axisBottom(xScale)
+          .ticks(d3.timeDay, 1)
+          .tickSize(5)
+          .tickFormat(d3.timeFormat('%-d')))
+        .selectAll('text')
+          .attr('class', 'xaxis day')
+          .attr('text-anchor', 'center')
+          .attr('pointer-events', 'none')
+          .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
+      }
+
+      if (type === 'startAt100') {
+        main.selectAll('.xnormal').transition(ts).attr('opacity', 0);
+        main.selectAll('.x100').transition(ts).attr('opacity', 1);
+
+        main.select('.xaxiscount').call(d3.axisBottom(xScale)
+          .ticks(d3.timeDay, 1)
+          .tickSize(5)
+          .tickFormat((d, i) => i))
+        .selectAll('text')
+          .attr('class', 'xaxis day')
+          .attr('text-anchor', 'center')
+          .attr('pointer-events', 'none')
+          .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
+      }
+
+      main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
+        .ticks(5)
+        .tickSize(-w)
+        .tickFormat(d3.format('.2s')))
+      .selectAll('line')
+        .attr('stroke-width', .33);
+    };
+
+    // DRAW DATA
+    const drawData = () => {
+      // add mouse focus groups
+      const focusAll = focus.selectAll('.focusgroup')
+        .data(dataset, d => d.country);
+
+      focusAll.exit().remove();
+
+      focusAll.enter().append('g')
+        .attr('class', 'focusgroup')
         .attr('pointer-events', 'none')
-        .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
-    }
+        .append('circle')
+        .attr('class', 'focuscircle')
+        .attr('r', 7)
+        .attr('stroke', d => d.color)
+        .attr('fill', 'none')
+        .attr('stroke-width', '1.5px');
 
-    main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
-      .ticks(5)
-      .tickSize(-w)
-      .tickFormat(d3.format('.2s')))
-    .selectAll('line')
-      .attr('stroke-width', .33);
-
-
-    // add mouse focus groups
-    const focusAll = focus.selectAll('.focusgroup')
-      .data(dataset, d => d.country);
-
-    focusAll.exit().remove();
-
-    focusAll.enter().append('g')
-      .attr('class', 'focusgroup')
-      .attr('pointer-events', 'none')
-      .append('circle')
-      .attr('class', 'focuscircle')
-      .attr('r', 7)
-      .attr('stroke', d => d.color)
-      .attr('fill', 'none')
-      .attr('stroke-width', '1.5px');
-
-    // overlay interactivity functions
-    svg.select('.overlay')
-      .on('mouseover', () => overlayMouseOver())
-      .on('mouseout', () => overlayMouseOut())
-      .on('mousemove', () => overlayMouseMove());
-
-    // DATA DRAWING
-    // line definition
-    const dataLine = d3.line()
-      .defined(d => d.value !== null)
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.value))
-
-    // 1. GROUPS
-    // add event groups for each country
-    const countryAll = main.selectAll('g.countrygroup')
-      .data(dataset, d => d.country);
-
-    // remove event groups for countries that got unchecked
-    countryAll.exit().remove();
-
-    // add groups for countries that arrived
-    const countryEnter = countryAll.enter()
-      .append('g')
-      .attr('class', d => `countrygroup countrygroup-${cleanStr(d.country)}`);
-
-    // 2. PATHS
-    // add paths for countries that arrived
-    countryEnter.append('path')
-      .attr('class', 'countryline')
-      .attr('id', d => `${cleanStr(d.country)}-path`)
-      .style('stroke', d => d.color)
-      .style('stroke-width', '2px')
-      .style('fill', 'none')
-      .attr('d', d => dataLine(d.values))
-      .attr('pointer-events', 'none');
-
-    // update paths for countries that are already there when data changes
-    countryAll.selectAll('.countryline')
-      .data(dataset, d => d.country)
-      .transition().duration(200)
-      .attr('d', d => dataLine(d.values));
+      // overlay interactivity functions
+      svg.select('.overlay')
+        .on('mouseover', () => overlayMouseOver())
+        .on('mouseout', () => overlayMouseOut())
+        .on('mousemove', () => overlayMouseMove());
 
 
-    // 3. EVENT DOTS
-    // new groups are needed so dots are above lines
-    const countryEventAll = main.selectAll('g.countryeventgroup')
-      .data(dataset, d => d.country);
+      // DATA DRAWING
+      // line definition
+      const dataLine = d3.line()
+        .defined(d => d.value !== null)
+        .x(d => xScale(d.date))
+        .y(d => yScale(d.value))
 
-    // remove event groups for countries that got unchecked
-    countryEventAll.exit().remove();
+      // 1. GROUPS
+      // add event groups for each country (in case we have to add something beside lines)
+      const countryAll = CountryLinesGroup.selectAll('g.countryline')
+        .data(dataset, d => d.country);
 
-    // add groups for countries that arrived
-    countryEventAll.enter()
-      .append('g')
-      .attr('class', d => `countryeventgroup countryeventgroup-${cleanStr(d.country)}`);
+      // remove event groups for countries that got unchecked
+      countryAll.exit().remove();
 
-    const eventDots = main.selectAll('g.countryeventgroup')
-      .data(dataset, d => d.country)
-      .selectAll('.eventdot')
-      .data(d => d.events);
+      // add groups for countries that arrived
+      const countryEnter = countryAll.enter()
+        .append('g')
+        .attr('class', d => `countryline countryline-${cleanStr(d.country)}`);
 
-    // remove event dots for countries that left
-    eventDots.exit().remove()
+      // 2. PATHS
+      // add paths for countries that arrived
+      countryEnter.append('path')
+        .attr('class', 'countryline-path')
+        .attr('id', d => `${cleanStr(d.country)}-path`)
+        .style('stroke', d => d.color)
+        .style('stroke-width', '2px')
+        .style('fill', 'none')
+        .attr('d', d => dataLine(d.values))
+        .attr('pointer-events', 'none');
 
-    // add event dots for countries that arrived
-    eventDots.enter().append('circle')
-      .attr('class', d => `eventdot ${getEventClasses(d).join(' ')}`)
-      .attr('stroke-width', '1.66px')
-      .attr('stroke', d => d.color)
-      .attr('fill', 'white')
-      .attr('opacity', 0)
-      .attr('r', 0)
-      .attr('cx', d => xScale(d.date))
-      .attr('cy', d => yScale(d.value))
-      // update event dots for countries alredy there
-    .merge(eventDots)
-      .transition(t => tl)
-      .attr('r', 4.5)
-      .attr('cx', d => xScale(d.date))
-      .attr('cy', d => yScale(d.value))
-      .attr('opacity', 1);
+      // update paths for countries that are already there when data changes
+      countryAll.selectAll('.countryline-path')
+        .data(dataset, d => d.country)
+        .transition().duration(200)
+        .attr('d', d => dataLine(d.values));
 
-    main.selectAll('.eventdot')
-      .on('mouseover', d => eventDotMouseOver(d))
-      .on('mouseout', d => eventDotMouseOut(d))
 
-    const eventTexts = main.selectAll('g.countryeventgroup')
-      .data(dataset, d => d.country)
-      .selectAll('.eventdot-text')
-      .data(d => d.events);
+      // 3. EVENT DOTS
+      // a group is created for each country's events
+      const countryEventAll = countryEventsGroup.selectAll('g.countryevent')
+        .data(dataset, d => d.country);
 
-    eventTexts.exit().remove()
+      // remove event groups for countries that got unchecked
+      countryEventAll.exit().remove();
 
-    eventTexts.enter().append('text')
-      .attr('class', d => `eventdot-text ${getEventClasses(d).join(' ')}`)
-      .attr('x', d => xScale(d.date))
-      .attr('y', d => yScale(d.value) + 4)
-      .attr('text-anchor', 'middle')
-      .attr('pointer-events', 'none')
-      .attr('font-size', '.66rem')
-    .merge(eventTexts)
-      .transition(t => tl)
-      .attr('x', d => xScale(d.date))
-      .attr('y', d => yScale(d.value) + 4);
+      // add groups for countries that arrived
+      countryEventAll.enter()
+        .append('g')
+        .attr('class', d => `countryevent countryevent-${cleanStr(d.country)}`);
+
+      const eventDots = main.selectAll('g.countryevent')
+        .data(dataset, d => d.country)
+        .selectAll('.eventdot')
+        .data(d => d.events);
+
+      // remove event dots for countries that left
+      eventDots.exit().remove()
+
+      // add event dots for countries that arrived
+      eventDots.enter().append('circle')
+        .attr('class', d => `eventdot ${getEventClasses(d).join(' ')}`)
+        .attr('stroke-width', '1.66px')
+        .attr('stroke', d => d.color)
+        .attr('fill', 'white')
+        .attr('opacity', 0)
+        .attr('r', 0)
+        .attr('cx', d => xScale(d.date))
+        .attr('cy', d => yScale(d.value))
+        // update event dots for countries alredy there
+      .merge(eventDots)
+        .transition(t => tl)
+        .attr('r', 4.5)
+        .attr('cx', d => xScale(d.date))
+        .attr('cy', d => yScale(d.value))
+        .attr('opacity', 1);
+
+      main.selectAll('.eventdot')
+        .on('mouseover', d => eventDotMouseOver(d))
+        .on('mouseout', d => eventDotMouseOut(d))
+
+      const eventTexts = main.selectAll('g.countryevent')
+        .data(dataset, d => d.country)
+        .selectAll('.eventdot-text')
+        .data(d => d.events);
+
+      eventTexts.exit().remove()
+
+      eventTexts.enter().append('text')
+        .attr('class', d => `eventdot-text ${getEventClasses(d).join(' ')}`)
+        .attr('x', d => xScale(d.date))
+        .attr('y', d => yScale(d.value) + 4)
+        .attr('text-anchor', 'middle')
+        .attr('pointer-events', 'none')
+        .attr('font-size', '.66rem')
+      .merge(eventTexts)
+        .transition(t => tl)
+        .attr('x', d => xScale(d.date))
+        .attr('y', d => yScale(d.value) + 4);
+    };
+
+
+    // PAINT THE CHART
+    drawAxes();
+    drawData();
 
 
     // INTERACTIVITY FUNCTIONS
@@ -391,7 +418,34 @@ function MultiLineChart(props) {
         .style('opacity', 0);
     };
 
-  console.log(`MultiLineChart r (${width}x${parseInt(height)})`);
+
+    // brush: zooming
+    const brushEnd = () => {
+      console.log('brushend');
+
+      const selection = d3.event.selection;
+      if (!selection) return;
+
+      xScale.domain([ xScale.invert(selection[0]), xScale.invert(selection[1]) ]);
+      svg.select('.brush').call(xBrush.clear);
+
+      // update axis and line position
+      drawAxes();
+      drawData();
+    };
+
+    // double click on chart area: reset zoom
+    const resetZoom = () => {
+      console.log('dblclick');
+
+      xScale.domain(dateRange);
+
+      // update axis and line position
+      drawAxes();
+      drawData();
+    }
+
+    console.log(`MultiLineChart r (${width}x${parseInt(height)})`);
 
   }, [props.dataset, props.show, props.maxY, props.dimensions]);
 
@@ -402,11 +456,13 @@ function MultiLineChart(props) {
           className="main"
           transform={`translate(${margin.left}, ${margin.top})`}
         >
-          <rect className='overlay' height={h} width={w} fill="white" />
+          <rect className='mainoverlay' height={h} width={w} fill="white" />
           <g className="xaxismonth xnormal" transform={`translate(0, ${h})`} />
           <g className="xaxisweek xnormal" transform={`translate(0, ${h})`} />
           <g className="xaxisday xnormal" transform={`translate(0, ${h})`} />
           <g className="xaxiscount x100" transform={`translate(0, ${h})`} />
+          <g className="allcountrylines" />
+          <g className="allcountryevents" />
           <g className="ygrid" />
           <g className="focus">
             <line
