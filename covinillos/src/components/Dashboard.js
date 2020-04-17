@@ -9,6 +9,7 @@ import {
   makeStyles,
   ThemeProvider,
   createMuiTheme,
+  Modal,
 } from '@material-ui/core';
 
 import MailIcon from '@material-ui/icons/Mail';
@@ -32,13 +33,18 @@ export default function Dashboard(props) {
 
   const [showData, setShowData] = useState(config.defaultShowData);
   const [showType, setShowType] = useState(config.defaultShowType);
+  const [suggestEventModalOpen, setSuggestEventModalOpen] = useState(false);
 
   const handleChangeShowData = e => { setShowData(e.target.value); };
   const handleChangeShowType = e => {
     setShowType(e.target.checked ? 'total' : 'daily');
   };
   const handleClickSuggestEvent = () => {
-    alert('coming soon');
+    setSuggestEventModalOpen(true);
+  };
+  const handleCloseSuggestEvent = () => {
+    console.log('event suggested');
+    setSuggestEventModalOpen(false);
   };
 
   const classes = useStyles();
@@ -101,6 +107,18 @@ export default function Dashboard(props) {
 
         <ReferenceList rows={events} />
       </Grid>
+
+      <Modal
+        open={suggestEventModalOpen}
+        onClose={handleCloseSuggestEvent}
+      >
+          <div>
+            <h2 id="simple-modal-title">Text in a modal</h2>
+            <p id="simple-modal-description">
+              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </p>
+          </div>
+      </Modal>
     </ThemeProvider>
   );
 }
