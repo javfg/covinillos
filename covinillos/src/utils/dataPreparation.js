@@ -18,11 +18,11 @@ function prepareMultiCountryNormal(dataset, colorMap, selection, show) {
     dataset[country].forEach(day => {
       const date = setTime(day.date, 12);
       const value = day[show];
-      const captions = day.events.map(e => e.description);
+      const items = day.events.map(e => ({ caption: e.description, group: e.group }));
 
       values.push({ date, value });
-      if (captions.length) {
-        events.push({ country, color, date, captions, value });
+      if (items.length) {
+        events.push({ country, color, date, items, value });
       }
     });
 
@@ -33,6 +33,9 @@ function prepareMultiCountryNormal(dataset, colorMap, selection, show) {
 }
 
 
+//
+// Prepares dataset matching all selected countries at 100 of a given value.
+//
 function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
   const pDataset = [];
 

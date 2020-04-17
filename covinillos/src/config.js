@@ -1,6 +1,7 @@
 const config = {
   tooltipHeight: 120,
   tooltipWidth: 200,
+  tooltipWideWidth: 400,
   defaultMultiCountriesNormalSelection: [
     'Spain',
     'Italy',

@@ -23,6 +23,7 @@
 .font { @include generator($fontsizes, 'font-size'); }
 .text { @include generator($aligns, 'text-align'); }
 .text-bold { font-weight: bold; }
+.text-light { font-weight: 100; }
 .text-capitalize { text-transform: capitalize; }
 .lh { @include generator($lineheights, 'line-height'); }
 
@@ -30,6 +31,7 @@
 .h { @include generator($percents, 'height'); }
 
 .align-self { @include generator($aligns, 'align-self')}
+.align-items { @include generator($aligns, 'align-items')}
 .d { @include generator($display, 'display'); }
 .flex-col { flex-direction: column; }
 .flex-grow-1 { flex-grow: 1; }

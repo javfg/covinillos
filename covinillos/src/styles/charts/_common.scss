@@ -9,53 +9,6 @@
 .tick line { color: $mid; }
 .tick text { color: $dark; }
 
-div.tooltip {
-	position: absolute;
-	height: auto;
-	padding: 5px;
-	background-color: white;
-	border-radius: 5px;
-	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
-	pointer-events: none;
-	z-index: 5;
-}
-
-.tooltip-narrow {
-	width: 200px;
-}
-
-.tooltip-wide {
-	width: 250px;
-}
-
-.tooltip-date {
-	display: flex;
-	padding: 0 $md 0 $md;
-	justify-content: center;
-	background-color: $dark;
-	color: $light;
-}
-
-.tooltip-table {
-	width: 100%;
-
-	td {
-		padding: 0;
-		border-bottom: 1px solid $light;
-	}
-}
-
-.tooltip-content {
-	font-size: .66rem;
-	margin-left: $xs;
-	margin-bottom: $xs;
-}
-
-.event {
-	font-size: .66rem;
-	text-transform: capitalize;
-}
-
 .month {
 	text-transform: uppercase;
 	font-weight: 700;

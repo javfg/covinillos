@@ -5,6 +5,7 @@ $info: #17a2b8;
 $light: #f1f1f1;
 $mid: #a8aeb3;
 $dark: #393c3f;
+$white: #fff;
 
 $ferrari: #df2800;
 $sky: #95c8d8;
@@ -12,6 +13,7 @@ $tuscany: #fcd12a;
 $azur: #0080ff;
 
 $none: 0rem;
+$xxs: .15rem;
 $xs: .33rem;
 $sm: .5rem;
 $md: 1rem;
@@ -33,10 +35,12 @@ $fgcolors: (
   ferrari: $ferrari,
   sky: $sky,
   tuscany: $tuscany,
+  white: $white,
 );
 
 $sizes: (
   none: $none,
+  xxs: $xxs,
   xs: $xs,
   sm: $sm,
   md: $md,

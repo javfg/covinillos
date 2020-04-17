@@ -10,6 +10,10 @@ import {
   monthToPixels,
   dayToPixels,
   setTime,
+  getEventClasses,
+  translate,
+  countryToFlag,
+  stringList,
 } from '../utils/utils';
 
 
@@ -34,7 +38,7 @@ function MultiLineChart(props) {
     if (!dataset.length) return;
 
     const dateRange = d3.extent(dataset[0].values, d => d.date);
-    const dateFormat = d3.timeFormat('%e-%m-%Y');
+    const dateFormat = d3.timeFormat('%d-%m-%Y');
 
 
     // scale domains
@@ -138,7 +142,6 @@ function MultiLineChart(props) {
       .append('g')
       .attr('class', d => `countrygroup countrygroup-${cleanStr(d.country)}`);
 
-
     // 2. PATHS
     // add paths for countries that arrived
     countryEnter.append('path')
@@ -158,8 +161,19 @@ function MultiLineChart(props) {
 
 
     // 3. EVENT DOTS
-    // select country groups and match data from events
-    const eventDots = main.selectAll('g.countrygroup')
+    // new groups are needed so dots are above lines
+    const countryEventAll = main.selectAll('g.countryeventgroup')
+      .data(dataset, d => d.country);
+
+    // remove event groups for countries that got unchecked
+    countryEventAll.exit().remove();
+
+    // add groups for countries that arrived
+    countryEventAll.enter()
+      .append('g')
+      .attr('class', d => `countryeventgroup countryeventgroup-${cleanStr(d.country)}`);
+
+    const eventDots = main.selectAll('g.countryeventgroup')
       .data(dataset, d => d.country)
       .selectAll('.eventdot')
       .data(d => d.events);
@@ -169,13 +183,11 @@ function MultiLineChart(props) {
 
     // add event dots for countries that arrived
     eventDots.enter().append('circle')
-      .attr('class', 'eventdot')
+      .attr('class', d => `eventdot ${getEventClasses(d).join(' ')}`)
       .attr('stroke-width', '1.66px')
       .attr('stroke', d => d.color)
       .attr('fill', 'white')
       .attr('opacity', 0)
-      .on('mouseover', d => eventDotMouseOver(d))
-      .on('mouseout', d => eventDotMouseOut(d))
       .attr('r', 0)
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.value))
@@ -186,6 +198,29 @@ function MultiLineChart(props) {
       .attr('cx', d => xScale(d.date))
       .attr('cy', d => yScale(d.value))
       .attr('opacity', 1);
+
+    main.selectAll('.eventdot')
+      .on('mouseover', d => eventDotMouseOver(d))
+      .on('mouseout', d => eventDotMouseOut(d))
+
+    const eventTexts = main.selectAll('g.countryeventgroup')
+      .data(dataset, d => d.country)
+      .selectAll('.eventdot-text')
+      .data(d => d.events);
+
+    eventTexts.exit().remove()
+
+    eventTexts.enter().append('text')
+      .attr('class', d => `eventdot-text ${getEventClasses(d).join(' ')}`)
+      .attr('x', d => xScale(d.date))
+      .attr('y', d => yScale(d.value) + 4)
+      .attr('text-anchor', 'middle')
+      .attr('pointer-events', 'none')
+      .attr('font-size', '.66rem')
+    .merge(eventTexts)
+      .transition(t => tl)
+      .attr('x', d => xScale(d.date))
+      .attr('y', d => yScale(d.value) + 4);
 
 
     // INTERACTIVITY FUNCTIONS
@@ -204,9 +239,10 @@ function MultiLineChart(props) {
 
     const overlayMouseMove = () => {
       const { name, dataset, type } = props;
-      const x = setTime(xScale.invert(d3.event.x - margin.left - 15), 11, 59);
+      const x = setTime(xScale.invert(d3.event.x - margin.left - 25), 11, 59);
       const bisectDate = d3.bisector(d => d.date).left;
       const i = bisectDate(dataset[0].values, x, 1);
+
       const dataAtX = dataset
         .map(c => ({
           country: c.country,
@@ -227,7 +263,7 @@ function MultiLineChart(props) {
         .attr(
           'transform',
           d => {
-            const y = d.values[i].value ? yScale(d.values[i].value) : -50;
+            const y = d.values[i].value !== null ? yScale(d.values[i].value) : -50;
             return `translate (${xScale(x)}, ${y})`;
           }
         );
@@ -260,28 +296,82 @@ function MultiLineChart(props) {
     // event dot mouse over function: show tooltip and color event dot
     const eventDotMouseOver = d => {
       const { name, show } = props;
-      console.log('', svgRef.current.getBoundingClientRect());
 
-      const tooltipX = `${getTooltipX(d3.event.pageX, window.innerWidth, 0, true)}px`;
+      const tooltipX = `${getTooltipX(d3.event.pageX, window.innerWidth, 0, true, true)}px`;
       const tooltipY = `${svgRef.current.getBoundingClientRect().bottom - 25}px`;
 
+      // get all countries data for that event group
       d3.select(d3.event.target)
         .transition(t => ts).attr('fill', d => d.color);
+
+      let tooltipHtml = '';
+
+      d.items.forEach((item, i) => {
+        const eventCircles = d3.selectAll(`.eventdot.event-${item.group}`);
+        const eventTexts = d3.selectAll(`.eventdot-text.event-${item.group}`);
+
+        tooltipHtml += `
+          <div class="d-flex border-dark mb-xxs">
+            <div class="d-flex align-items-center px-md m-xxs bg-dark fg-light">
+              <h1>${i + 1}</h1>
+            </div>
+            <div class="flex-grow-1">
+              <div class="flex-grow-1">
+                <span class="event p-xs d-block mt-xxs mr-xxs bg-danger fg-white text-center">
+                  ${item.caption}
+                </span>
+              </div>
+            <div>
+              <table class="w-100">
+                <tr class="bg-light font-75">
+                  <th class="text-light">Date</th>
+                  <th class="text-light">Country</th>
+                  <th class="text-light text-capitalize">${translate(show)}</th>
+                </th>
+                <tr>
+                  <td><span class="text-bold">${dateFormat(d.date)}</span></td>
+                  <td>
+                    <strong style="color:${d.color}"}>
+                      ${countryToFlag(d.country)} ${d.country}
+                    </strong>
+                  </td>
+                  <td class="text-right">${d.value}</td>
+                </tr>
+                <tr>
+                  <td colspan="3" class="font-75">Other countries...</td>
+                </tr>
+        `;
+
+        eventCircles
+          .transition(t => ts)
+          .attr('r', 9)
+          .attr('fill', 'lightgrey');
+
+        eventTexts
+          .text(function(d) { return stringList([d3.select(this).text(), i + 1]); });
+
+        const countriesData = eventCircles.data().map(d => d);
+
+        tooltipHtml += countriesData
+          .filter(c => c.country !== d.country)
+          .sort((a, b) => a.date - b.date)
+          .map(event => `
+            <tr>
+              <td><span class="text-bold">${dateFormat(event.date)}</span></td>
+              <td>
+                <strong style="color:${event.color}"}>
+                  ${countryToFlag(event.country)} ${event.country}
+                </strong>
+              </td>
+              <td class="text-right">${event.value}</td>
+            </tr>`).join('');
+          tooltipHtml += '</table></div></div></div>';
+      });
 
       d3.select(`.${name}-eventstooltip`)
         .style('left', tooltipX)
         .style('top', tooltipY)
-        .html(
-          '<div class="tooltip-date">' +
-            dateFormat(d.date) +
-          '</div><div class="tooltip-content mt-xs"><div class="mb-xs">' +
-          `<strong style="color:${d.color}" class="event"}>
-            ${d.country}
-          </strong>` +
-          `<small> at ${d.value} ${show}</small></div>` +
-          d.captions.map(c => `<div class="event">${c}</div>`).join('') +
-          '</div>'
-        )
+        .html(tooltipHtml)
         .transition(t => ts).style('opacity', .85);
     }
 
@@ -290,7 +380,11 @@ function MultiLineChart(props) {
     const eventDotMouseOut = d => {
       d3.selectAll('.eventdot')
         .transition(t => tl)
+        .attr('r', 4.5)
         .attr('fill', 'white');
+
+      d3.selectAll('.eventdot-text')
+        .text('');
 
       d3.select(`.${props.name}-eventstooltip`)
         .transition(t => tl)
@@ -299,7 +393,7 @@ function MultiLineChart(props) {
 
   console.log(`MultiLineChart r (${width}x${parseInt(height)})`);
 
-  }, [props.dataset, props.maxY, props.dimensions]);
+  }, [props.dataset, props.show, props.maxY, props.dimensions]);
 
   return (
     <>
@@ -330,7 +424,7 @@ function MultiLineChart(props) {
         style={{'opacity': 0}}
       />
       <div
-        className={`${props.name}-eventstooltip tooltip tooltip-narrow`}
+        className={`${props.name}-eventstooltip tooltip tooltip-wide`}
         style={{'opacity': 0}}
       />
     </>

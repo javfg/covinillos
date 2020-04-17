@@ -18,22 +18,18 @@ export function getMaxY(dataset, selection, show) {
 export const cleanStr = (str) => str.replace(/\s/g, '').toLowerCase();
 
 
-export function getTooltipX(mouseX, windowWidth, offset = 0, mid = false) {
+export function getTooltipX(mouseX, windowWidth, offset = 0, mid = false, wide = false) {
   const mouseOffset = 15;
   const maxX = windowWidth - offset;
+  const tooltipWidth = wide
+    ? config.tooltipWideWidth
+    : config.tooltipWidth;
 
   const result = mouseX + config.tooltipWidth < maxX
     ? mouseX + mouseOffset
-    : mouseX - config.tooltipWidth - mouseOffset;
+    : mouseX - tooltipWidth - mouseOffset;
 
-  console.log('mid', mid);
-  console.log('result', result);
-  console.log('config.tooltipWidth', config.tooltipWidth / 2);
-
-
-
-
-  return mid ? result - config.tooltipWidth / 2 : result;
+  return mid ? result - tooltipWidth / 2 : result;
 }
 
 
@@ -53,6 +49,10 @@ export function setTime(date, hours, minutes = 0, seconds = 0) {
 
   return newDate;
 }
+
+export const getEventClasses = d => d.items.map(i => 'event-' + i.group);
+
+export const stringList = strList => strList.filter(e => !!e).join(',');
 
 
 export function countryToFlag(country) {
