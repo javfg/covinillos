@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 
 import * as d3 from 'd3';
 import { isEqual } from 'lodash';
+import { getTooltipX, countryLabel, translate } from '../../utils/utils';
 
 
 function BarChart(props) {
@@ -15,14 +16,16 @@ function BarChart(props) {
 
 
   useEffect(() => {
-    const { dataset, color, maxY } = props;
+    const { name, dataset, color, maxY, show } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
+    const tooltip = d3.select(`.${name}-tooltip`);
+    const dateFormat = d3.timeFormat('%d-%m-%Y');
 
     // scale domains
     const xScale = d3.scaleBand()
       .range([0, w])
-      .padding(0.4)
+      .padding(0.2)
       .domain(dataset.map(d => d.date));
 
     const yScale = d3.scaleLinear()
@@ -32,7 +35,7 @@ function BarChart(props) {
     // grids/axes
     main.select('.xaxis').call(d3.axisBottom(xScale)
       .tickSize(5)
-      .tickFormat(d3.timeFormat('%-m/%-d')))
+      .tickFormat(d3.timeFormat('%-d/%-m')))
     .selectAll('text')
       .attr('class', 'xaxis count')
       .attr('text-anchor', 'start')
@@ -49,7 +52,7 @@ function BarChart(props) {
       .attr('stroke-width', .33);
 
     // bars
-    const rects = main.selectAll('rect')
+    const rects = main.selectAll('rect.bar')
       .data(dataset, d => d.date);
 
     rects.exit()
@@ -61,6 +64,7 @@ function BarChart(props) {
 
     rects.enter()
       .append('rect')
+      .attr('class', 'bar')
       .attr('fill', 'grey')
       .attr('x', d => xScale(d.date))
       .attr('y', yScale(0))
@@ -73,15 +77,46 @@ function BarChart(props) {
       .attr('width', xScale.bandwidth)
       .attr('height', d => h - yScale(d.value))
       .attr('fill', color)
-      .attr('fill-opacity', 1)
-      // .on('mouseover', d => barMouseOver(d))
-      // .on('mouseout', d => barMouseOut(d));
+      .attr('fill-opacity', 1);
+
+      main.selectAll('.bar')
+      .on('mouseover', () => barMouseOver())
+      .on('mouseout', () => barMouseOut())
+      .on('mousemove', d => barMouseMove(d));
 
 
+    // INTERACTIVITY FUNCTIONS
+    // overlay mouse functions: show/hide and move line and dots
+    const barMouseOver = () => { tooltip.transition(t => ts).style('opacity', 1); };
+    const barMouseOut = () => { tooltip.transition(t => ts).style('opacity', 0); };
 
+    const barMouseMove = d => {
+      tooltip
+        .html(`
+          <div class="tooltip-date">
+            ${dateFormat(d.date)}
+          </div>
+          <div class="tooltip-content mt-xs">
+            <table class="tooltip-table">
+              <tr>
+                <td><strong style="color:${color}">${countryLabel(name)}</strong></td>
+                <td class="text-right">${d.value}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="tooltip-footer">
+            ${translate(show)}
+          </div>
+        `)
+        .style('left', `${getTooltipX(
+          d3.event.clientX,
+          window.innerWidth,
+          margin.left
+        )}px`)
+        .style('top', `${d3.event.clientY + 5}px`);
+    };
 
-
-    }, [props.dataset, props.maxY, props.dimensions]);
+  }, [props.dataset, props.maxY, props.dimensions]);
 
   console.log(`BarChart [${props.country}] r (${width}x${parseInt(height)})`);
 

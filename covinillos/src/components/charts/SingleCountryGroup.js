@@ -51,11 +51,12 @@ export default function SingleCountryGroup(props) {
               <Grid item xs={12}>
                 <ChartWrapper>
                   <BarChart
-                    name={key}
+                    name={c}
                     dataset={prepareData(dataset[c])}
                     country={c}
                     color={colorMap[c]}
                     maxY={maxY}
+                    show={show}
                     />
                   </ChartWrapper>
               </Grid>

@@ -75,6 +75,9 @@ export function countryToFlag(country) {
     : isoCode;
 }
 
+export const countryLabel = country => `${countryToFlag(country)} ${country}`;
+
+
 // Add days in Date proto.
 // https://stackoverflow.com/questions/563406/add-days-to-javascript-date
 Date.prototype.addDays = function addDays(d) { return new Date(this.valueOf() + 864E5 * d); };
