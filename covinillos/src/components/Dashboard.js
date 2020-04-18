@@ -13,13 +13,14 @@ import {
 
 import MailIcon from '@material-ui/icons/Mail';
 
-import Charts from './charts/Charts';
-import ReferenceList from './lists/ReferenceList';
-import DataList from './lists/DataList';
+import Charts from './Charts/Charts';
+import ReferenceList from './Lists/ReferenceList';
+import DataList from './Lists/DataList';
 
 import bluGreen from '../styles/theme';
 
 import { prepareDataList } from '../utils/dataPreparation';
+import Lists from './Lists/Lists';
 
 
 const useStyles = makeStyles({
@@ -42,8 +43,6 @@ export default function Dashboard(props) {
 
   const classes = useStyles();
   const theme = createMuiTheme(bluGreen);
-
-  const dataListDataset = prepareDataList(dataset);
 
 
   return (
@@ -70,9 +69,10 @@ export default function Dashboard(props) {
         dataset={dataset}
       />
 
-        <DataList rows={dataListDataset} />
-
-        <ReferenceList rows={events} />
+      <Lists
+        dataset={dataset}
+        events={events}
+      />
 
       <Modal
         open={suggestEventModalOpen}

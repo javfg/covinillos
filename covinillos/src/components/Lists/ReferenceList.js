@@ -10,25 +10,26 @@ import { countryToFlag } from '../../utils/utils';
 
 const cols = [{
     id: 'country',
-    width: 25,
+    width: 16,
     sortable: true,
     label: 'Country',
     cellContent: d => <>{countryToFlag(d.country)} {d.country}</>
   }, {
     id: 'date',
-    width: 25,
+    width: 15,
     sortable: true,
     label: 'Date',
+    align: 'center',
     cellContent: d => d.date
   }, {
     id: 'description',
-    width: 45,
+    width: 60,
     sortable:true,
     label: 'Description',
     cellContent: d => d.description
   }, {
     id: 'reference',
-     width: 5,
+     width: 10,
      label: 'Reference',
      align: 'center',
      cellContent: d =>
@@ -43,17 +44,13 @@ export default function ReferenceList(props) {
   const { rows } = props;
 
   return (
-    <Grid container spacing={3} style={{ margin: 0, width: '100%' }}>
-      <Grid item xs={12}>
-        <Paper width="90%">
-          <Typography variant="h5">Reference list</Typography>
+    <>
+      <Typography variant="h5">Reference list</Typography>
 
-          <DataTable
-            rows={rows}
-            cols={cols}
-          />
-        </Paper>
-      </Grid>
-    </Grid>
+      <DataTable
+        rows={rows}
+        cols={cols}
+      />
+    </>
   );
 }

@@ -26,7 +26,8 @@ const cols = [{
     sortable: true,
     numeric: true,
     label: 'New confirmed',
-    cellContent: d => d.confirmedNew.toLocaleString(),
+    cellContent: d => `+${d.confirmedNew.toLocaleString()}`,
+    cellStyle: { backgroundColor: '#fff3cd' },
   },{
     id: 'deaths',
     width: 12,
@@ -40,21 +41,23 @@ const cols = [{
     sortable: true,
     numeric: true,
     label: 'New deaths',
-    cellContent: d => d.deathsNew.toLocaleString(),
+    cellContent: d => `+${d.deathsNew.toLocaleString()}`,
+    cellStyle: { backgroundColor: '#f8d7da' },
   },{
     id: 'recovered',
-     width: 12,
-     label: 'Recovered',
-     sortable: true,
-     numeric: true,
-     cellContent: d => d.recovered.toLocaleString(),
+    width: 12,
+    label: 'Recovered',
+    sortable: true,
+    numeric: true,
+    cellContent: d => d.recovered.toLocaleString(),
   }, {
     id: 'recoveredNew',
     width: 12,
     sortable: true,
     numeric: true,
     label: 'New recovered',
-    cellContent: d => d.recoveredNew.toLocaleString(),
+    cellContent: d => `+${d.recoveredNew.toLocaleString()}`,
+    cellStyle: { backgroundColor: '#d4edda' },
   }, {
     id: 'growth',
     width: 12,
@@ -69,18 +72,17 @@ const cols = [{
 export default function DataList(props) {
   const { rows } = props;
 
-  return (
-    <Grid container spacing={3} style={{ margin: 0, width: '100%' }}>
-      <Grid item xs={12}>
-        <Paper width="90%">
-          <Typography variant="h5">Country data</Typography>
+  rows[0].rowStyle = { fontWeight: 'bold' };
 
-          <DataTable
-            rows={rows}
-            cols={cols}
-          />
-        </Paper>
-      </Grid>
-    </Grid>
+
+  return (
+    <>
+      <Typography variant="h5">Country data</Typography>
+
+      <DataTable
+        rows={rows}
+        cols={cols}
+      />
+    </>
   );
 }

@@ -27,9 +27,14 @@ const useStyles1 = makeStyles((theme) => ({
 }));
 
 const useStyles2 = makeStyles({
-  table: { minWidth: 500 },
+  table: { minWidth: 500, tableLayout: 'fixed' },
   root: { margin: '1rem 2% 0 2%', width: '96%', maxHeight: '50vh' },
-  cellsm: { padding: '0 1rem 0 1rem', height: '28px' },
+  cellsm: {
+    padding: '0 1rem 0 1rem',
+    height: '28px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 });
 
 
@@ -79,7 +84,7 @@ function EnhancedTableHead(props) {
               fontSize: '.75rem',
               backgroundColor: 'lightgrey',
             }}
-            align={col.numeric ? 'right' : 'left'}
+            align={col.align ? col.align : col.numeric ? 'right' : 'left'}
             sortDirection={orderBy === col.id ? order : false}
             width={`${col.width}%`}
           >
@@ -176,7 +181,11 @@ export default function DataTable(props) {
 
   const handleRequestSort = (_, property) => {
     const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+
+    if (orderBy === property) {
+      setOrder(isAsc ? 'desc' : 'asc');
+    }
+
     setOrderBy(property);
   };
 
@@ -200,6 +209,7 @@ export default function DataTable(props) {
               .map((row) => (
                 <TableRow
                   key={`${row.country}-${row.date}-${row.description}`}
+                  style={{ whiteSpace: 'nowrap' }}
                   hover
                 >
                   {cols.map(col =>
@@ -207,7 +217,7 @@ export default function DataTable(props) {
                       key={`tablecell-${col.id}`}
                       className={classes.cellsm}
                       align={col.align ? col.align : col.numeric ? 'right' : 'left'}
-                      style={col?.style}
+                      style={{ ...col.cellStyle, ...row.rowStyle }}
                     >
                       {col.cellContent(row)}
                     </TableCell>
