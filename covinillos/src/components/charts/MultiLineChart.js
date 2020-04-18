@@ -29,7 +29,7 @@ function MultiLineChart(props) {
 
 
   useEffect(() => {
-    const { dataset, maxY, type } = props;
+    const { dataset, maxY, type, show } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
     const focus = main.select('.focus');
@@ -296,19 +296,24 @@ function MultiLineChart(props) {
         );
 
       d3.select(`.${name}-tooltip`)
-      .html(
-        '<div class="tooltip-date">' +
-          (type === 'normal' ? dateFormat(dataset[0].values[i].date) : '') +
-          (type === 'startAt100' ? `day ${i}` : '') +
-        '</div>' +
-        '<div class="tooltip-content mt-xs"><table class="tooltip-table">' +
-        dataAtX.map(c =>
-          `<tr>
-            <td><strong style="color:${c.color}"}>${countryLabel(c.country)}</strong></td>
-            <td class="text-right">${c.value}</td>
-          </tr>`
-        ).join('') + '</table></div>'
-      )
+      .html(`
+        <div class="tooltip-date">
+          ${type === 'normal' ? dateFormat(dataset[0].values[i].date) : 'day' + i}
+        </div>
+        <div class="tooltip-content mt-xs">
+          <table class="tooltip-table">
+            ` + dataAtX.map(c => `
+              <tr>
+                <td><strong style="color:${c.color}"}>${countryLabel(c.country)}</strong></td>
+                <td class="text-right">${c.value}</td>
+              </tr>
+            `).join('') + `
+          </table>
+        </div>
+        <div class="tooltip-footer">
+          ${translate(show)}
+        </div>
+      `)
       .transition().duration(25)
       .style('opacity', 1)
       .style('left', `${getTooltipX(
