@@ -312,11 +312,11 @@ function MultiLineChart(props) {
       .transition().duration(25)
       .style('opacity', 1)
       .style('left', `${getTooltipX(
-        d3.event.pageX,
+        d3.event.clientX,
         window.innerWidth,
         margin.left
       )}px`)
-      .style('top', `${d3.event.pageY + 5}px`);
+      .style('top', `${d3.event.clientY + 5}px`);
     };
 
 
