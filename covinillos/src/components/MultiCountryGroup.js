@@ -8,6 +8,7 @@ import MultiLineChart from './MultiLineChart';
 
 import { getMaxY, translate } from '../utils/utils';
 import { prepareMultiCountry } from '../utils/dataPreparation';
+import config from '../config';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -23,11 +24,11 @@ export default function MultiCountryGroup(props) {
   const [alt, setAlt] = useState(false);
 
   const handleChangeSelection = (_, selection) => {
-    if (!selection.length || selection.length > 10) return;
+    if (selection.length > 10) return;
     if (alt) {
-      setAltSelection(selection);
+      setAltSelection(selection.length ? selection : config.defaultMultiCountriesAltSelection);
     } else {
-      setNormalSelection(selection);
+      setNormalSelection(selection.length ? selection : config.defaultMultiCountriesNormalSelection);
     }
   };
 
