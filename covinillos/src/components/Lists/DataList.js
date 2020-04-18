@@ -25,7 +25,7 @@ const cols = [{
     width: 12,
     sortable: true,
     numeric: true,
-    label: 'New confirmed',
+    label: 'New conf.',
     cellContent: d => `+${d.confirmedNew.toLocaleString()}`,
     cellStyle: { backgroundColor: '#fff3cd' },
   },{
@@ -55,7 +55,7 @@ const cols = [{
     width: 12,
     sortable: true,
     numeric: true,
-    label: 'New recovered',
+    label: 'New rec.',
     cellContent: d => `+${d.recoveredNew.toLocaleString()}`,
     cellStyle: { backgroundColor: '#d4edda' },
   }, {

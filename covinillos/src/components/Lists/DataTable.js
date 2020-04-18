@@ -30,7 +30,7 @@ const useStyles2 = makeStyles({
   table: { minWidth: 500, tableLayout: 'fixed' },
   root: { margin: '1rem 2% 0 2%', width: '96%', maxHeight: '50vh' },
   cellsm: {
-    padding: '0 1rem 0 1rem',
+    padding: '0 .25rem 0 .25rem',
     height: '28px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -80,7 +80,7 @@ function EnhancedTableHead(props) {
           <TableCell
             key={col.id}
             style={{
-              padding: '0.25rem 1rem 0.25rem 1rem',
+              padding: '.25rem',
               fontSize: '.75rem',
               backgroundColor: 'lightgrey',
             }}
