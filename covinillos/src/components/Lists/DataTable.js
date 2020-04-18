@@ -161,9 +161,6 @@ function TablePaginationActions(props) {
 export default function DataTable(props) {
   const { rows, cols, defaultSort } = props;
 
-  console.log('props', props);
-
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = React.useState(defaultSort[1]);
