@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
 import * as d3 from 'd3';
-
 import { isEqual } from 'lodash';
 
 
@@ -30,15 +29,17 @@ function BarChart(props) {
       .range([h, 0])
       .domain([0, maxY]);
 
-    // grid/axes
+    // grids/axes
     main.select('.xaxis').call(d3.axisBottom(xScale)
-      .ticks(d3.timeDay, 1)
       .tickSize(5)
-      .tickFormat(d3.timeFormat('%-d')))
+      .tickFormat(d3.timeFormat('%-m/%-d')))
     .selectAll('text')
-      .attr('class', 'xaxis day')
-      .attr('text-anchor', 'center')
-      .attr('pointer-events', 'none');
+      .attr('class', 'xaxis count')
+      .attr('text-anchor', 'start')
+      .attr('pointer-events', 'none')
+      .attr("y", -2)
+      .attr("x", 6)
+      .attr('transform', 'rotate(90)');
 
     main.select('.ygrid').transition(t).call(d3.axisLeft(yScale)
       .ticks(5)
@@ -72,7 +73,13 @@ function BarChart(props) {
       .attr('width', xScale.bandwidth)
       .attr('height', d => h - yScale(d.value))
       .attr('fill', color)
-      .attr('fill-opacity', 1);
+      .attr('fill-opacity', 1)
+      // .on('mouseover', d => barMouseOver(d))
+      // .on('mouseout', d => barMouseOut(d));
+
+
+
+
 
     }, [props.dataset, props.maxY, props.dimensions]);
 
@@ -80,12 +87,18 @@ function BarChart(props) {
 
 
   return (
-    <svg ref={svgRef} height={height} width={width}>
-      <g className="main" transform={`translate(${margin.left}, ${margin.top})`}>
-        <g className="xaxis" transform={`translate(0, ${h})`} />
-        <g className="ygrid" />
-      </g>
-    </svg>
+    <>
+      <svg ref={svgRef} height={height} width={width}>
+        <g className="main" transform={`translate(${margin.left}, ${margin.top})`}>
+          <g className="xaxis" transform={`translate(0, ${h})`} />
+          <g className="ygrid" />
+        </g>
+      </svg>
+      <div
+        className={`${props.name}-tooltip tooltip tooltip-narrow`}
+        style={{'opacity': 0}}
+      />
+    </>
   );
 }
 

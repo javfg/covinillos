@@ -16,11 +16,15 @@
 
 .xaxis.day {
 	font-size: .4rem;
-	color: $mid;
+	color: $dark;
 }
 
 .xaxis.month {
 	color: $mid;
+}
+
+.xaxis.count {
+	font-size: .5rem;
 }
 
 .focustext {

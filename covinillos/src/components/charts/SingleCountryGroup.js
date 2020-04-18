@@ -51,6 +51,7 @@ export default function SingleCountryGroup(props) {
               <Grid item xs={12}>
                 <ChartWrapper>
                   <BarChart
+                    name={key}
                     dataset={prepareData(dataset[c])}
                     country={c}
                     color={colorMap[c]}
@@ -60,7 +61,7 @@ export default function SingleCountryGroup(props) {
               </Grid>
               <Grid item xs={2}>
                 <CountrySelector
-                  name={`singlecountrychart-${i}`}
+                  name={key}
                   countries={countries}
                   colorMap={colorMap}
                   handleChangeCountry={(_, v) => handleChangeSelection(i, v)}
