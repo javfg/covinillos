@@ -12,8 +12,8 @@ import {
   setTime,
   getEventClasses,
   translate,
-  countryToFlag,
   stringList,
+  countryLabel,
 } from '../../utils/utils';
 
 
@@ -304,7 +304,7 @@ function MultiLineChart(props) {
         '<div class="tooltip-content mt-xs"><table class="tooltip-table">' +
         dataAtX.map(c =>
           `<tr>
-            <td><strong style="color:${c.color}"}>${c.country}</strong></td>
+            <td><strong style="color:${c.color}"}>${countryLabel(c.country)}</strong></td>
             <td class="text-right">${c.value}</td>
           </tr>`
         ).join('') + '</table></div>'
@@ -359,7 +359,7 @@ function MultiLineChart(props) {
                   <td><span class="text-bold">${dateFormat(d.date)}</span></td>
                   <td>
                     <strong style="color:${d.color}"}>
-                      ${countryToFlag(d.country)} ${d.country}
+                      ${countryLabel(d.country)}
                     </strong>
                   </td>
                   <td class="text-right">${d.value}</td>
@@ -387,7 +387,7 @@ function MultiLineChart(props) {
               <td><span class="text-bold">${dateFormat(event.date)}</span></td>
               <td>
                 <strong style="color:${event.color}"}>
-                  ${countryToFlag(event.country)} ${event.country}
+                  ${countryLabel(event.country)}
                 </strong>
               </td>
               <td class="text-right">${event.value}</td>
