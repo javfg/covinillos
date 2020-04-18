@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import {
-  Grid,
   AppBar,
   Toolbar,
   Typography,
@@ -14,13 +13,10 @@ import {
 
 import MailIcon from '@material-ui/icons/Mail';
 
-import DataSelector from './DataSelector';
-import SingleCountryGroup from './SingleCountryGroup';
-import MultiCountryGroup from './MultiCountryGroup';
+import Charts from './Charts';
 import ReferenceList from './ReferenceList';
 import DataList from './DataList';
 
-import config from '../config';
 import bluGreen from '../styles/theme';
 
 import { prepareDataList } from '../utils/dataPreparation';
@@ -34,14 +30,8 @@ const useStyles = makeStyles({
 export default function Dashboard(props) {
   const { countries, colorMap, dataset, events } = props;
 
-  const [showData, setShowData] = useState(config.defaultShowData);
-  const [showType, setShowType] = useState(config.defaultShowType);
   const [suggestEventModalOpen, setSuggestEventModalOpen] = useState(false);
 
-  const handleChangeShowData = e => { setShowData(e.target.value); };
-  const handleChangeShowType = e => {
-    setShowType(e.target.checked ? 'total' : 'daily');
-  };
   const handleClickSuggestEvent = () => {
     setSuggestEventModalOpen(true);
   };
@@ -74,47 +64,15 @@ export default function Dashboard(props) {
         </Toolbar>
       </AppBar>
 
-      <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
-        <Grid item sm={12} md={6} lg={4} xl={3}>
-          <DataSelector
-            name="singlecountrychart-data"
-            title="Data to show"
-            items={['confirmed', 'deaths', 'recovered']}
-            handleChange={handleChangeShowData}
-            selection={showData}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={2}>
-          <DataSelector
-            name="singlecountrychart-type"
-            title="Aggregate"
-            items={['daily', 'total']}
-            handleChange={handleChangeShowType}
-            selection={showType}
-          />
-        </Grid>
-
-        <MultiCountryGroup
-          countries={countries}
-          colorMap={colorMap}
-          dataset={dataset}
-          normalSelection={config.defaultMultiCountriesNormalSelection}
-          altSelection={config.defaultMultiCountriesAltSelection}
-          show={`${showData}_${showType}`}
-        />
-
-        <SingleCountryGroup
-          countries={countries}
-          colorMap={colorMap}
-          dataset={dataset}
-          selection={config.defaultSingleCountrySelection}
-          show={`${showData}_${showType}`}
-        />
+      <Charts
+        countries={countries}
+        colorMap={colorMap}
+        dataset={dataset}
+      />
 
         <DataList rows={dataListDataset} />
 
         <ReferenceList rows={events} />
-      </Grid>
 
       <Modal
         open={suggestEventModalOpen}

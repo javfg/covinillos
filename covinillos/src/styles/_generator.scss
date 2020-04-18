@@ -1,6 +1,6 @@
 @mixin generator($values, $attributelist, $valuepre: '', $valueafter: '') {
     @each $name, $value in $values {
-        &-#{$name} {
+        &-#{"" + $name} {
             @each $attribute in $attributelist {
                 #{$attribute}: #{$valuepre}$value#{$valueafter};
             }
