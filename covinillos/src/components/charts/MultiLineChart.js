@@ -266,7 +266,8 @@ function MultiLineChart(props) {
 
     const overlayMouseMove = () => {
       const { name, dataset, type } = props;
-      const x = setTime(xScale.invert(d3.event.x - margin.left - 25), 11, 59);
+      const mouseX = d3.mouse(d3.select('.mainoverlay').node())[0];
+      const x = setTime(xScale.invert(mouseX), 11, 59);
       const bisectDate = d3.bisector(d => d.date).left;
       const i = bisectDate(dataset[0].values, x, 1);
 
