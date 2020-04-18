@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { Grid, Paper, makeStyles, Box } from '@material-ui/core';
+import { Grid, Paper, makeStyles } from '@material-ui/core';
 
 import CountrySelector from './CountrySelector';
 import ChartWrapper from './ChartWrapper';
 import BarChart from './BarChart';
 
-import { getMaxY } from '../utils/utils';
+import { getMaxY } from '../../utils/utils';
 
-import config from '../config';
+import config from '../../config';
 
 
 const useStyles = makeStyles({

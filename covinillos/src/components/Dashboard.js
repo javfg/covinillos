@@ -13,9 +13,9 @@ import {
 
 import MailIcon from '@material-ui/icons/Mail';
 
-import Charts from './Charts';
-import ReferenceList from './ReferenceList';
-import DataList from './DataList';
+import Charts from './charts/Charts';
+import ReferenceList from './lists/ReferenceList';
+import DataList from './lists/DataList';
 
 import bluGreen from '../styles/theme';
 

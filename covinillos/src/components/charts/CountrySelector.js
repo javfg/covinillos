@@ -7,7 +7,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
-import { countryToFlag } from '../utils/utils';
+import { countryToFlag } from '../../utils/utils';
 
 
 const useStyles = makeStyles({

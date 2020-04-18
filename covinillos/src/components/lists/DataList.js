@@ -4,7 +4,7 @@ import { Typography, Grid, Paper } from '@material-ui/core';
 
 import DataTable from './DataTable';
 
-import { countryToFlag } from '../utils/utils';
+import { countryToFlag } from '../../utils/utils';
 
 
 const cols = [{

@@ -14,7 +14,7 @@ import {
   translate,
   countryToFlag,
   stringList,
-} from '../utils/utils';
+} from '../../utils/utils';
 
 
 function MultiLineChart(props) {

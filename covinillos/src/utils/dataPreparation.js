@@ -77,8 +77,6 @@ function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
 // Prepares dataset for the data list.
 //
 export function prepareDataList(dataset) {
-  console.log('preping data ist');
-
   const pDataset = [{
     country: 'World',
     confirmed: 0,

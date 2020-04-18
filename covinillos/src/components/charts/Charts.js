@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 
 import { Grid } from '@material-ui/core';
-import MailIcon from '@material-ui/icons/Mail';
 
 import DataSelector from './DataSelector';
 import SingleCountryGroup from './SingleCountryGroup';
 import MultiCountryGroup from './MultiCountryGroup';
 
-import config from '../config';
+import config from '../../config';
 
 
 export default function Dashboard(props) {
