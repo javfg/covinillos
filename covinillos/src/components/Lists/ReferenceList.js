@@ -50,6 +50,7 @@ export default function ReferenceList(props) {
       <DataTable
         rows={rows}
         cols={cols}
+        defaultSort={['date', 'asc']}
       />
     </>
   );

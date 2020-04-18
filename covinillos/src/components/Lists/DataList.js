@@ -82,6 +82,7 @@ export default function DataList(props) {
       <DataTable
         rows={rows}
         cols={cols}
+        defaultSort={['confirmed', 'desc']}
       />
     </>
   );
