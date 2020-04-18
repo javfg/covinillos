@@ -3,6 +3,7 @@
 venv
 node_modules
 .cache
+.parcel-cache
 dist
 oldstuff
 COVID-19
