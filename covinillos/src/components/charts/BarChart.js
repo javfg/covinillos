@@ -49,7 +49,8 @@ function BarChart(props) {
       .tickSize(-w)
       .tickFormat(d3.format(".2s")))
     .selectAll('line')
-      .attr('stroke-width', .33);
+      .attr('stroke-width', .33)
+      .attr('pointer-events', 'none');
 
     // bars
     const rects = main.selectAll('rect.bar')
@@ -77,20 +78,26 @@ function BarChart(props) {
       .attr('width', xScale.bandwidth)
       .attr('height', d => h - yScale(d.value))
       .attr('fill', color)
-      .attr('fill-opacity', 1);
-
-      main.selectAll('.bar')
-      .on('mouseover', () => barMouseOver())
-      .on('mouseout', () => barMouseOut())
-      .on('mousemove', d => barMouseMove(d));
+      .attr('fill-opacity', 1)
+      .attr('pointer-events', 'none');
 
 
     // INTERACTIVITY FUNCTIONS
+    main.selectAll('.mainoverlay')
+      .on('mouseover', () => barMouseOver())
+      .on('mouseout', () => barMouseOut())
+      .on('mousemove', () => barMouseMove());
+
     // overlay mouse functions: show/hide and move line and dots
     const barMouseOver = () => { tooltip.transition(t => ts).style('opacity', 1); };
     const barMouseOut = () => { tooltip.transition(t => ts).style('opacity', 0); };
 
-    const barMouseMove = d => {
+    const barMouseMove = () => {
+      const x = d3.mouse(d3.select('.mainoverlay').node())[0];
+      const eachBand = xScale.step();
+      const i = Math.floor(x / eachBand);
+      const d = dataset[i < dataset.length ? i : dataset.length - 1];
+
       tooltip
         .html(`
           <div class="tooltip-date">
@@ -125,6 +132,7 @@ function BarChart(props) {
     <>
       <svg ref={svgRef} height={height} width={width}>
         <g className="main" transform={`translate(${margin.left}, ${margin.top})`}>
+          <rect className='mainoverlay' height={h} width={w} fill="white" />
           <g className="xaxis" transform={`translate(0, ${h})`} />
           <g className="ygrid" />
         </g>
