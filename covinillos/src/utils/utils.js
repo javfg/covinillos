@@ -63,6 +63,11 @@ export function countryToFlag(country) {
     return String.fromCodePoint('128674');
   }
 
+  // World.
+  if (isoCode === 'W') {
+    return String.fromCodePoint('127758');
+  }
+
   return typeof String.fromCodePoint !== 'undefined'
     ? isoCode
       .toUpperCase()

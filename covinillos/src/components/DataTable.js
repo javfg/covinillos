@@ -3,10 +3,8 @@ import React from 'react';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import {
-  Link,
   IconButton,
   Paper,
   Table,
@@ -14,15 +12,25 @@ import {
   TableHead,
   TableCell,
   TableContainer,
-  TableFooter,
   TablePagination,
   TableSortLabel,
   TableRow,
-  Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { countryToFlag } from '../utils/utils';
+
+const useStyles1 = makeStyles((theme) => ({
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
+  },
+}));
+
+const useStyles2 = makeStyles({
+  table: { minWidth: 500 },
+  root: { margin: '1rem 2% 0 2%', width: '96%', maxHeight: '50vh' },
+  cellsm: { padding: '0 1rem 0 1rem', height: '28px' },
+});
 
 
 function descendingComparator(a, b, orderBy) {
@@ -59,12 +67,18 @@ function EnhancedTableHead(props) {
     onRequestSort(event, property);
   };
 
+
   return (
     <TableHead>
       <TableRow>
         {cols.map(col => (
           <TableCell
             key={col.id}
+            style={{
+              padding: '0.25rem 1rem 0.25rem 1rem',
+              fontSize: '.75rem',
+              backgroundColor: 'lightgrey',
+            }}
             align={col.numeric ? 'right' : 'left'}
             sortDirection={orderBy === col.id ? order : false}
             width={`${col.width}%`}
@@ -87,13 +101,6 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
 
 
 function TablePaginationActions(props) {
@@ -146,13 +153,6 @@ function TablePaginationActions(props) {
 }
 
 
-const useStyles2 = makeStyles({
-  table: { minWidth: 500 },
-  root: { margin: '0 5% 0 5%', width: '90%' },
-  cellsm: { padding: '0 1rem 0 1rem' },
-});
-
-
 export default function DataTable(props) {
   const { rows, cols } = props;
 
@@ -184,57 +184,57 @@ export default function DataTable(props) {
 
 
   return (
-    <TableContainer className={classes.root} component={Paper}>
-      <Table className={classes.table} size="small">
-          <EnhancedTableHead
-            classes={classes}
-            order={order}
-            orderBy={orderBy}
-            onRequestSort={handleRequestSort}
-            cols={cols}
-          />
-        <TableBody>
-          {stableSort(rows, getComparator(order, orderBy))
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((row, index) => (
-              <TableRow key={`${row.country}-${row.date}-${row.description}`}>
-                {cols.map(col =>
-                  <TableCell
-                    key={`tablecell-${col.id}`}
-                    className={classes.cellsm}
-                  >
-                    {col.cellContent(row)}
-                  </TableCell>
-                )}
-              </TableRow>
-            ))
-          }
-
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 30 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: { 'aria-label': 'rows per page' },
-                native: true,
-              }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
+    <>
+      <TableContainer className={classes.root} component={Paper}>
+        <Table className={classes.table} size="small" stickyHeader>
+            <EnhancedTableHead
+              classes={classes}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              cols={cols}
             />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          <TableBody>
+            {stableSort(rows, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <TableRow
+                  key={`${row.country}-${row.date}-${row.description}`}
+                  hover
+                >
+                  {cols.map(col =>
+                    <TableCell
+                      key={`tablecell-${col.id}`}
+                      className={classes.cellsm}
+                      align={col.align ? col.align : col.numeric ? 'right' : 'left'}
+                      style={col?.style}
+                    >
+                      {col.cellContent(row)}
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))
+            }
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 28 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: -1 }]}
+        component="div"
+        colSpan={cols.length}
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+        ActionsComponent={TablePaginationActions}
+      />
+    </>
   );
 }

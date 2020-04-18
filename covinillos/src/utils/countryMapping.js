@@ -250,4 +250,5 @@ export const countryMapping = {
   'West Bank and Gaza': 'PS',
   'Diamond Princess': 1,
   'MS Zaandam': 2,
+  'World': 'W',
 };

@@ -18,9 +18,12 @@ import DataSelector from './DataSelector';
 import SingleCountryGroup from './SingleCountryGroup';
 import MultiCountryGroup from './MultiCountryGroup';
 import ReferenceList from './ReferenceList';
+import DataList from './DataList';
 
 import config from '../config';
 import bluGreen from '../styles/theme';
+
+import { prepareDataList } from '../utils/dataPreparation';
 
 
 const useStyles = makeStyles({
@@ -49,6 +52,9 @@ export default function Dashboard(props) {
 
   const classes = useStyles();
   const theme = createMuiTheme(bluGreen);
+
+  const dataListDataset = prepareDataList(dataset);
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -104,6 +110,8 @@ export default function Dashboard(props) {
           selection={config.defaultSingleCountrySelection}
           show={`${showData}_${showType}`}
         />
+
+        <DataList rows={dataListDataset} />
 
         <ReferenceList rows={events} />
       </Grid>

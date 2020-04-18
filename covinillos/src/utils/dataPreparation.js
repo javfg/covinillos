@@ -71,3 +71,49 @@ function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
 
   return pDataset;
 }
+
+
+//
+// Prepares dataset for the data list.
+//
+export function prepareDataList(dataset) {
+  const pDataset = [{
+    country: 'World',
+    confirmed: 0,
+    confirmedNew: 0,
+    confirmedPrev: 0,
+    deaths: 0,
+    deathsNew: 0,
+    recovered: 0,
+    recoveredNew: 0,
+  }];
+
+  pDataset.push(...Object.keys(dataset).map((d, i) => {
+    const values = dataset[d][dataset[d].length - 1];
+
+    pDataset[0].confirmed += values.confirmed_total;
+    pDataset[0].confirmedNew += values.confirmed_daily;
+    pDataset[0].deaths += values.deaths_total;
+    pDataset[0].deathsNew += values.deaths_daily;
+    pDataset[0].recovered += values.recovered_total;
+    pDataset[0].recoveredNew += values.recovered_daily;
+
+    if (i < dataset[d].length - 1) {
+      pDataset[0].confirmedPrev += values.confirmed_total;
+    }
+
+    return {
+      country: d,
+      confirmed: values.confirmed_total,
+
+      confirmedPrev: dataset[d][dataset[d].length - 2].confirmed_total,
+      confirmedNew: values.confirmed_daily,
+      deaths: values.deaths_total,
+      deathsNew: values.deaths_daily,
+      recovered: values.recovered_total,
+      recoveredNew: values.recovered_daily,
+    };
+  }));
+
+  return pDataset;
+}
