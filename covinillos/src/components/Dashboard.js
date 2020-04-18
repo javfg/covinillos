@@ -9,18 +9,15 @@ import {
   ThemeProvider,
   createMuiTheme,
   Modal,
+  Switch,
 } from '@material-ui/core';
 
 import MailIcon from '@material-ui/icons/Mail';
 
 import Charts from './Charts/Charts';
-import ReferenceList from './Lists/ReferenceList';
-import DataList from './Lists/DataList';
+import Lists from './Lists/Lists';
 
 import bluGreen from '../styles/theme';
-
-import { prepareDataList } from '../utils/dataPreparation';
-import Lists from './Lists/Lists';
 
 
 const useStyles = makeStyles({
@@ -37,7 +34,6 @@ export default function Dashboard(props) {
     setSuggestEventModalOpen(true);
   };
   const handleCloseSuggestEvent = () => {
-    console.log('event suggested');
     setSuggestEventModalOpen(false);
   };
 
