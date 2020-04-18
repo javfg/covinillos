@@ -57,7 +57,7 @@ export default function MultiCountryGroup(props) {
           </ChartWrapper>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={3}>
           <Grid container justify="center" alignItems="center">
             <Switch name="altSelector" checked={alt} onChange={handleChangeAlt} />
             <Grid item className={classes.root}>
@@ -66,7 +66,7 @@ export default function MultiCountryGroup(props) {
           </Grid>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={9}>
           <CountrySelector
             name="singlecountrychart"
             countries={countries}

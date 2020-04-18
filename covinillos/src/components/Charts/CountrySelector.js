@@ -70,6 +70,7 @@ export default function CountrySelector(props) {
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',
+              overflow: 'hidden',
             }}
           />
         )}
@@ -79,7 +80,8 @@ export default function CountrySelector(props) {
               style={{
                 backgroundColor: colorMap[c],
                 color: 'white',
-                textShadow: '0px 0px 4px black'
+                textShadow: '0px 0px 4px black',
+                maxWidth: '15%',
               }}
               className={classes.chip}
               label={<span>{countryToFlag(c)} {c}</span>}
