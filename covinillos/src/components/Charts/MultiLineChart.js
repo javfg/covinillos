@@ -22,7 +22,7 @@ function MultiLineChart(props) {
   const tl = d3.transition().duration(250);
   const ts = d3.transition().duration(100);
   const width = props.dimensions.width;
-  const height = width / 4.5;
+  const height = width / 7;
   const margin = {top: 10, right: 0, bottom: 40, left: 30};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
