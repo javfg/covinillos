@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider, createMuiTheme, Popover, Button, Box, Typography } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme, Popover, Box, Typography } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 
 import Charts from './Charts/Charts';
@@ -77,7 +77,7 @@ export default function Dashboard({ countries, colorMap, dataset, events }) {
       >
         <Box style={{ flexDirection: 'row', display: 'flex', width: 'auto', padding: '1rem' }}>
           <DoneIcon color="secondary" />
-          <Typography>Event suggestion sent!</Typography>
+          <Typography>Event suggestion not implemented!</Typography>
         </Box>
       </Popover>
     </ThemeProvider>
