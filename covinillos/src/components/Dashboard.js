@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-
 import { ThemeProvider, createMuiTheme, Modal } from '@material-ui/core';
 
 import Charts from './Charts/Charts';
 import Lists from './Lists/Lists';
-
+import SuggestEventModal from './SuggestEventModal';
+import TopBar from './TopBar';
 import bluGreen from '../styles/theme';
-import TopBar from './AppBar';
 
 
 
 
-export default function Dashboard(props) {
-  const { countries, colorMap, dataset, events } = props;
-
+export default function Dashboard({ countries, colorMap, dataset, events }) {
   const [suggestEventModalOpen, setSuggestEventModalOpen] = useState(false);
 
   const handleClickSuggestEvent = () => {
@@ -29,7 +26,9 @@ export default function Dashboard(props) {
 
   return (
     <ThemeProvider theme={theme}>
-      <TopBar />
+      <TopBar
+        handleClickSuggestEvent={handleClickSuggestEvent}
+      />
 
       <Charts
         countries={countries}
@@ -42,17 +41,10 @@ export default function Dashboard(props) {
         events={events}
       />
 
-      <Modal
+      <SuggestEventModal
         open={suggestEventModalOpen}
         onClose={handleCloseSuggestEvent}
-      >
-          <div>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </p>
-          </div>
-      </Modal>
+      />
     </ThemeProvider>
   );
 }

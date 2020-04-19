@@ -1,10 +1,8 @@
 import React from 'react';
+import { Link, Typography, Grid } from '@material-ui/core';
 
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
-import { Link, Typography, Paper, Grid } from '@material-ui/core';
-
 import DataTable from './DataTable';
-
 import { countryToFlag } from '../../utils/utils';
 
 
@@ -40,11 +38,9 @@ const cols = [{
 ];
 
 
-export default function ReferenceList(props) {
-  const { rows } = props;
-
+export default function ReferenceList({ rows }) {
   return (
-    <>
+    <Grid item xs={12} xl={6}>
       <Typography variant="h5">Reference list</Typography>
 
       <DataTable
@@ -52,6 +48,6 @@ export default function ReferenceList(props) {
         cols={cols}
         defaultSort={['date', 'asc']}
       />
-    </>
+    </Grid>
   );
 }

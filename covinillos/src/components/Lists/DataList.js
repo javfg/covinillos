@@ -1,9 +1,7 @@
 import React from 'react';
-
-import { Typography, Grid, Paper } from '@material-ui/core';
+import { Typography, Grid } from '@material-ui/core';
 
 import DataTable from './DataTable';
-
 import { countryToFlag } from '../../utils/utils';
 
 
@@ -69,14 +67,12 @@ const cols = [{
 ];
 
 
-export default function DataList(props) {
-  const { rows } = props;
-
+export default function DataList({ rows }) {
   rows[0].rowStyle = { fontWeight: 'bold' };
 
 
   return (
-    <>
+    <Grid item xs={12} xl={6}>
       <Typography variant="h5">Country data</Typography>
 
       <DataTable
@@ -84,6 +80,6 @@ export default function DataList(props) {
         cols={cols}
         defaultSort={['confirmed', 'desc']}
       />
-    </>
+    </Grid>
   );
 }

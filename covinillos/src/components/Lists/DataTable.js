@@ -6,6 +6,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import {
   IconButton,
+  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -16,10 +17,9 @@ import {
   TableSortLabel,
   TableRow,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 
-const useStyles1 = makeStyles((theme) => ({
+const useStyles1 = makeStyles(theme => ({
   root: {
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
@@ -72,9 +72,7 @@ function stableSort(array, comparator) {
 }
 
 
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort, cols } = props;
-
+function EnhancedTableHead({ order, orderBy, onRequestSort, cols }) {
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -113,9 +111,7 @@ function EnhancedTableHead(props) {
 }
 
 
-function TablePaginationActions(props) {
-  const { count, page, rowsPerPage, onChangePage } = props;
-
+function TablePaginationActions({ count, page, rowsPerPage, onChangePage }) {
   const handleFirstPageButtonClick = (event) => {
     onChangePage(event, 0);
   };
@@ -163,9 +159,7 @@ function TablePaginationActions(props) {
 }
 
 
-export default function DataTable(props) {
-  const { rows, cols, defaultSort } = props;
-
+export default function DataTable({ rows, cols, defaultSort }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [order, setOrder] = React.useState(defaultSort[1]);

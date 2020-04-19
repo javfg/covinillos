@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import { Grid } from '@material-ui/core';
 
-import DataSelector from './DataSelector';
 import SingleCountryGroup from './SingleCountryGroup';
 import MultiCountryGroup from './MultiCountryGroup';
-
-import config from '../../config';
 import useChartSettings from '../../hooks/useChartSettings';
+import config from '../../config';
 
 
-export default function Dashboard(props) {
-  const { countries, colorMap, dataset } = props;
+export default function Dashboard({ countries, colorMap, dataset }) {
   const { chartSettings } = useChartSettings();
   const { showData, showType } = chartSettings;
 

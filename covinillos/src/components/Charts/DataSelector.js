@@ -1,14 +1,13 @@
 import React from 'react';
-
 import {
+  Box,
   FormControlLabel,
   makeStyles,
   RadioGroup,
   Radio,
+  Switch,
   Typography,
-  Box,
 } from '@material-ui/core';
-import Switch from '@material-ui/core/Switch';
 
 
 const useStyles = makeStyles(theme => ({
@@ -19,9 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function DataSelector(props) {
-  const { title, name = 'ds', items, handleChange, selection } = props;
-
+export default function DataSelector({ title, name = 'ds', items, handleChange, selection }) {
   const classes = useStyles();
 
 

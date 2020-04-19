@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   AppBar,
   Toolbar,
@@ -8,9 +7,7 @@ import {
   makeStyles,
   Grid,
   useMediaQuery,
-  useTheme,
 } from '@material-ui/core';
-
 import MailIcon from '@material-ui/icons/Mail';
 
 import DataSelector from './Charts/DataSelector';
@@ -34,6 +31,7 @@ function TopBar({ handleClickSuggestEvent }) {
   const { chartSettings, saveChartSettings } = useChartSettings();
   const { showData, showType } = chartSettings;
 
+
   const handleChangeShowData = e => {
     saveChartSettings({...chartSettings, showData: e.target.value});
   };
@@ -52,7 +50,6 @@ function TopBar({ handleClickSuggestEvent }) {
 
         <Grid container className={matchesUpMd ? classes.reducewidth : null } spacing={3}>
           <Grid item xs={12} lg={8} xl={6}>
-
             <DataSelector
               name="showdata"
               title="Data"
@@ -60,7 +57,6 @@ function TopBar({ handleClickSuggestEvent }) {
               handleChange={handleChangeShowData}
               selection={showData}
             />
-
           </Grid>
           <Grid item className={matchesDownMd ? classes.reduceheight : ''} xs={12} lg={4} xl={6}>
             <DataSelector
@@ -70,10 +66,8 @@ function TopBar({ handleClickSuggestEvent }) {
               handleChange={handleChangeShowType}
               selection={showType}
             />
-
           </Grid>
         </Grid>
-
         <Button
           color="inherit"
           onClick={handleClickSuggestEvent}

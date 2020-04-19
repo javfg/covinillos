@@ -5,7 +5,6 @@ import { Grid, Switch, makeStyles, Paper } from '@material-ui/core';
 import CountrySelector from './CountrySelector';
 import ChartWrapper from './ChartWrapper';
 import MultiLineChart from './MultiLineChart';
-
 import { getMaxY, translate } from '../../utils/utils';
 import { prepareMultiCountry } from '../../utils/dataPreparation';
 import config from '../../config';
