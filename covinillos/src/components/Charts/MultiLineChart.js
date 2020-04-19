@@ -111,9 +111,8 @@ function MultiLineChart(props) {
       }
 
       main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
-        .ticks(5)
-        .tickSize(-w)
-        .tickFormat(d3.format('.2s')))
+        .ticks(10, 's')
+        .tickSize(-w))
       .selectAll('line')
         .attr('stroke-width', .33);
     };

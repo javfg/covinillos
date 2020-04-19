@@ -30,7 +30,8 @@ function BarChart(props) {
 
     const yScale = d3.scaleLinear()
       .range([h, 0])
-      .domain([0, maxY]);
+      .domain([0, maxY])
+      .nice();
 
     // grids/axes
     main.select('.xaxis').call(d3.axisBottom(xScale)
@@ -45,9 +46,9 @@ function BarChart(props) {
       .attr('transform', 'rotate(90)');
 
     main.select('.ygrid').transition(t).call(d3.axisLeft(yScale)
-      .ticks(5)
-      .tickSize(-w)
-      .tickFormat(d3.format(".2s")))
+      .ticks(10, 's')
+      .tickSize(-w))
+      // .tickFormat(d3.format(".2s")))
     .selectAll('line')
       .attr('stroke-width', .33)
       .attr('pointer-events', 'none');
