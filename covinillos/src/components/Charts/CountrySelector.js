@@ -82,7 +82,9 @@ export default function CountrySelector(props) {
                 color: 'white',
                 textShadow: '0px 0px 4px black',
                 maxWidth: '15%',
+                fontSize: '.66rem',
               }}
+              size="small"
               className={classes.chip}
               label={<span>{countryToFlag(c)} {c}</span>}
               {...getTagProps({ index })}
