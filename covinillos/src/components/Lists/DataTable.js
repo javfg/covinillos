@@ -28,13 +28,19 @@ const useStyles1 = makeStyles((theme) => ({
 
 const useStyles2 = makeStyles({
   table: { minWidth: 500, tableLayout: 'fixed' },
-  root: { margin: '1rem 2% 0 2%', width: '96%', maxHeight: '50vh' },
+  tableheader: { textTransform: 'uppercase' },
+  root: { margin: '1rem 0', width: '100%', maxHeight: '50vh' },
   cellsm: {
     padding: '0 .25rem 0 .25rem',
     height: '28px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
+  tc: {
+    padding: '.25rem',
+    fontSize: '.75rem',
+    backgroundColor: 'lightgrey',
+  }
 });
 
 
@@ -72,18 +78,16 @@ function EnhancedTableHead(props) {
     onRequestSort(event, property);
   };
 
+  const classes = useStyles2();
+
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow className={classes.tableheader}>
         {cols.map(col => (
           <TableCell
             key={col.id}
-            style={{
-              padding: '.25rem',
-              fontSize: '.75rem',
-              backgroundColor: 'lightgrey',
-            }}
+            className={classes.tc}
             align={col.align ? col.align : col.numeric ? 'right' : 'left'}
             sortDirection={orderBy === col.id ? order : false}
             width={`${col.width}%`}

@@ -1,20 +1,22 @@
 import React from 'react';
 
 import {
-  Grid,
   FormControlLabel,
   makeStyles,
   RadioGroup,
   Radio,
   Typography,
-  Paper,
+  Box,
 } from '@material-ui/core';
 import Switch from '@material-ui/core/Switch';
 
 
 const useStyles = makeStyles(theme => ({
-  lbl: { ...theme.typography.button },
+  caps: { textTransform: 'uppercase'},
+  title: { textTransform: 'uppercase', fontWeight: 'bold', marginRight: '1rem' },
   fg: { flexDirection: 'row', justifyContent: 'center' },
+  radiogroup: { flexDirection: 'row', display: 'flex', alignItems: 'center' },
+  radio: { backgroundColor: 'black '},
   paper: { height: '100%', padding: '.5rem' },
   center: { textAlign: 'center' }
 }));
@@ -26,31 +28,32 @@ export default function DataSelector(props) {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.paper} justify="center">
-      <Typography variant="h6">{title}</Typography>
-      {items.length === 2 ? (
-        <div className={classes.center}>
-          <span className={classes.lbl}>{items[0]}</span>
-          <Switch
-            name="itemName"
-            checked={selection === items[1]}
-            onChange={handleChange}
-          />
-          <span className={classes.lbl}>{items[1]}</span>
-        </div>
-      ) : (
+    items.length === 2 ? (
+      <Box>
+        <span className={classes.title}>{title}</span>
+        <span className={classes.caps}>{items[0]}</span>
+        <Switch
+          name="itemName"
+          checked={selection === items[1]}
+          onChange={handleChange}
+        />
+        <span className={classes.caps}>{items[1]}</span>
+      </Box>
+    ) : (
+      <Box className={classes.radiogroup}>
+        <span className={classes.title}>{title}</span>
         <RadioGroup name={name} onChange={handleChange} className={classes.fg}>
           {items.map((item, i) => (
             <FormControlLabel
               key={`${name}-${item}-selector`}
               control={<Radio />}
-              label={<Typography className={classes.lbl}>{item}</Typography>}
+              label={<Typography className={classes.caps}>{item}</Typography>}
               value={item}
               checked={selection === item}
             />
           ))}
         </RadioGroup>
-      )}
-    </Paper>
+      </Box>
+    )
   );
 }

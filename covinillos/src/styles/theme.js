@@ -3,22 +3,22 @@ const bluGreen = {
   palette: {
     common: {
       black: 'rgba(0, 0, 0, 0.86)',
-      white: 'rgba(229, 229, 229, 1)'
+      white: 'rgba(255, 255, 255, 1)'
     },
     background: {
       paper: '#fff',
       default: '#fafafa'
     },
     primary: {
-      light: 'rgba(29, 137, 206, 1)',
-      main: 'rgba(25, 113, 169, 1)',
-      dark: 'rgba(18, 83, 123, 1)',
+      light: '#1971a9',
+      main: '#1971a9',
+      dark: '#0c3854',
       contrastText: '#fff'
     },
     secondary: {
-      light: 'rgba(67, 206, 53, 1)',
-      main: 'rgba(57, 138, 49, 1)',
-      dark: 'rgba(44, 106, 38, 1)',
+      light: '#ffab40',
+      main: '#ffab40',
+      dark: '#7f3700',
       contrastText: '#fff'
     },
     error: {
@@ -28,8 +28,8 @@ const bluGreen = {
       contrastText: '#fff'
     },
     text: {
-      primary: 'rgba(0, 0, 0, 0.87)',
-      secondary: 'rgba(0, 0, 0, 0.54)',
+      primary: '#263238',
+      secondary: '#263238',
       disabled: 'rgba(0, 0, 0, 0.38)',
       hint: 'rgba(0, 0, 0, 0.38)'
     }

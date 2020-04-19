@@ -23,7 +23,7 @@ const cols = [{
     cellContent: d => d.date
   }, {
     id: 'description',
-    width: 60,
+    width: 61,
     sortable:true,
     label: 'Description',
     cellContent: d => d.description

@@ -1,28 +1,14 @@
 import React, { useState } from 'react';
 
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme,
-  Modal,
-  Switch,
-} from '@material-ui/core';
-
-import MailIcon from '@material-ui/icons/Mail';
+import { ThemeProvider, createMuiTheme, Modal } from '@material-ui/core';
 
 import Charts from './Charts/Charts';
 import Lists from './Lists/Lists';
 
 import bluGreen from '../styles/theme';
+import TopBar from './AppBar';
 
 
-const useStyles = makeStyles({
-  title: { flexGrow: 1 },
-});
 
 
 export default function Dashboard(props) {
@@ -37,27 +23,13 @@ export default function Dashboard(props) {
     setSuggestEventModalOpen(false);
   };
 
-  const classes = useStyles();
+
   const theme = createMuiTheme(bluGreen);
 
 
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="sticky">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            COVID-19 Pandemic stats
-          </Typography>
-          <Button
-            color="inherit"
-            onClick={handleClickSuggestEvent}
-            className={classes.button}
-            startIcon={<MailIcon />}
-          >
-            Suggest an event
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <TopBar />
 
       <Charts
         countries={countries}

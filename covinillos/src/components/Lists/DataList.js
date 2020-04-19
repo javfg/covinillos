@@ -63,7 +63,7 @@ const cols = [{
     width: 12,
     sortable: true,
     numeric: true,
-    label: 'Growth rate',
+    label: 'Growth',
     cellContent: d => `${parseFloat(d.confirmedNew / d.confirmedPrev * 100).toFixed(2)}%`,
   },
 ];

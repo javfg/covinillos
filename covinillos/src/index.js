@@ -4,6 +4,8 @@ import { schemeTableau10 as st } from 'd3';
 
 import Dashboard from './components/Dashboard';
 
+import { ChartSettingsProvider } from './contexts/ChartSettings';
+
 import dataset from '../data/dataset.json';
 import events from '../data/events.json';
 
@@ -17,10 +19,12 @@ const colorMap = countries
 
 // Render app.
 ReactDOM.render(
-  <Dashboard
-    countries={countries}
-    colorMap={colorMap}
-    dataset={dataset}
-    events={events}
-  />
+  <ChartSettingsProvider>
+    <Dashboard
+      countries={countries}
+      colorMap={colorMap}
+      dataset={dataset}
+      events={events}
+    />
+  </ChartSettingsProvider>
 , document.getElementById("app"));
