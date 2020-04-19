@@ -21,14 +21,14 @@ const useStyles = makeStyles({
   toolbar: { justifyContent: 'space-between' },
   caps: { textTransform: 'uppercase'},
   reduceheight: { marginTop: '-36px' },
-  reducewidth: { width: '50%' },
+  reducewidth: { width: '60%' },
 });
 
 
 function TopBar({ handleClickSuggestEvent }) {
   const classes = useStyles();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme => theme.breakpoints.down('md'));
+  const matchesDownMd = useMediaQuery(theme => theme.breakpoints.down('md'));
+  const matchesUpMd = useMediaQuery(theme => theme.breakpoints.up('md'));
 
   const { chartSettings, saveChartSettings } = useChartSettings();
   const { showData, showType } = chartSettings;
@@ -49,8 +49,8 @@ function TopBar({ handleClickSuggestEvent }) {
           COVID-19 Pandemic stats
         </Typography>
 
-        <Grid container className={matches ? classes.reducewidth : null} spacing={3}>
-          <Grid item xs={12} lg={6}>
+        <Grid container className={matchesUpMd ? classes.reducewidth : null } spacing={3}>
+          <Grid item xs={12} lg={8} xl={6}>
 
             <DataSelector
               name="showdata"
@@ -61,7 +61,7 @@ function TopBar({ handleClickSuggestEvent }) {
             />
 
           </Grid>
-          <Grid item className={matches ? classes.reduceheight : null} xs={12} lg={6}>
+          <Grid item className={matchesDownMd ? classes.reduceheight : ''} xs={12} lg={4} xl={6}>
             <DataSelector
               name="showtype"
               title="Aggregate"
