@@ -9,14 +9,8 @@ import { countryLabel } from '../../utils/utils';
 
 
 const useStyles = makeStyles({
-  option: {
-    padding: 2,
-    '& > span': { marginRight: 10 },
-  },
-  input: props => ({
-    color: props.colorMap[props.selection],
-    padding: 0,
-  }),
+  option: { padding: 2, '& > span': { marginRight: 10 }, },
+  input: props => ({ color: props.colorMap[props.selection], padding: '0px' }),
   checkbox: { marginRight: 8, padding: 0 },
 });
 
@@ -96,7 +90,7 @@ export default function CountrySelector(props) {
         options={countries}
         onChange={handleChangeCountry}
         value={selection}
-        classes={{ option: classes.option, }}
+        classes={{ option: classes.option }}
         renderOption={c => <span style={{color: colorMap[c]}}>{countryLabel(c)}</span>}
         renderInput={params =>
           <TextField
@@ -107,7 +101,6 @@ export default function CountrySelector(props) {
               ...params.inputProps,
               autoComplete: 'new-password',
               className: classes.input,
-              label: 'HGIIH',
             }}
           />
         }

@@ -22,6 +22,7 @@ const config = {
   defaultSingleCountrySelection: ['Spain', 'Italy'],
   defaultShowData: 'confirmed',
   defaultShowType: 'total',
+  popoverTimeout: 5000,
 };
 
 
