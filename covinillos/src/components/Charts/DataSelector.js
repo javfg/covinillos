@@ -12,13 +12,10 @@ import Switch from '@material-ui/core/Switch';
 
 
 const useStyles = makeStyles(theme => ({
+  box: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
   caps: { textTransform: 'uppercase'},
-  title: { textTransform: 'uppercase', fontWeight: 'bold', marginRight: '1rem' },
-  fg: { flexDirection: 'row', justifyContent: 'center' },
-  radiogroup: { flexDirection: 'row', display: 'flex', alignItems: 'center' },
-  radio: { backgroundColor: 'black '},
-  paper: { height: '100%', padding: '.5rem' },
-  center: { textAlign: 'center' }
+  title: { fontWeight: 'bold', marginRight: '1rem' },
+  radiogroup: { flexDirection: 'row' },
 }));
 
 
@@ -26,11 +23,13 @@ export default function DataSelector(props) {
   const { title, name = 'ds', items, handleChange, selection } = props;
 
   const classes = useStyles();
+  console.log('classes', classes);
+
 
   return (
     items.length === 2 ? (
-      <Box>
-        <span className={classes.title}>{title}</span>
+      <Box className={classes.box} >
+        <span className={`${classes.title} ${classes.caps}`}>{title}</span>
         <span className={classes.caps}>{items[0]}</span>
         <Switch
           name="itemName"
@@ -40,9 +39,9 @@ export default function DataSelector(props) {
         <span className={classes.caps}>{items[1]}</span>
       </Box>
     ) : (
-      <Box className={classes.radiogroup}>
-        <span className={classes.title}>{title}</span>
-        <RadioGroup name={name} onChange={handleChange} className={classes.fg}>
+      <Box className={classes.box}>
+        <span className={`${classes.title} ${classes.caps}`}>{title}</span>
+        <RadioGroup name={name} onChange={handleChange} className={classes.radiogroup}>
           {items.map((item, i) => (
             <FormControlLabel
               key={`${name}-${item}-selector`}
