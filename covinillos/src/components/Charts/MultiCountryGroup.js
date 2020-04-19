@@ -11,10 +11,10 @@ import { prepareMultiCountry } from '../../utils/dataPreparation';
 import config from '../../config';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: { ...theme.typography.button },
-  paper: { width: '100%', height: '100%', padding: '.5rem', margin: '.5rem' },
-}));
+const useStyles = makeStyles({
+  caps: { textTransform: 'uppercase' },
+  sepadding: { padding: '0 3px 3px 0' },
+});
 
 export default function MultiCountryGroup(props) {
   const { countries, colorMap, dataset, show } = props;
@@ -42,41 +42,43 @@ export default function MultiCountryGroup(props) {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.paper}>
-      <Grid container spacing={3} style={{ margin: 0, width: '100%' }}>
-        <Grid item xs={12}>
-          <ChartWrapper>
-            <MultiLineChart
-              type={type}
-              countries={selection}
-              dataset={pDataset}
-              maxY={maxY}
-              name="multicountrychart"
-              show={show}
-            />
-          </ChartWrapper>
-        </Grid>
+    <Grid item xs={12}>
+      <Paper>
+        <Grid container>
+          <Grid item xs={12}>
+            <ChartWrapper>
+              <MultiLineChart
+                type={type}
+                countries={selection}
+                dataset={pDataset}
+                maxY={maxY}
+                name="multicountrychart"
+                show={show}
+              />
+            </ChartWrapper>
+          </Grid>
 
-        <Grid item xs={3}>
-          <Grid component="label" container justify="center" alignItems="center">
-            <Switch name="altSelector" checked={alt} onChange={handleChangeAlt} />
-            <Grid item className={classes.root}>
-              Start at 100 {translate(show)}
+          <Grid item xs={3}>
+            <Grid component="label" container justify="center" alignItems="center">
+              <Switch name="altSelector" checked={alt} onChange={handleChangeAlt} />
+              <Grid item className={classes.caps}>
+                Start at 100 {translate(show)}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
 
-        <Grid item xs={9}>
-          <CountrySelector
-            name="singlecountrychart"
-            countries={countries}
-            colorMap={colorMap}
-            handleChangeCountry={handleChangeSelection}
-            selection={selection}
-            selectorType="checkbox"
-          />
+          <Grid item xs={9} className={classes.sepadding}>
+            <CountrySelector
+              name="singlecountrychart"
+              countries={countries}
+              colorMap={colorMap}
+              handleChangeCountry={handleChangeSelection}
+              selection={selection}
+              selectorType="checkbox"
+            />
+          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </Grid>
   );
 }

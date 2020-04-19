@@ -66,7 +66,6 @@ export default function CountrySelector(props) {
             label="Countries"
             variant="outlined"
             placeholder={selection.length < 10 ? 'Select countries...' : ''}
-            style={{ padding: 3 }}
             inputProps={{
               ...params.inputProps,
               autoComplete: 'new-password',

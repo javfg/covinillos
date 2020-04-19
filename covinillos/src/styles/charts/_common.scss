@@ -1,18 +1,18 @@
-.lastvalue-label {
-  font-size: .5rem;
+.chart-wrapper {
+	padding: .5rem;
+	height: 100%;
+  width: 100%;
 }
 
+// hide square around ygrid
 .domain {
   visibility: hidden;
 }
 
+// axes settings
 .tick line { color: $mid; }
 .tick text { color: $dark; }
 
-.month {
-	text-transform: uppercase;
-	font-weight: 700;
-}
 
 .xaxis.day {
 	font-size: .4rem;
@@ -21,21 +21,15 @@
 
 .xaxis.month {
 	color: $mid;
+	text-transform: uppercase;
+	font-weight: 700;
 }
 
 .xaxis.count {
 	font-size: .5rem;
 }
 
-.focustext {
-	font-size:  8px;
-	paint-order: stroke;
-	stroke: #fff;
-	stroke-width: 4px;
-	stroke-linecap: butt;
-	stroke-linejoin: miter;
-}
-
-.overlay {
+// bar chart
+.mainoverlay {
 	cursor: crosshair;
 }

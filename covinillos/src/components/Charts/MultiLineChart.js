@@ -427,8 +427,6 @@ function MultiLineChart(props) {
 
     // brush: zooming
     const brushEnd = () => {
-      console.log('brushend');
-
       const selection = d3.event.selection;
       if (!selection) return;
 
@@ -442,8 +440,6 @@ function MultiLineChart(props) {
 
     // double click on chart area: reset zoom
     const resetZoom = () => {
-      console.log('dblclick');
-
       xScale.domain(dateRange);
 
       // update axis and line position
@@ -462,7 +458,6 @@ function MultiLineChart(props) {
           className="main"
           transform={`translate(${margin.left}, ${margin.top})`}
         >
-          <rect className='mainoverlay' height={h} width={w} fill="white" />
           <g className="xaxismonth xnormal" transform={`translate(0, ${h})`} />
           <g className="xaxisweek xnormal" transform={`translate(0, ${h})`} />
           <g className="xaxisday xnormal" transform={`translate(0, ${h})`} />

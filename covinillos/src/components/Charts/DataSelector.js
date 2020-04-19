@@ -23,7 +23,6 @@ export default function DataSelector(props) {
   const { title, name = 'ds', items, handleChange, selection } = props;
 
   const classes = useStyles();
-  console.log('classes', classes);
 
 
   return (
