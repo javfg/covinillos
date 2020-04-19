@@ -58,7 +58,7 @@ export default function MultiCountryGroup(props) {
         </Grid>
 
         <Grid item xs={3}>
-          <Grid container justify="center" alignItems="center">
+          <Grid component="label" container justify="center" alignItems="center">
             <Switch name="altSelector" checked={alt} onChange={handleChangeAlt} />
             <Grid item className={classes.root}>
               Start at 100 {translate(show)}

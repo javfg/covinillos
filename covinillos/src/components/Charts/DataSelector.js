@@ -28,7 +28,7 @@ export default function DataSelector(props) {
 
   return (
     items.length === 2 ? (
-      <Box className={classes.box} >
+      <Box component="label" className={classes.box} >
         <span className={`${classes.title} ${classes.caps}`}>{title}</span>
         <span className={classes.caps}>{items[0]}</span>
         <Switch
