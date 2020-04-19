@@ -298,7 +298,7 @@ function MultiLineChart(props) {
       d3.select(`.${name}-tooltip`)
       .html(`
         <div class="tooltip-date">
-          ${type === 'normal' ? dateFormat(dataset[0].values[i].date) : 'day ' + i}
+          ${type === 'normal' ? dateFormat(dataset[0].values[i].date) : 'Day ' + i}
         </div>
         <div class="tooltip-content mt-xs">
           <table class="tooltip-table">
