@@ -60,7 +60,7 @@ export default function SingleCountryGroup(props) {
                 />
               </ChartWrapper>
             </Grid>
-            <Grid item xs={2} className={classes.sepadding}>
+            <Grid item xs={6} sm={4} md={3} xl={4} className={classes.sepadding}>
               <CountrySelector
                 name={key}
                 countries={countries}
