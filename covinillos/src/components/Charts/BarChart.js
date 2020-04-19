@@ -93,10 +93,15 @@ function BarChart(props) {
     const barMouseOut = () => { tooltip.transition(t => ts).style('opacity', 0); };
 
     const barMouseMove = () => {
-      const x = d3.mouse(d3.select('.mainoverlay').node())[0];
+      const x = d3.mouse(svg.select('.mainoverlay').node())[0];
       const eachBand = xScale.step();
       const i = Math.floor(x / eachBand);
       const d = dataset[i < dataset.length ? i : dataset.length - 1];
+
+      console.log('x', x);
+
+      console.log('d', d);
+
 
       tooltip
         .html(`
