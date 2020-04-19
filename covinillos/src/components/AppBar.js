@@ -18,10 +18,11 @@ import useChartSettings from '../hooks/useChartSettings';
 
 
 const useStyles = makeStyles({
-  toolbar: { justifyContent: 'space-between' },
   caps: { textTransform: 'uppercase'},
+  button: { padding: 0 },
   reduceheight: { marginTop: '-36px' },
   reducewidth: { width: '60%' },
+  toolbar: { justifyContent: 'space-between', padding: '0 16px !important' },
 });
 
 
