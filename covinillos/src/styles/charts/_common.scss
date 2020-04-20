@@ -4,11 +4,6 @@
   width: 100%;
 }
 
-// hide square around ygrid
-.domain {
-  visibility: hidden;
-}
-
 // axes settings
 .tick line { color: $mid; }
 .tick text { color: $dark; }

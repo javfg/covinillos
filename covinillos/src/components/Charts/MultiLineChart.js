@@ -110,11 +110,22 @@ function MultiLineChart(props) {
           .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
       }
 
-      main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
-        .ticks(10, 's')
-        .tickSize(-w))
-      .selectAll('line')
-        .attr('stroke-width', .33);
+      main.select('.ygrid').transition(tl).call(d3.axisLeft(yScale)
+      .ticks(10, 's')
+      .tickSize(-w)
+      .tickFormat(d3.format('.2s')))
+    .selectAll('line')
+      .attr('stroke-width', .33)
+      .attr('pointer-events', 'none');
+
+    main.select('.ygrid').select('.domain').remove();
+
+    main.select('.ygrid').select('.tick:last-of-type text')
+      .clone()
+        .attr('x', 3)
+        .attr('text-anchor', 'start')
+        .attr('font-weight', 'bold')
+        .text(translate(show));
     };
 
     // DRAW DATA
@@ -128,7 +139,7 @@ function MultiLineChart(props) {
       focusAll.enter().append('g')
         .attr('class', 'focusgroup')
         .attr('pointer-events', 'none')
-        .append('circle')
+      .append('circle')
         .attr('class', 'focuscircle')
         .attr('r', 7)
         .attr('stroke', d => d.color)
@@ -464,7 +475,7 @@ function MultiLineChart(props) {
           <g className="allcountrylines" />
           <g className="allcountryevents" />
           <g className="ygrid" />
-          <g className="focus">
+          <g className="focus" opacity={0}>
             <line
               className="focusline"
               opacity={1}

@@ -43,17 +43,27 @@ function BarChart(props) {
       .attr('class', 'xaxis count')
       .attr('text-anchor', 'start')
       .attr('pointer-events', 'none')
-      .attr("y", -2)
-      .attr("x", 6)
+      .attr('y', -2)
+      .attr('x', 6)
       .attr('transform', 'rotate(90)');
 
     main.select('.ygrid').transition(tl).call(d3.axisLeft(yScale)
       .ticks(10, 's')
-      .tickSize(-w))
-      // .tickFormat(d3.format(".2s")))
+      .tickSize(-w)
+      .tickFormat(d3.format('.2s')))
     .selectAll('line')
       .attr('stroke-width', .33)
       .attr('pointer-events', 'none');
+
+    main.select('.ygrid').select('.domain').remove();
+
+    main.select('.ygrid').select('.tick:last-of-type text')
+      .clone()
+        .attr('x', 3)
+        .attr('text-anchor', 'start')
+        .attr('font-weight', 'bold')
+        .text(translate(show));
+
 
     // bars
     const rects = main.selectAll('rect.bar')
