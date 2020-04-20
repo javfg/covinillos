@@ -1,7 +1,5 @@
 const config = {
-  tooltipHeight: 120,
-  tooltipWidth: 200,
-  tooltipWideWidth: 400,
+  // dashboard defalts
   defaultMultiCountriesNormalSelection: [
     'Spain',
     'Italy',
@@ -22,6 +20,17 @@ const config = {
   defaultSingleCountrySelection: ['Spain', 'Italy'],
   defaultShowData: 'confirmed',
   defaultShowType: 'total',
+
+  // chart config
+  tooltipHeight: 120,
+  tooltipWidth: 200,
+  tooltipWideWidth: 400,
+
+  transitionData: 500,
+  transitionLong: 250,
+  transitionShort: 100,
+
+  // suggest event form
   popoverTimeout: 5000,
 };
 
