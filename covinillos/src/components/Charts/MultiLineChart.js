@@ -18,15 +18,14 @@ import config from '../../config';
 
 function MultiLineChart(props) {
   const svgRef = useRef();
-  const tl = d3.transition().duration(config.transitionData);
-  const ts = d3.transition().duration(config.transitionLong);
-  const td = d3.transition().duration(config.transitionShort);
+  const tl = d3.transition().duration(config.transitionLong);
+  const ts = d3.transition().duration(config.transitionShort);
+  const td = d3.transition().duration(config.transitionData);
   const width = props.dimensions.width;
   const height = Math.max(width / 7, 250);
   const margin = {top: 10, right: 0, bottom: 40, left: 30};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
-
 
   useEffect(() => {
     const { dataset, maxY, type, show } = props;

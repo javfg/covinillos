@@ -26,7 +26,7 @@ const config = {
   tooltipWidth: 200,
   tooltipWideWidth: 400,
 
-  transitionData: 500,
+  transitionData: 750,
   transitionLong: 250,
   transitionShort: 100,
 
