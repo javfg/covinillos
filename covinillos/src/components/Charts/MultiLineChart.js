@@ -117,7 +117,7 @@ function MultiLineChart(props) {
       .attr('stroke-width', .33)
       .attr('pointer-events', 'none');
 
-    main.select('.ygrid').select('.domain').remove();
+    main.selectAll('.domain').remove();
 
     main.select('.ygrid').select('.tick:last-of-type text')
       .clone()
@@ -359,13 +359,13 @@ function MultiLineChart(props) {
             </div>
             <div class="flex-grow-1">
               <div class="flex-grow-1">
-                <span class="event p-xs d-block mt-xxs mr-xxs bg-danger fg-white text-center">
+                <span class="event p-xs d-block mt-xxs mr-xxs bg-danger fg-w text-center">
                   ${item.caption}
                 </span>
               </div>
             <div>
               <table class="w-100">
-                <tr class="bg-light font-75">
+                <tr class="bg-light font-75"">
                   <th class="text-light">Date</th>
                   <th class="text-light">Country</th>
                   <th class="text-light text-capitalize">${translate(show)}</th>

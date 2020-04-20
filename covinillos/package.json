@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel src/index.html --open",
     "dataset": "git -C ../COVID-19 pull; /usr/bin/env python3 ../data_converter.py",
-    "build": "parcel build ./src/index.html"
+    "build": "parcel build ./src/index.html",
+    "deploy": "parcel build ./src/index.html --no-source-maps"
   },
   "author": "",
   "license": "MIT",
