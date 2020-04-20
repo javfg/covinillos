@@ -3,11 +3,13 @@ import * as d3 from 'd3';
 import { isEqual } from 'lodash';
 
 import { getTooltipX, countryLabel, translate } from '../../utils/utils';
+import config from '../../config';
 
 
 function BarChart(props) {
   const svgRef = useRef();
-  const t = d3.transition().duration(250);
+  const tl = d3.transition().duration(config.transitionLong);
+  const td = d3.transition().duration(config.transitionData);
   const width = props.dimensions.width;
   const height = Math.max(width / 6, 200);
   const margin = {top: 10, right: 0, bottom: 40, left: 30};
@@ -45,7 +47,7 @@ function BarChart(props) {
       .attr("x", 6)
       .attr('transform', 'rotate(90)');
 
-    main.select('.ygrid').transition(t).call(d3.axisLeft(yScale)
+    main.select('.ygrid').transition(tl).call(d3.axisLeft(yScale)
       .ticks(10, 's')
       .tickSize(-w))
       // .tickFormat(d3.format(".2s")))
@@ -59,7 +61,7 @@ function BarChart(props) {
 
     rects.exit()
       .attr('fill', 'red')
-      .transition(t)
+      .transition(td)
       .attr('y', yScale(0))
       .attr('height', 0)
       .remove();
@@ -73,7 +75,7 @@ function BarChart(props) {
       .attr('width', xScale.bandwidth)
       .attr('height', 0)
     .merge(rects)
-      .transition(t)
+      .transition(td)
       .attr('x', d => xScale(d.date))
       .attr('y', d => yScale(d.value))
       .attr('width', xScale.bandwidth)
