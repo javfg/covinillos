@@ -1,12 +1,39 @@
 import { setTime, longest } from './utils';
 
 
+// initial preparation
+export const prepareDataset = dataset => {
+  const dataMap = [
+    'confirmed_total',
+    'deaths_total',
+    'recovered_total',
+    'confirmed_daily',
+    'deaths_daily',
+    'recovered_daily',
+  ];
+
+  Object.keys(dataset).forEach(country => {
+    dataset[country].forEach(day => {
+      dataMap.forEach((key, i) => {
+        day[key] = day.data[i];
+        if (!day.events) day.events = [];
+      });
+    });
+  });
+
+  return dataset;
+};
+
+
 export const prepareMultiCountry = (dataset, colorMap, selection, show, alt) =>
   !alt
     ? prepareMultiCountryNormal(dataset, colorMap, selection, show)
     : prepareMultiCountryAlt(dataset, colorMap, selection, show);
 
 
+//
+// Prepares dataset for multi country chart.
+//
 function prepareMultiCountryNormal(dataset, colorMap, selection, show) {
   const pDataset = [];
 
