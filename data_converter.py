@@ -38,21 +38,40 @@ def sort_descending(df, col):
     return df.sort_values(by=col, ascending=False)
 
 
+def fix_spanish_data():
+    confirmed_total.loc['Spain']['2020-04-15'] = 177633
+    deaths_total.loc['Spain']['2020-04-15'] = 18579
+
+    confirmed_total.loc['Spain']['2020-04-16'] = 182816
+    deaths_total.loc['Spain']['2020-04-16'] = 19130
+
+    confirmed_total.loc['Spain']['2020-04-17'] = 188068
+    deaths_total.loc['Spain']['2020-04-17'] = 19478
+    recovered_total.loc['Spain']['2020-04-17'] = 72963
+
+    recovered_total.loc['Spain']['2020-04-18'] = 74662
+
+    confirmed_total.loc['Spain']['2020-04-19'] = 195944
+
+
 confirmed_total = f"{covid_timeseries_path}time_series_covid19_confirmed_global.csv"
 confirmed_total = aggregate_countries(fix_data(pd.read_csv(confirmed_total, sep=","), "%m/%d/%y"))
 confirmed_total = sort_descending(confirmed_total, confirmed_total.columns[-1])
-confirmed_daily = confirmed_total.diff(axis=1).fillna(confirmed_total).clip(lower=0).astype(int)
 
 country_order = list(confirmed_total.index.values)
 
 deaths_total = f"{covid_timeseries_path}time_series_covid19_deaths_global.csv"
 deaths_total = aggregate_countries(fix_data(pd.read_csv(deaths_total, sep=","), "%m/%d/%y"))
 deaths_total = deaths_total.loc[country_order]
-deaths_daily = deaths_total.diff(axis=1).fillna(deaths_total).clip(lower=0).astype(int)
 
 recovered_total = f"{covid_timeseries_path}time_series_covid19_recovered_global.csv"
 recovered_total = aggregate_countries(fix_data(pd.read_csv(recovered_total, sep=","), "%m/%d/%y"))
 recovered_total = recovered_total.loc[country_order]
+
+fix_spanish_data()
+
+confirmed_daily = confirmed_total.diff(axis=1).fillna(confirmed_total).clip(lower=0).astype(int)
+deaths_daily = deaths_total.diff(axis=1).fillna(deaths_total).clip(lower=0).astype(int)
 recovered_daily = recovered_total.diff(axis=1).fillna(recovered_total).clip(lower=0).astype(int)
 
 
@@ -83,3 +102,5 @@ events_dict = events.to_dict(orient="records")
 
 with open(f"{covid_root_path}/covinillos/data/events.json", "w") as events_file:
     json.dump(events_dict, events_file)
+
+# Correct spanish data
