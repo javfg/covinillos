@@ -6,8 +6,21 @@ import Dashboard from './components/Dashboard';
 
 import { ChartSettingsProvider } from './contexts/ChartSettings';
 
-import dataset from '../data/dataset.json';
-import events from '../data/events.json';
+// import dataset from '../data/dataset.json';
+// import events from '../data/events.json';
+
+let dataset = {};
+let events = [];
+
+(async () => {
+  const datasetRequest = await fetch('data/dataset.json');
+  console.log('datasetRequest', datasetRequest);
+
+  dataset = await datasetRequest.json();
+
+  console.log('datasetRequest', dataset);
+
+})()
 
 import './styles/main.scss';
 
@@ -20,11 +33,11 @@ const colorMap = countries
 // Render app.
 ReactDOM.render(
   <ChartSettingsProvider>
-    <Dashboard
+    {/* <Dashboard
       countries={countries}
       colorMap={colorMap}
       dataset={dataset}
       events={events}
-    />
+    /> */}
   </ChartSettingsProvider>
 , document.getElementById("app"));
