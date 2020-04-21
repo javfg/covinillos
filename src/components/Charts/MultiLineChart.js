@@ -124,11 +124,10 @@ function MultiLineChart(props) {
       setTimeout(() => {
         main.select('.ygrid').select('.tick:last-of-type text')
           .clone()
-            .attr('class', 'ygridlegend')
+            .attr('class', 'ygridlegend text-stroke text-uppercase')
             .attr('x', 3)
             .attr('text-anchor', 'start')
             .attr('font-weight', 'bold')
-            .style('text-transform', 'uppercase')
             .attr('opacity', 0)
             .transition(t => tl)
             .attr('opacity', 1)

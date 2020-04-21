@@ -25,6 +25,7 @@
 .text-bold { font-weight: bold; }
 .text-light { font-weight: 100; }
 .text-capitalize { text-transform: capitalize; }
+.text-uppercase { text-transform: uppercase; }
 .lh { @include generator($lineheights, 'line-height'); }
 
 .w { @include generator($percents, 'width'); }
