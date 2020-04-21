@@ -40,12 +40,14 @@ export default function Dashboard({ countries, colorMap, dataset, events }) {
 
 
   const theme = createMuiTheme(bluGreen);
+  console.log('dataset', dataset);
 
 
   return (
     <ThemeProvider theme={theme}>
       <TopBar
         handleClickSuggestEvent={handleClickSuggestEvent}
+        lastUpdated={dataset[countries[0]][dataset[countries[0]].length - 1].date}
       />
 
       <Charts

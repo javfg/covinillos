@@ -109,22 +109,31 @@ function MultiLineChart(props) {
           .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
       }
 
-      main.select('.ygrid').transition(tl).call(d3.axisLeft(yScale)
-      .ticks(10, 's')
-      .tickSize(-w)
-      .tickFormat(d3.format('.2s')))
-    .selectAll('line')
-      .attr('stroke-width', .33)
-      .attr('pointer-events', 'none');
+      main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
+        .ticks(10, 's')
+        .tickSize(-w)
+        .tickFormat(d3.format('.2s')))
+      .selectAll('line')
+        .attr('stroke-width', .33)
+        .attr('pointer-events', 'none');
 
-    main.selectAll('.domain').remove();
+      main.selectAll('.domain').remove();
+      main.select('.ygridlegend').remove();
 
-    main.select('.ygrid').select('.tick:last-of-type text')
-      .clone()
-        .attr('x', 3)
-        .attr('text-anchor', 'start')
-        .attr('font-weight', 'bold')
-        .text(translate(show));
+      // timeout to wait for transition
+      setTimeout(() => {
+        main.select('.ygrid').select('.tick:last-of-type text')
+          .clone()
+            .attr('class', 'ygridlegend')
+            .attr('x', 3)
+            .attr('text-anchor', 'start')
+            .attr('font-weight', 'bold')
+            .style('text-transform', 'uppercase')
+            .attr('opacity', 0)
+            .transition(t => tl)
+            .attr('opacity', 1)
+            .text(translate(show))
+      }, config.transitionLong);
     };
 
     // DRAW DATA

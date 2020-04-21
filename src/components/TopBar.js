@@ -18,12 +18,19 @@ const useStyles = makeStyles({
   caps: { textTransform: 'uppercase'},
   button: { padding: 0 },
   reduceheight: { marginTop: '-36px' },
-  reducewidth: { width: '60%' },
-  toolbar: { justifyContent: 'space-between', padding: '0 16px !important' },
+  reducewidth: { width: '56%' },
+  toolbar: { justifyContent: 'space-between', padding: '0 8px !important' },
+  title: { textTransform: 'uppercase', fontWeight: 'bold'},
+  subtitle: {
+    fontSize: '0.8rem',
+    textAlign: 'right',
+    textTransform: 'uppercase',
+    margin: '-9px 0 0 0'
+  },
 });
 
 
-function TopBar({ handleClickSuggestEvent }) {
+function TopBar({ handleClickSuggestEvent, lastUpdated }) {
   const classes = useStyles();
   const matchesDownMd = useMediaQuery(theme => theme.breakpoints.down('md'));
   const matchesUpMd = useMediaQuery(theme => theme.breakpoints.up('md'));
@@ -44,9 +51,12 @@ function TopBar({ handleClickSuggestEvent }) {
   return (
     <AppBar position="sticky">
       <Toolbar className={classes.toolbar}>
-        <Typography variant="h6">
-          COVID-19 Pandemic stats
-        </Typography>
+        <div>
+          <Typography variant="h6" className={classes.title}>
+            COVID-19 Pandemic stats
+          </Typography>
+          <p className={classes.subtitle}>Last updated: {lastUpdated}</p>
+        </div>
 
         <Grid container className={matchesUpMd ? classes.reducewidth : null } spacing={3}>
           <Grid item xs={12} lg={8} xl={6}>
