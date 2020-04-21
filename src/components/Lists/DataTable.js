@@ -29,7 +29,7 @@ const useStyles1 = makeStyles(theme => ({
 const useStyles2 = makeStyles({
   table: { minWidth: 500, tableLayout: 'fixed' },
   tableheader: { textTransform: 'uppercase' },
-  root: { margin: '1rem 0', width: '100%', maxHeight: '50vh' },
+  root: { margin: '1rem 0', width: '100%', maxHeight: '314px' },
   cellsm: {
     padding: '0 .25rem 0 .25rem',
     height: '28px',
@@ -234,7 +234,7 @@ export default function DataTable({ rows, cols, defaultSort }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, { label: 'All', value: -1 }]}
+        rowsPerPageOptions={[5, 10, { label: 'All', value: -1 }]}
         component="div"
         colSpan={cols.length}
         count={rows.length}
