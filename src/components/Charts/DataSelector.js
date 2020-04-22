@@ -10,12 +10,12 @@ import {
 } from '@material-ui/core';
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   box: { display: 'flex', justifyContent: 'center', alignItems: 'center' },
   caps: { textTransform: 'uppercase'},
   title: { fontWeight: 'bold', marginRight: '1rem' },
   radiogroup: { flexDirection: 'row' },
-}));
+});
 
 
 export default function DataSelector({ title, name = 'ds', items, handleChange, selection }) {

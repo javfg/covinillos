@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme, Popover, Box, Typography } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 
+import TopBar from './TopBar';
 import Charts from './Charts/Charts';
 import Lists from './Lists/Lists';
 import SuggestEventModal from './SuggestEventModal';
-import TopBar from './TopBar';
+import Footer from './Footer';
 import config from '../config';
 import bluGreen from '../styles/theme';
 import { encode } from '../utils/utils';
@@ -92,6 +93,8 @@ export default function Dashboard({ countries, colorMap, dataset, events }) {
           <Typography>Event suggestion sent!</Typography>
         </Box>
       </Popover>
-    </ThemeProvider>
+
+      <Footer />
+    </ThemeProvider >
   );
 }
