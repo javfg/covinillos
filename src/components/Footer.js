@@ -50,7 +50,7 @@ function Footer() {
           target="blank"
           className={classes.link}
         >
-          Johns Hopkins CSSE
+          Johns Hopkins CSSE.
         </Link>
 
       </span>
