@@ -73,70 +73,72 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
         <Typography variant="h5">Suggest a new event</Typography>
         <p>All fields are required.</p>
 
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Autocomplete
-              autoHighlight
-              disableClearable
-              options={countries}
-              onChange={handleChangeCountry}
-              value={country}
-              renderOption={c => <span style={{color: colorMap[c]}}>{countryLabel(c)}</span>}
-              renderInput={params =>
-                <TextField
-                  {...params}
-                  label="Choose a country"
-                  inputProps={{ ...params.inputProps, autoComplete: 'new-password' }}
-                  error={countryError}
-                />
-              }
-            />
-          </Grid>
+        <form name="suggest-event" data-netlify="true">
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <Autocomplete
+                autoHighlight
+                disableClearable
+                options={countries}
+                onChange={handleChangeCountry}
+                value={country}
+                renderOption={c => <span style={{color: colorMap[c]}}>{countryLabel(c)}</span>}
+                renderInput={params =>
+                  <TextField
+                    {...params}
+                    label="Choose a country"
+                    inputProps={{ ...params.inputProps, autoComplete: 'new-password' }}
+                    error={countryError}
+                  />
+                }
+              />
+            </Grid>
 
-          <Grid item xs={6}>
-            <TextField
-              className={classes.field}
-              error={dateError}
-              label="Description"
-              type="date"
-              InputLabelProps={{ shrink: true }}
-              onChange={handleChangeDate}
-              value={date}
-            />
-          </Grid>
+            <Grid item xs={6}>
+              <TextField
+                className={classes.field}
+                error={dateError}
+                label="Description"
+                type="date"
+                InputLabelProps={{ shrink: true }}
+                onChange={handleChangeDate}
+                value={date}
+              />
+            </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              className={classes.field}
-              label="Description"
-              error={descriptionError}
-              onChange={handleChangeDescription}
-              value={description}
-            />
-          </Grid>
+            <Grid item xs={12}>
+              <TextField
+                className={classes.field}
+                label="Description"
+                error={descriptionError}
+                onChange={handleChangeDescription}
+                value={description}
+              />
+            </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              className={classes.field}
-              label="Reference"
-              error={referenceError}
-              onChange={handleChangeReference}
-              value={reference}
-            />
-          </Grid>
+            <Grid item xs={12}>
+              <TextField
+                className={classes.field}
+                label="Reference"
+                error={referenceError}
+                onChange={handleChangeReference}
+                value={reference}
+              />
+            </Grid>
 
-          <Grid item xs={12}>
-            <Box textAlign="right">
-              <Button
-                color="primary"
-                onClick={handleClickSend}
-                variant="contained"
-              >
-                Send
-              </Button>
-            </Box>
+            <Grid item xs={12}>
+              <Box textAlign="right">
+                <Button
+                  color="primary"
+                  onClick={handleClickSend}
+                  variant="contained"
+                >
+                  Send
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        </form>
       </Paper>
     </Modal>
   );
