@@ -137,7 +137,6 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
                   color="primary"
                   onClick={handleClickSend}
                   variant="contained"
-                  type="submit"
                 >
                   Send
                 </Button>
