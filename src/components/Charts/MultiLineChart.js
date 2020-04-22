@@ -7,6 +7,8 @@ import {
   getTooltipX,
   monthToPixels,
   dayToPixels,
+  dateFormat,
+  dateFormatLong,
   setTime,
   getEventClasses,
   translate,
@@ -37,7 +39,6 @@ function MultiLineChart(props) {
     if (!dataset.length) return;
 
     const dateRange = d3.extent(dataset[0].values, d => d.date);
-    const dateFormat = d3.timeFormat('%d-%m-%Y');
 
 
     // scale domains
@@ -316,7 +317,7 @@ function MultiLineChart(props) {
       d3.select(`.${name}-tooltip`)
       .html(`
         <div class="tooltip-date">
-          ${type === 'normal' ? dateFormat(dataset[0].values[i].date) : 'Day ' + i}
+          ${type === 'normal' ? dateFormatLong(dataset[0].values[i].date) : 'Day ' + i}
         </div>
         <div class="tooltip-content mt-xs">
           <table class="tooltip-table">

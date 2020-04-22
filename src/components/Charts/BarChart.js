@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import { isEqual } from 'lodash';
 
-import { getTooltipX, countryLabel, translate } from '../../utils/utils';
+import { getTooltipX, countryLabel, translate, dateFormatLong } from '../../utils/utils';
 import config from '../../config';
 
 
@@ -22,7 +22,7 @@ function BarChart(props) {
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
     const tooltip = d3.select(`.${name}-tooltip`);
-    const dateFormat = d3.timeFormat('%d-%m-%Y');
+
 
     // scale domains
     const xScale = d3.scaleBand()
@@ -115,7 +115,7 @@ function BarChart(props) {
       tooltip
         .html(`
           <div class="tooltip-date">
-            ${dateFormat(d.date)}
+            ${dateFormatLong(d.date)}
           </div>
           <div class="tooltip-content mt-xs">
             <table class="tooltip-table">

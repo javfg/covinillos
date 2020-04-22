@@ -5,7 +5,7 @@
   "main": "dist/index.html",
   "scripts": {
     "start": "parcel src/index.html --open",
-    "dataset": "git -C ../COVID-19 pull; /usr/bin/env python3 ../covinillos-data/data_converter.py",
+    "dataset": "./update_dataset.sh",
     "build": "parcel build ./src/index.html --no-source-maps",
     "deploy": "rm -rf ./dist; parcel build ./src/index.html --no-source-maps; ./deploy.sh"
   },

@@ -50,6 +50,11 @@ export function setTime(date, hours, minutes = 0, seconds = 0) {
   return newDate;
 }
 
+export const dateFormatLong = d3.timeFormat('%Y-%m-%d (%a)');
+
+export const dateFormat = d3.timeFormat('%Y-%m-%d');
+
+
 export const getEventClasses = d => d.items.map(i => 'event-' + i.group);
 
 export const stringList = strList => strList.filter(e => !!e).join(',');
