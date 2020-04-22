@@ -52,7 +52,7 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
   };
 
   const handleClickSend = () => {
-    if (validate()) { handleSendEventSuggestion(); };
+    if (validate()) { handleSendEventSuggestion(country, date, description, reference); };
   };
 
 
