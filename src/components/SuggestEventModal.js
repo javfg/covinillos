@@ -52,8 +52,9 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
   };
 
   const handleClickSend = () => {
-    if (validate()) { handleSendEventSuggestion(country, date, description, reference); }
+    if (validate()) { handleSendEventSuggestion(); };
   };
+
 
   const validate = () => {
     if (!country) setCountryError(true);
@@ -73,10 +74,11 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
         <Typography variant="h5">Suggest a new event</Typography>
         <p>All fields are required.</p>
 
-        <form name="suggest-event" data-netlify="true">
+        <form name="suggest-event" method="post">
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Autocomplete
+                name="suggest-event-country"
                 autoHighlight
                 disableClearable
                 options={countries}
@@ -96,9 +98,10 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
 
             <Grid item xs={6}>
               <TextField
+                name="suggest-event-date"
                 className={classes.field}
                 error={dateError}
-                label="Description"
+                label="Date of event"
                 type="date"
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChangeDate}
@@ -108,6 +111,7 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
 
             <Grid item xs={12}>
               <TextField
+                name="suggest-event-description"
                 className={classes.field}
                 label="Description"
                 error={descriptionError}
@@ -118,6 +122,7 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
 
             <Grid item xs={12}>
               <TextField
+                name="suggest-event-reference"
                 className={classes.field}
                 label="Reference"
                 error={referenceError}
@@ -132,6 +137,7 @@ function SuggestEventModal({ countries, colorMap, handleSendEventSuggestion, onC
                   color="primary"
                   onClick={handleClickSend}
                   variant="contained"
+                  type="submit"
                 >
                   Send
                 </Button>

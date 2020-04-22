@@ -8,6 +8,7 @@ import SuggestEventModal from './SuggestEventModal';
 import TopBar from './TopBar';
 import config from '../config';
 import bluGreen from '../styles/theme';
+import { encode } from '../utils/utils';
 
 
 export default function Dashboard({ countries, colorMap, dataset, events }) {
@@ -24,12 +25,22 @@ export default function Dashboard({ countries, colorMap, dataset, events }) {
     setPopoverOpen(false);
   };
 
-  const handleSendEventSuggestion = (country, date, description, reference) => {
+  const handleSendEventSuggestion = async (country, date, description, reference) => {
     setSuggestEventModalOpen(false);
-    setPopoverOpen(true);
 
-    // TODO: SEND HERE
-    console.log(country, date, description, reference);
+    await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({
+        'form-name': 'suggest-event',
+        'suggest-event-country': country,
+        'suggest-event-date': date,
+        'suggest-event-description': description,
+        'suggest-event-reference': reference,
+      })
+    });
+
+    setPopoverOpen(true);
   };
 
 
@@ -40,7 +51,6 @@ export default function Dashboard({ countries, colorMap, dataset, events }) {
 
 
   const theme = createMuiTheme(bluGreen);
-  console.log('dataset', dataset);
 
 
   return (
@@ -79,7 +89,7 @@ export default function Dashboard({ countries, colorMap, dataset, events }) {
       >
         <Box style={{ flexDirection: 'row', display: 'flex', width: 'auto', padding: '1rem' }}>
           <DoneIcon color="secondary" />
-          <Typography>Event suggestion not implemented!</Typography>
+          <Typography>Event suggestion sent!</Typography>
         </Box>
       </Popover>
     </ThemeProvider>
