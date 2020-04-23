@@ -65,7 +65,7 @@ function Footer() {
         </Link>
         {' '}|{' '}
         <Link
-          href="https://github.com/javfg/covinillos/LICENSE?raw=true"
+          href="https://github.com/javfg/covinillos/blob/master/LICENSE"
           target="blank"
           className={classes.link}
         >
