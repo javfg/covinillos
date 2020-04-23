@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Link, Button } from '@material-ui/core';
+import { makeStyles, Link } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
 
@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
     zIndex: 4,
   },
   footerp: { display: 'block', fontSize: '.75rem', fontWeight: 100 },
-  icon: { color: theme.palette.primary.main, fontSize: '.9rem'},
+  footerstrut: { padding: '.75rem' },
+  icon: { color: theme.palette.primary.main, fontSize: '.9rem' },
   link: { color: theme.palette.primary.main, fontSize: '.75rem' },
 }));
 
@@ -31,48 +32,51 @@ function Footer() {
   const classes = useStyles();
 
   return (
-    <div className={classes.footer}>
-      <span className={classes.footerp}>
-        Created to teach myself how to use{' '}
+    <>
+      <div className={classes.footerstrut} />
+      <div className={classes.footer}>
+        <span className={classes.footerp}>
+          Created to teach myself how to use{' '}
 
-        <Link
-          href="https://d3js.org/"
-          target="blank"
-          className={classes.link}
-        >
-          d3.js
-        </Link>
+          <Link
+            href="https://d3js.org/"
+            target="blank"
+            className={classes.link}
+          >
+            d3.js
+          </Link>
 
-        , using data provided by{' '}
+          , using data provided by{' '}
 
-        <Link
-          href="https://github.com/CSSEGISandData/COVID-19"
-          target="blank"
-          className={classes.link}
-        >
-          Johns Hopkins CSSE.
-        </Link>
+          <Link
+            href="https://github.com/CSSEGISandData/COVID-19"
+            target="blank"
+            className={classes.link}
+          >
+            Johns Hopkins CSSE.
+          </Link>
 
-      </span>
+        </span>
 
-      <span className={classes.footerp}>
-        <Link
-          className={classes.link}
-          href="https://github.com/javfg/covinillos"
-          target="blank"
-        >
-          <GitHubIcon className={classes.icon} /> Report an issue or take a look at the code
-        </Link>
-        {' '}|{' '}
-        <Link
-          href="https://github.com/javfg/covinillos/blob/master/LICENSE"
-          target="blank"
-          className={classes.link}
-        >
-          License
-        </Link>
-      </span>
-    </div>
+        <span className={classes.footerp}>
+          <Link
+            className={classes.link}
+            href="https://github.com/javfg/covinillos"
+            target="blank"
+          >
+            <GitHubIcon className={classes.icon} /> Report an issue or take a look at the code
+          </Link>
+          {' '}|{' '}
+          <Link
+            href="https://github.com/javfg/covinillos/blob/master/LICENSE"
+            target="blank"
+            className={classes.link}
+          >
+            License
+          </Link>
+        </span>
+      </div>
+    </>
   );
 }
 
