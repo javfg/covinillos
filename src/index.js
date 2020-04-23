@@ -14,6 +14,7 @@ const preparedDataset = prepareDataset(dataset);
 const countries = Object.keys(dataset);
 const colorMap = countries
   .reduce((acc, country, i) => ({...acc, [country]: st[i % st.length]}), {})
+const lastUpdate = dataset[countries[0]][dataset[countries[0]].length - 1].date;
 
 
 // Render app.
@@ -24,6 +25,7 @@ ReactDOM.render(
       colorMap={colorMap}
       dataset={preparedDataset}
       events={events}
+      lastUpdate={lastUpdate}
     />
   </ChartSettingsProvider>
 , document.getElementById("app"));

@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 });
 
 
-function TopBar({ handleClickSuggestEvent, lastUpdated }) {
+function TopBar({ handleClickSuggestEvent, lastUpdate }) {
   const classes = useStyles();
   const matchesDownMd = useMediaQuery(theme => theme.breakpoints.down('md'));
   const matchesUpMd = useMediaQuery(theme => theme.breakpoints.up('md'));
@@ -55,7 +55,7 @@ function TopBar({ handleClickSuggestEvent, lastUpdated }) {
           <Typography variant="h6" className={classes.title}>
             COVID-19 Pandemic stats
           </Typography>
-          <p className={classes.subtitle}>Last updated: {lastUpdated}</p>
+          <p className={classes.subtitle}>Last updated: {lastUpdate}</p>
         </div>
 
         <Grid container className={matchesUpMd ? classes.reducewidth : null } spacing={3}>

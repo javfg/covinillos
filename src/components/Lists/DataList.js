@@ -18,12 +18,13 @@ const cols = [{
     numeric: true,
     label: 'Confirmed',
     cellContent: d => d.confirmed.toLocaleString(),
+    cellStyle: { backgroundColor: '#fffbf2' },
   }, {
     id: 'confirmedNew',
     width: 12,
     sortable: true,
     numeric: true,
-    label: 'New conf.',
+    label: 'New',
     cellContent: d => `+${d.confirmedNew.toLocaleString()}`,
     cellStyle: { backgroundColor: '#fff3cd' },
   },{
@@ -33,12 +34,13 @@ const cols = [{
     numeric: true,
     label: 'Deaths',
     cellContent: d => d.deaths.toLocaleString(),
+    cellStyle: { backgroundColor: '#fdf4f5' },
   }, {
     id: 'deathsNew',
     width: 12,
     sortable: true,
     numeric: true,
-    label: 'New deaths',
+    label: 'New',
     cellContent: d => `+${d.deathsNew.toLocaleString()}`,
     cellStyle: { backgroundColor: '#f8d7da' },
   },{
@@ -48,12 +50,13 @@ const cols = [{
     sortable: true,
     numeric: true,
     cellContent: d => d.recovered.toLocaleString(),
+    cellStyle: { backgroundColor: '#f4faf5' },
   }, {
     id: 'recoveredNew',
     width: 12,
     sortable: true,
     numeric: true,
-    label: 'New rec.',
+    label: 'New',
     cellContent: d => `+${d.recoveredNew.toLocaleString()}`,
     cellStyle: { backgroundColor: '#d4edda' },
   }, {
@@ -67,13 +70,13 @@ const cols = [{
 ];
 
 
-export default function DataList({ rows }) {
+export default function DataList({ rows, lastUpdate }) {
   rows[0].rowStyle = { fontWeight: 'bold' };
 
 
   return (
     <Grid item xs={12} xl={6}>
-      <Typography variant="h5">Country data</Typography>
+      <Typography variant="h5">Country data - {lastUpdate}</Typography>
 
       <DataTable
         rows={rows}
