@@ -288,8 +288,6 @@ function MultiLineChart(props) {
       const x = setTime(xScale.invert(mouseX), 11, 59);
       const bisectDate = d3.bisector(d => d.date).left;
       const i = bisectDate(dataset[0].values, x, 1, dataset[0].values.length - 1);
-      console.log('i', i);
-
 
       const dataAtX = dataset
         .map(c => ({
@@ -322,7 +320,7 @@ function MultiLineChart(props) {
           ${type === 'normal' ? dateFormatLong(dataset[0].values[i].date) : 'Day ' + i}
         </div>
         <div class="tooltip-content mt-xs">
-          <table class="tooltip-table">
+          <table class="tooltip-table font-90">
             ` + dataAtX.map(c => `
               <tr>
                 <td><strong style="color:${c.color}"}>${countryLabel(c.country)}</strong></td>
@@ -375,7 +373,7 @@ function MultiLineChart(props) {
                 </span>
               </div>
             <div>
-              <table class="w-100">
+              <table class="w-100 font-90">
                 <tr class="bg-light font-75"">
                   <th class="text-light">Date</th>
                   <th class="text-light">Country</th>
