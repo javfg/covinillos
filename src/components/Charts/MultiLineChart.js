@@ -287,7 +287,9 @@ function MultiLineChart(props) {
       const mouseX = d3.mouse(d3.select('.mainoverlay').node())[0];
       const x = setTime(xScale.invert(mouseX), 11, 59);
       const bisectDate = d3.bisector(d => d.date).left;
-      const i = bisectDate(dataset[0].values, x, 1);
+      const i = bisectDate(dataset[0].values, x, 1, dataset[0].values.length - 1);
+      console.log('i', i);
+
 
       const dataAtX = dataset
         .map(c => ({
