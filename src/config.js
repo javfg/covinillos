@@ -6,7 +6,7 @@ const config = {
     'United Kingdom',
   ],
   defaultMultiCountriesAltSelection: [
-    'US',
+    'United States',
     'Spain',
     'Italy',
     'France',

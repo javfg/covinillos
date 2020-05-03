@@ -113,8 +113,6 @@ function BarChart(props) {
       const i = Math.floor(x / eachBand);
       const d = dataset[i < dataset.length ? i : dataset.length - 1];
 
-      console.log('mouisemove', tooltip);
-
       tooltip
         .html(`
           <div class="tooltip-date">

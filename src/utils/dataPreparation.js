@@ -73,8 +73,11 @@ function prepareMultiCountryNormal(dataset, colorMap, selection, show) {
 //
 function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
   const pDataset = [];
+  console.log('dataset', dataset);
+  console.log('show', show);
 
   selection.forEach(country => {
+    console.log('country', country);
     const values = [];
     const color = colorMap[country];
     const startIndex = dataset[country].findIndex(day => day[show] >= 100);
