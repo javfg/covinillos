@@ -277,7 +277,7 @@ function MultiLineChart(props) {
     const overlayMouseOut = () => {
       focus.transition(t => ts).style('opacity', 0);
 
-      d3.select(`.${props.name}-tooltip`)
+      d3.select(`.${cleanStr(props.name)}-tooltip`)
         .transition(t => ts)
         .style('opacity', 0);
     };
@@ -495,11 +495,11 @@ function MultiLineChart(props) {
         </g>
       </svg>
       <div
-        className={`${props.name}-tooltip tooltip tooltip-narrow`}
+        className={`${cleanStr(props.name)}-tooltip tooltip tooltip-narrow`}
         style={{'opacity': 0}}
       />
       <div
-        className={`${props.name}-eventstooltip tooltip tooltip-wide`}
+        className={`${cleanStr(props.name)}-eventstooltip tooltip tooltip-wide`}
         style={{'opacity': 0}}
       />
     </>

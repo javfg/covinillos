@@ -15,7 +15,7 @@ export const prepareDataset = dataset => {
   Object.keys(dataset).forEach(country => {
     dataset[country].forEach(day => {
       dataMap.forEach((key, i) => {
-        day[key] = day.data[i];
+        day[key] = day.data[i] >= 0 ? day.data[i] : 0;
         if (!day.events) day.events = [];
       });
     });
@@ -23,6 +23,14 @@ export const prepareDataset = dataset => {
 
   return dataset;
 };
+
+export const prepareCountries  = dataset => Object.keys(dataset)
+  .sort((a, b) => {
+    const confirmed_a = dataset[a][dataset[a].length - 1].confirmed_total;
+    const confirmed_b = dataset[b][dataset[b].length - 1].confirmed_total;
+
+    return confirmed_b - confirmed_a;
+  });
 
 
 export const prepareMultiCountry = (dataset, colorMap, selection, show, alt) =>
@@ -104,30 +112,8 @@ function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
 // Prepares dataset for the data list.
 //
 export function prepareDataList(dataset) {
-  const pDataset = [{
-    country: 'World',
-    confirmed: 0,
-    confirmedNew: 0,
-    confirmedPrev: 0,
-    deaths: 0,
-    deathsNew: 0,
-    recovered: 0,
-    recoveredNew: 0,
-  }];
-
-  pDataset.push(...Object.keys(dataset).map((d, i) => {
+  const pDataset = Object.keys(dataset).map((d, i) => {
     const values = dataset[d][dataset[d].length - 1];
-
-    pDataset[0].confirmed += values.confirmed_total;
-    pDataset[0].confirmedNew += values.confirmed_daily;
-    pDataset[0].deaths += values.deaths_total;
-    pDataset[0].deathsNew += values.deaths_daily;
-    pDataset[0].recovered += values.recovered_total;
-    pDataset[0].recoveredNew += values.recovered_daily;
-
-    if (i < dataset[d].length - 1) {
-      pDataset[0].confirmedPrev += values.confirmed_total;
-    }
 
     return {
       country: d,
@@ -140,7 +126,7 @@ export function prepareDataList(dataset) {
       recovered: values.recovered_total,
       recoveredNew: values.recovered_daily,
     };
-  }));
+  });
 
   return pDataset;
 }

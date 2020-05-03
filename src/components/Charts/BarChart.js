@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import { isEqual } from 'lodash';
 
-import { getTooltipX, countryLabel, translate, dateFormatLong } from '../../utils/utils';
+import { getTooltipX, countryLabel, translate, dateFormatLong, cleanStr } from '../../utils/utils';
 import config from '../../config';
 
 
@@ -21,7 +21,8 @@ function BarChart(props) {
     const { name, dataset, color, maxY, show } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
-    const tooltip = d3.select(`.${name}-tooltip`);
+    console.log('name', name);
+    const tooltip = d3.select(`.${cleanStr(name)}-tooltip`);
 
 
     // scale domains
@@ -112,6 +113,8 @@ function BarChart(props) {
       const i = Math.floor(x / eachBand);
       const d = dataset[i < dataset.length ? i : dataset.length - 1];
 
+      console.log('mouisemove', tooltip);
+
       tooltip
         .html(`
           <div class="tooltip-date">
@@ -152,7 +155,7 @@ function BarChart(props) {
         </g>
       </svg>
       <div
-        className={`${props.name}-tooltip tooltip tooltip-narrow`}
+        className={`${cleanStr(props.name)}-tooltip tooltip tooltip-narrow`}
         style={{'opacity': 0}}
       />
     </>

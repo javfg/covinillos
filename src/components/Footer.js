@@ -53,8 +53,20 @@ function Footer() {
             target="blank"
             className={classes.link}
           >
-            Johns Hopkins CSSE.
+            Johns Hopkins CSSE
           </Link>
+
+          {' '}and{' '}
+
+          <Link
+            href="https://github.com/owid/covid-19-data"
+            target="blank"
+            className={classes.link}
+          >
+            Our World in Data
+          </Link>
+
+          .
 
         </span>
 
