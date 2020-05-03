@@ -21,7 +21,6 @@ function BarChart(props) {
     const { name, dataset, color, maxY, show } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
-    console.log('name', name);
     const tooltip = d3.select(`.${cleanStr(name)}-tooltip`);
 
 

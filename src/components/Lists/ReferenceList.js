@@ -40,7 +40,7 @@ const cols = [{
 
 export default function ReferenceList({ rows }) {
   return (
-    <Grid item xs={12} xl={6}>
+    <Grid item xs={12} xl={5}>
       <Typography variant="h5">Reference list</Typography>
 
       <DataTable

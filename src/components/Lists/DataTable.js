@@ -45,12 +45,8 @@ const useStyles2 = makeStyles({
 
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
+  if (b[orderBy] < a[orderBy]) return -1;
+  if (b[orderBy] > a[orderBy]) return 1;
   return 0;
 }
 
@@ -91,7 +87,7 @@ function EnhancedTableHead({ order, orderBy, onRequestSort, cols }) {
             sortDirection={orderBy === col.id ? order : false}
             width={`${col.width}%`}
           >
-            {col.sortable ? (
+            {(col.sortable === undefined || col.sortable) ? (
               <TableSortLabel
                 active={orderBy === col.id}
                 direction={orderBy === col.id ? order : 'asc'}

@@ -2,86 +2,91 @@ import React from 'react';
 import { Typography, Grid } from '@material-ui/core';
 
 import DataTable from './DataTable';
-import { countryToFlag } from '../../utils/utils';
+import { countryLabel } from '../../utils/utils';
 
 
 const cols = [{
     id: 'country',
-    width: 16,
-    sortable: true,
+    width: 18,
     label: 'Country',
-    cellContent: d => <>{countryToFlag(d.country)} {d.country}</>,
+    cellContent: d => <>{countryLabel(d.country)}</>,
   }, {
-    id: 'confirmed',
-    width: 12,
-    sortable: true,
+    id: 'confirmed_total',
+    width: 10,
     numeric: true,
     label: 'Confirmed',
-    cellContent: d => d.confirmed.toLocaleString(),
+    cellContent: d => d.confirmed_total.toLocaleString(),
     cellStyle: { backgroundColor: '#fffbf2' },
   }, {
-    id: 'confirmedNew',
-    width: 12,
-    sortable: true,
+    id: 'confirmed_pm_total',
+    width: 7,
+    numeric: true,
+    label: 'Per 1M',
+    cellContent: d => d.confirmed_pm_total.toLocaleString(),
+    cellStyle: { backgroundColor: '#ffe79f' },
+  }, {
+    id: 'confirmed_daily',
+    width: 10,
     numeric: true,
     label: 'New',
-    cellContent: d => `+${d.confirmedNew.toLocaleString()}`,
+    cellContent: d => `+${d.confirmed_daily.toLocaleString()}`,
     cellStyle: { backgroundColor: '#fff3cd' },
-  },{
-    id: 'deaths',
-    width: 12,
-    sortable: true,
+  }, {
+    id: 'deaths_total',
+    width: 10,
     numeric: true,
     label: 'Deaths',
-    cellContent: d => d.deaths.toLocaleString(),
+    cellContent: d => d.deaths_total.toLocaleString(),
     cellStyle: { backgroundColor: '#fdf4f5' },
   }, {
-    id: 'deathsNew',
-    width: 12,
-    sortable: true,
+    id: 'deaths_pm_total',
+    width: 7,
+    numeric: true,
+    label: 'Per 1M',
+    cellContent: d => d.deaths_pm_total.toLocaleString(),
+    cellStyle: { backgroundColor: '#f1afb5' },
+  }, {
+    id: 'deaths_daily',
+    width: 10,
     numeric: true,
     label: 'New',
-    cellContent: d => `+${d.deathsNew.toLocaleString()}`,
+    cellContent: d => `+${d.deaths_daily.toLocaleString()}`,
     cellStyle: { backgroundColor: '#f8d7da' },
   },{
-    id: 'recovered',
-    width: 12,
+    id: 'recovered_total',
+    width: 10,
     label: 'Recovered',
-    sortable: true,
     numeric: true,
-    cellContent: d => d.recovered.toLocaleString(),
+    cellContent: d => d.recovered_total.toLocaleString(),
     cellStyle: { backgroundColor: '#f4faf5' },
   }, {
-    id: 'recoveredNew',
-    width: 12,
-    sortable: true,
+    id: 'recovered_daily',
+    width: 10,
     numeric: true,
     label: 'New',
-    cellContent: d => `+${d.recoveredNew.toLocaleString()}`,
+    cellContent: d => `+${d.recovered_daily.toLocaleString()}`,
     cellStyle: { backgroundColor: '#d4edda' },
   }, {
     id: 'growth',
-    width: 12,
-    sortable: true,
+    width: 8,
     numeric: true,
     label: 'Growth',
-    cellContent: d => `${parseFloat(d.confirmedNew / d.confirmedPrev * 100).toFixed(2)}%`,
+    cellContent: d => `${d.growth.toFixed(2)}%`,
   },
 ];
 
 
 export default function DataList({ rows, lastUpdate }) {
-  rows[0].rowStyle = { fontWeight: 'bold' };
-
+  rows.find(r => r.country === 'World').rowStyle = { fontWeight: 'bold' };
 
   return (
-    <Grid item xs={12} xl={6}>
+    <Grid item xs={12} xl={7}>
       <Typography variant="h5">Country data - {lastUpdate}</Typography>
 
       <DataTable
         rows={rows}
         cols={cols}
-        defaultSort={['confirmed', 'desc']}
+        defaultSort={['confirmed_total', 'desc']}
       />
     </Grid>
   );

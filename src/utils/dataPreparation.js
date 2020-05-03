@@ -10,6 +10,14 @@ export const prepareDataset = dataset => {
     'confirmed_daily',
     'deaths_daily',
     'recovered_daily',
+    'confirmed_pm_total',
+    'confirmed_pm_daily',
+    'deaths_pm_total',
+    'deaths_pm_daily',
+    'tests_total',
+    'tests_daily',
+    'tests_pt_total',
+    'tests_pt_daily',
   ];
 
   Object.keys(dataset).forEach(country => {
@@ -73,11 +81,7 @@ function prepareMultiCountryNormal(dataset, colorMap, selection, show) {
 //
 function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
   const pDataset = [];
-  console.log('dataset', dataset);
-  console.log('show', show);
-
   selection.forEach(country => {
-    console.log('country', country);
     const values = [];
     const color = colorMap[country];
     const startIndex = dataset[country].findIndex(day => day[show] >= 100);
@@ -113,23 +117,36 @@ function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
 
 //
 // Prepares dataset for the data list.
+// Has to calculate world recovered, as it comes from JHU.
 //
 export function prepareDataList(dataset) {
-  const pDataset = Object.keys(dataset).map((d, i) => {
-    const values = dataset[d][dataset[d].length - 1];
+  let worldRecoveredTotal = 0;
+  let worldRecoveredDaily = 0;
 
-    return {
-      country: d,
-      confirmed: values.confirmed_total,
+  const preparedDataList = Object.keys(dataset)
+    .map(d => {
+      const data = { ...dataset[d][dataset[d].length - 1] };
+      const prev = dataset[d][dataset[d].length - 2];
 
-      confirmedPrev: dataset[d][dataset[d].length - 2].confirmed_total,
-      confirmedNew: values.confirmed_daily,
-      deaths: values.deaths_total,
-      deathsNew: values.deaths_daily,
-      recovered: values.recovered_total,
-      recoveredNew: values.recovered_daily,
-    };
-  });
+      data['country'] = d;
+      data['growth'] = data.confirmed_daily / prev.confirmed_total * 100;
 
-  return pDataset;
+      if (data.recovered_total === 0) {
+        data.recovered_total = prev.recovered_total;
+        data.recovered_daily = prev.recovered_daily;
+      }
+
+      worldRecoveredTotal += data.recovered_total;
+      worldRecoveredDaily += data.recovered_daily;
+
+      return data;
+    })
+    .sort((a, b) => b.confirmed_total - a.confirmed_total);
+
+  const world = preparedDataList.find(c => c.country === 'World');
+  world.recovered_total = worldRecoveredTotal;
+  world.recovered_daily = worldRecoveredDaily;
+
+
+  return preparedDataList;
 }
