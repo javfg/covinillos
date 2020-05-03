@@ -8,7 +8,7 @@ import { countryToFlag } from '../../utils/utils';
 
 const cols = [{
     id: 'country',
-    width: 16,
+    width: 20,
     sortable: true,
     label: 'Country',
     cellContent: d => <>{countryToFlag(d.country)} {d.country}</>
@@ -21,13 +21,13 @@ const cols = [{
     cellContent: d => d.date
   }, {
     id: 'description',
-    width: 61,
+    width: 50,
     sortable:true,
     label: 'Description',
     cellContent: d => d.description
   }, {
     id: 'reference',
-     width: 10,
+     width: 15,
      label: 'Reference',
      align: 'center',
      cellContent: d =>

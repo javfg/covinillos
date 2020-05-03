@@ -7,7 +7,7 @@ import { countryLabel } from '../../utils/utils';
 
 const cols = [{
     id: 'country',
-    width: 18,
+    width: 16,
     label: 'Country',
     cellContent: d => <>{countryLabel(d.country)}</>,
   }, {
@@ -19,7 +19,7 @@ const cols = [{
     cellStyle: { backgroundColor: '#fffbf2' },
   }, {
     id: 'confirmed_pm_total',
-    width: 7,
+    width: 8,
     numeric: true,
     label: 'Per 1M',
     cellContent: d => d.confirmed_pm_total.toLocaleString(),
@@ -40,7 +40,7 @@ const cols = [{
     cellStyle: { backgroundColor: '#fdf4f5' },
   }, {
     id: 'deaths_pm_total',
-    width: 7,
+    width: 8,
     numeric: true,
     label: 'Per 1M',
     cellContent: d => d.deaths_pm_total.toLocaleString(),
