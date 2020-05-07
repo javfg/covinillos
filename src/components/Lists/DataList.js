@@ -5,11 +5,15 @@ import DataTable from './DataTable';
 import { countryLabel } from '../../utils/utils';
 
 
-const cols = [{
+const lastUpdateLabel = (data, lastUpdate) => data.date !== lastUpdate ? ` (${data.date})` : '';
+
+
+export default function DataList({ rows, lastUpdate }) {
+  const cols = [{
     id: 'country',
     width: 16,
     label: 'Country',
-    cellContent: d => <>{countryLabel(d.country)}</>,
+    cellContent: d => <>{countryLabel(d.country)}{lastUpdateLabel(d, lastUpdate)}</>,
   }, {
     id: 'confirmed_total',
     width: 10,
@@ -21,7 +25,7 @@ const cols = [{
     id: 'confirmed_pm_total',
     width: 8,
     numeric: true,
-    label: 'Per 1M',
+    label: 'Per M',
     cellContent: d => d.confirmed_pm_total.toLocaleString(),
     cellStyle: { backgroundColor: '#ffe79f' },
   }, {
@@ -42,7 +46,7 @@ const cols = [{
     id: 'deaths_pm_total',
     width: 8,
     numeric: true,
-    label: 'Per 1M',
+    label: 'Per M',
     cellContent: d => d.deaths_pm_total.toLocaleString(),
     cellStyle: { backgroundColor: '#f1afb5' },
   }, {
@@ -72,11 +76,8 @@ const cols = [{
     numeric: true,
     label: 'Growth',
     cellContent: d => `${d.growth.toFixed(2)}%`,
-  },
-];
+  }];
 
-
-export default function DataList({ rows, lastUpdate }) {
   rows.find(r => r.country === 'World').rowStyle = { fontWeight: 'bold' };
 
   return (
