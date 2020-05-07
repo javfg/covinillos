@@ -12,6 +12,7 @@ import config from '../../config';
 
 const useStyles = makeStyles({
   caps: { textTransform: 'uppercase' },
+  centerlabel: {justifyContent: 'center', alignItems: 'center', width: 'fit-content', margin: 'auto'},
   sepadding: { padding: '0 3px 3px 0' },
 });
 
@@ -58,7 +59,7 @@ export default function MultiCountryGroup(props) {
           </Grid>
 
           <Grid item xs={4} lg={3}>
-            <Grid component="label" container justify="center" alignItems="center">
+            <Grid component="label" container className={classes.centerlabel}>
               <Switch name="altSelector" checked={alt} onChange={handleChangeAlt} />
               <Grid item className={classes.caps}>
                 Start at 100 {translate(show)}
