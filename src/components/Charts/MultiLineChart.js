@@ -4,16 +4,17 @@ import { isEqual } from 'lodash';
 
 import {
   cleanStr,
-  getTooltipX,
-  monthToPixels,
-  dayToPixels,
   dateFormat,
   dateFormatLong,
-  setTime,
-  getEventClasses,
-  translate,
-  stringList,
+  dayToPixels,
   countryLabel,
+  exists,
+  getEventClasses,
+  getTooltipX,
+  monthToPixels,
+  setTime,
+  stringList,
+  translate,
 } from '../../utils/utils';
 import config from '../../config';
 
@@ -293,9 +294,9 @@ function MultiLineChart(props) {
         .map(c => ({
           country: c.country,
           color: c.color,
-          value: c.values[i].value,
+          value: c.values[i]?.value,
         }))
-        .filter(c => c.value !== null)
+        .filter(c => exists(c.value))
         .sort((a, b) => b.value - a.value);
 
       focus.select('line.focusline')
@@ -309,7 +310,7 @@ function MultiLineChart(props) {
         .attr(
           'transform',
           d => {
-            const y = d.values[i].value !== null ? yScale(d.values[i].value) : -50;
+            const y = d.values[i]?.value ? yScale(d.values[i].value) : -50;
             return `translate (${xScale(x)}, ${y})`;
           }
         );

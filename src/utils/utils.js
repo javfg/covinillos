@@ -125,9 +125,12 @@ const translateMap = {
   recovered_daily: 'daily recovered',
 };
 
-export const translate = (str) => translateMap[str];
+export const translate = str => translateMap[str];
 
 // encode suggest event form data
-export const encode = (data) => Object.keys(data)
+export const encode = data => Object.keys(data)
   .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
   .join("&");
+
+
+export const exists = val => typeof val !== 'undefined' && val !== null && val !== undefined;
