@@ -168,6 +168,7 @@ function MultiLineChart(props) {
         .defined(d => d.value !== null)
         .x(d => xScale(d.date))
         .y(d => yScale(d.value))
+        .curve(d3.curveCatmullRom)
 
       // 1. GROUPS
       // add event groups for each country (in case we have to add something beside lines)
