@@ -212,7 +212,11 @@ export default function DataTable({ rows, cols, defaultSort }) {
                       key={`tablecell-${col.id}`}
                       className={classes.cellsm}
                       align={col.align ? col.align : col.numeric ? 'right' : 'left'}
-                      style={{ ...col.cellStyle, ...row.rowStyle }}
+                      style={{
+                        ...col.cellStyle,
+                        ...row.rowStyle,
+                        ...col.numeric ? { fontFamily: 'Roboto Mono' } : {}
+                      }}
                     >
                       {col.cellContent(row)}
                     </TableCell>
