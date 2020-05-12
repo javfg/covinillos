@@ -53,7 +53,7 @@ function MultiLineChart(props) {
     const countryEventsGroup = main.select('.allcountryevents');
 
     // brush
-    const xBrush = d3.brushX().extent([[0, 0], [width, height]]).on("end", () => brushEnd());
+    const xBrush = d3.brushX().extent([[0, 0], [w, h]]).on('end', () => brushEnd());
 
     CountryLinesGroup.select('.brush').remove();
     CountryLinesGroup.append('g')
@@ -508,9 +508,5 @@ function MultiLineChart(props) {
   );
 }
 
-function areEqual(prevProps, nextProps) {
-  return isEqual(prevProps, nextProps);
-}
 
-
-export default React.memo(MultiLineChart, areEqual);
+export default React.memo(MultiLineChart, (prevProps, nextProps) => isEqual(prevProps, nextProps));
