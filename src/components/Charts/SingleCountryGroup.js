@@ -36,7 +36,6 @@ export default function SingleCountryGroup(props) {
     value: d[show],
   }));
 
-
   return (
     selection.map((c, i) => {
       const key = `singlecountry-${c}-${i}`;
@@ -62,7 +61,7 @@ export default function SingleCountryGroup(props) {
                 name={key}
                 countries={countries}
                 colorMap={colorMap}
-                handleChangeCountry={(_, v) => handleChangeSelection(i, v)}
+                handleChangeCountry={(_, v) => handleChangeSelection(i, v)}  //TODO: Fix this
                 selection={c}
                 selectorType="dropdown"
               />
