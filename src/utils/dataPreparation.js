@@ -126,7 +126,11 @@ export function prepareDataList(dataset) {
   const preparedDataList = Object.keys(dataset)
     .map(d => {
       const data = { ...dataset[d][dataset[d].length - 1] };
-      const prev = dataset[d][dataset[d].length - 2];
+      const prev = dataset[d][dataset[d].length - 2] || {
+        confirmed_total: 0,
+        recovered_total: 0,
+        recovered_daily: 0,
+      }
 
       data['country'] = d;
       data['growth'] = data.confirmed_daily / prev.confirmed_total * 100;
