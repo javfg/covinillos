@@ -42,7 +42,9 @@ export default function CountrySelector(props) {
               className={classes.checkbox}
               checked={selected}
             />
-            <span style={{color: colorMap[c]}}>{countryLabel(c)}</span>
+            <span id={`${name}-${selectorType}-${c}`} style={{color: colorMap[c]}}>
+              {countryLabel(c)}
+            </span>
           </>
         )}
         renderInput={(params) => (
@@ -91,7 +93,11 @@ export default function CountrySelector(props) {
         onChange={handleChangeCountry}
         value={selection}
         classes={{ option: classes.option }}
-        renderOption={c => <span style={{color: colorMap[c]}}>{countryLabel(c)}</span>}
+        renderOption={
+          c => <span id={`${name}-${selectorType}-${c}`} style={{color: colorMap[c]}}>
+            {countryLabel(c)}
+          </span>
+        }
         renderInput={params =>
           <TextField
             {...params}

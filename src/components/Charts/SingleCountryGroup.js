@@ -21,9 +21,11 @@ export default function SingleCountryGroup(props) {
 
   const classes = useStyles();
 
-  const handleChangeSelection = (index, value) => {
-    if (!value) value = config.singleCountriesSelection[i];
-    setSelection(selection.map((c, i) => i !== index ? c : value));
+  const handleChangeSelection = (event, value) => {
+    const selectionIndex = parseInt(event.target.id.split('-')[0]);
+
+    if (!value) value = config.singleCountriesSelection[selectionIndex];
+    setSelection(selection.map((c, i) => i !== selectionIndex ? c : value));
   };
 
   useEffect(() => {
@@ -36,40 +38,35 @@ export default function SingleCountryGroup(props) {
     value: d[show],
   }));
 
-  return (
-    selection.map((c, i) => {
-      const key = `singlecountry-${c}-${i}`;
-
-      return (
-      <Grid item xs={12} xl={6} key={key}>
-        <Paper>
-          <Grid container justify="flex-end">
-            <Grid item xs={12}>
-              <ChartWrapper>
-                <BarChart
-                  name={c}
-                  dataset={prepareData(dataset[c])}
-                  country={c}
-                  color={colorMap[c]}
-                  maxY={maxY}
-                  show={show}
-                />
-              </ChartWrapper>
-            </Grid>
-            <Grid item xs={6} sm={4} md={3} xl={4} className={classes.sepadding}>
-              <CountrySelector
-                name={key}
-                countries={countries}
-                colorMap={colorMap}
-                handleChangeCountry={(_, v) => handleChangeSelection(i, v)}  //TODO: Fix this
-                selection={c}
-                selectorType="dropdown"
+  return selection.map((c, i) =>
+    <Grid item xs={12} xl={6} key={i}>
+      <Paper>
+        <Grid container justify="flex-end">
+          <Grid item xs={12}>
+            <ChartWrapper>
+              <BarChart
+                name={c}
+                dataset={prepareData(dataset[c])}
+                country={c}
+                color={colorMap[c]}
+                maxY={maxY}
+                show={show}
               />
-            </Grid>
+            </ChartWrapper>
           </Grid>
-        </Paper>
-      </Grid>
-      );
-    })
+          <Grid item xs={6} sm={4} md={3} xl={4} className={classes.sepadding}>
+            <CountrySelector
+              id={`countryselector-${i}`}
+              name={i}
+              countries={countries}
+              colorMap={colorMap}
+              handleChangeCountry={handleChangeSelection}
+              selection={c}
+              selectorType="dropdown"
+            />
+          </Grid>
+        </Grid>
+      </Paper>
+    </Grid>
   );
 }
