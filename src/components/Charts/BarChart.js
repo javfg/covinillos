@@ -169,7 +169,8 @@ function BarChart(props) {
       const x = d3.mouse(svg.select('.mainoverlay').node())[0];
       const eachBand = xScale.step();
       const i = Math.floor(x / eachBand);
-      const d = dataset[i < dataset.length ? i : dataset.length - 1];
+      const slicedDataset = dataset.filter(day => xScale.domain().includes(day.date));
+      const d = slicedDataset[i < slicedDataset.length ? i : slicedDataset.length - 1];
 
       tooltip
         .html(`
