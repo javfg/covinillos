@@ -77,8 +77,8 @@ function MultiLineChart(props) {
         .attr('transform', `translate(${monthToPixels(xScale) / 2}, 6)`);
 
       if (type === 'normal') {
-        main.selectAll('.x100').transition(t => tl).attr('opacity', 0);
-        main.selectAll('.xnormal').transition(t => tl).attr('opacity', 1);
+        main.selectAll('.x100').transition(tl).attr('opacity', 0);
+        main.selectAll('.xnormal').transition(tl).attr('opacity', 1);
 
         main.select('.xaxisweek').call(d3.axisBottom(xScale)
           .ticks(d3.timeWeek, 1)
@@ -97,8 +97,8 @@ function MultiLineChart(props) {
       }
 
       if (type === 'startAt100') {
-        main.selectAll('.xnormal').transition(t => tl).attr('opacity', 0);
-        main.selectAll('.x100').transition(t => tl).attr('opacity', 1);
+        main.selectAll('.xnormal').transition(tl).attr('opacity', 0);
+        main.selectAll('.x100').transition(tl).attr('opacity', 1);
 
         main.select('.xaxiscount').call(d3.axisBottom(xScale)
           .ticks(d3.timeDay, 1)
@@ -111,7 +111,7 @@ function MultiLineChart(props) {
           .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
       }
 
-      main.select('.ygrid').transition(t => tl).call(d3.axisLeft(yScale)
+      main.select('.ygrid').transition(tl).call(d3.axisLeft(yScale)
         .ticks(10, 's')
         .tickSize(-w)
         .tickFormat(d3.format('.2s')))
@@ -131,7 +131,7 @@ function MultiLineChart(props) {
             .attr('text-anchor', 'start')
             .attr('font-weight', 'bold')
             .attr('opacity', 0)
-            .transition(t => tl)
+            .transition(tl)
             .attr('opacity', 1)
             .text(translate(show))
       }, config.transitionLong);
@@ -197,7 +197,7 @@ function MultiLineChart(props) {
       // update paths for countries that are already there when data changes
       countryAll.selectAll('.countryline-path')
         .data(dataset, d => d.country)
-        .transition(t => td)
+        .transition(td)
         .attr('d', d => dataLine(d.values));
 
 
@@ -234,7 +234,7 @@ function MultiLineChart(props) {
         .attr('cy', d => yScale(d.value))
         // update event dots for countries alredy there
       .merge(eventDots)
-        .transition(t => td)
+        .transition(td)
         .attr('r', 4.5)
         .attr('cx', d => xScale(d.date))
         .attr('cy', d => yScale(d.value))
@@ -259,7 +259,7 @@ function MultiLineChart(props) {
         .attr('pointer-events', 'none')
         .attr('font-size', '.66rem')
       .merge(eventTexts)
-        .transition(t => td)
+        .transition(td)
         .attr('x', d => xScale(d.date))
         .attr('y', d => yScale(d.value) + 4);
     };
