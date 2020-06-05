@@ -1,23 +1,28 @@
 const config = {
   // dashboard defalts
   defaultMultiCountriesNormalSelection: [
-    'Spain',
+    'France',
+    'Germany',
     'Italy',
+    'Spain',
     'United Kingdom',
   ],
   defaultMultiCountriesAltSelection: [
-    'United States',
-    'Spain',
-    'Italy',
+    'Austria',
+    'Belgium',
     'France',
     'Germany',
-    'United Kingdom',
-    'Belgium',
+    'Italy',
     'Netherlands',
+    'Spain',
     'Switzerland',
-    'Austria',
+    'United Kingdom',
+    'United States',
   ],
-  defaultSingleCountrySelection: ['Spain', 'Italy'],
+  defaultSingleCountrySelection: [
+    'Spain',
+    'United Kingdom',
+  ],
   defaultShowData: 'confirmed',
   defaultShowType: 'total',
 
@@ -33,6 +38,5 @@ const config = {
   // suggest event form
   popoverTimeout: 5000,
 };
-
 
 export default config;
