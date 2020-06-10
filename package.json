@@ -20,8 +20,10 @@
     "d3": "5.15.0",
     "lodash": "4.17.15",
     "react": "^16.13.1",
+    "react-cookies": "^0.1.1",
     "react-dom": "^16.13.1",
-    "react-ga": "^3.0.0"
+    "react-ga": "^3.0.0",
+    "universal-cookie": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

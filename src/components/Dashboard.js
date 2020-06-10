@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme, Popover, Box, Typography } from '@material-ui/core';
 import DoneIcon from '@material-ui/icons/Done';
 
+import CookieConsent from './CookieConsent';
 import TopBar from './TopBar';
 import Charts from './Charts/Charts';
 import Lists from './Lists/Lists';
@@ -96,6 +97,7 @@ export default function Dashboard({ countries, colorMap, dataset, events, lastUp
       </Popover>
 
       <Footer />
+      <CookieConsent />
     </ThemeProvider >
   );
 }
