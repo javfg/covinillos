@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactGA from 'react-ga';
 import { schemeTableau10 as st } from 'd3';
 
 import Dashboard from './components/Dashboard';
@@ -9,6 +10,8 @@ import dataset from '../data/dataset.json';
 import events from '../data/events.json';
 import './styles/main.scss';
 
+ReactGA.initialize('UA-169060166-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const preparedDataset = prepareDataset(dataset);
 const countries = prepareCountries(preparedDataset);
