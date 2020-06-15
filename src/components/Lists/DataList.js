@@ -22,19 +22,19 @@ export default function DataList({ rows, lastUpdate }) {
     cellContent: d => d.confirmed_total.toLocaleString(),
     cellStyle: { backgroundColor: '#fffbf2' },
   }, {
-    id: 'confirmed_pm_total',
-    width: 8,
-    numeric: true,
-    label: 'Per M',
-    cellContent: d => d.confirmed_pm_total.toLocaleString(),
-    cellStyle: { backgroundColor: '#ffe79f' },
-  }, {
     id: 'confirmed_daily',
     width: 10,
     numeric: true,
     label: 'New',
     cellContent: d => `+${d.confirmed_daily.toLocaleString()}`,
     cellStyle: { backgroundColor: '#fff3cd' },
+  }, {
+    id: 'confirmed_pm_total',
+    width: 8,
+    numeric: true,
+    label: 'Per M',
+    cellContent: d => d.confirmed_pm_total.toLocaleString(),
+    cellStyle: { backgroundColor: '#ffe79f' },
   }, {
     id: 'deaths_total',
     width: 10,
@@ -43,6 +43,13 @@ export default function DataList({ rows, lastUpdate }) {
     cellContent: d => d.deaths_total.toLocaleString(),
     cellStyle: { backgroundColor: '#fdf4f5' },
   }, {
+    id: 'deaths_daily',
+    width: 10,
+    numeric: true,
+    label: 'New',
+    cellContent: d => `+${d.deaths_daily.toLocaleString()}`,
+    cellStyle: { backgroundColor: '#f8d7da' },
+  }, {
     id: 'deaths_pm_total',
     width: 8,
     numeric: true,
@@ -50,13 +57,6 @@ export default function DataList({ rows, lastUpdate }) {
     cellContent: d => d.deaths_pm_total.toLocaleString(),
     cellStyle: { backgroundColor: '#f1afb5' },
   }, {
-    id: 'deaths_daily',
-    width: 10,
-    numeric: true,
-    label: 'New',
-    cellContent: d => `+${d.deaths_daily.toLocaleString()}`,
-    cellStyle: { backgroundColor: '#f8d7da' },
-  },{
     id: 'recovered_total',
     width: 10,
     label: 'Recovered',
