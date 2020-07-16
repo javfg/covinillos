@@ -6,10 +6,11 @@ import config from '../config';
 
 const ChartSettingsContext = React.createContext();
 
-const defaultChartSettings = {
-  showData: config.defaultShowData,
-  showType: config.defaultShowType,
-};
+const searchParams = new URLSearchParams(location.search);
+const showData = searchParams.get('data') || config.defaultShowData;
+const showType = searchParams.get('type') || config.defaultShowType;
+
+const defaultChartSettings = { showData, showType };
 
 
 export const ChartSettingsProvider = ({ children, chartSettings }) => {
