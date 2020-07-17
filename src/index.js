@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
+import { isMobile } from 'react-device-detect';
 import { schemeTableau10 as st } from 'd3';
 
 import Dashboard from './components/Dashboard';
@@ -15,9 +16,8 @@ ReactGA.pageview(window.location.pathname + window.location.search);
 
 const preparedDataset = prepareDataset(dataset);
 const countries = prepareCountries(preparedDataset);
-const colorMap = countries.reduce((acc, c, i) => ({...acc, [c]: st[i % st.length]}), {});
+const colorMap = countries.reduce((acc, c, i) => ({ ...acc, [c]: st[i % st.length] }), {});
 const lastUpdate = dataset[countries[0]][dataset[countries[0]].length - 1].date;
-
 
 // Render app.
 ReactDOM.render(
@@ -28,6 +28,8 @@ ReactDOM.render(
       dataset={preparedDataset}
       events={events}
       lastUpdate={lastUpdate}
+      mobile={isMobile}
     />
-  </ChartSettingsProvider>
-, document.getElementById("app"));
+  </ChartSettingsProvider>,
+  document.getElementById('app'),
+);

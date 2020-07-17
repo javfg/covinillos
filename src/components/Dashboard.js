@@ -12,8 +12,7 @@ import config from '../config';
 import bluGreen from '../styles/theme';
 import { encode } from '../utils/utils';
 
-
-export default function Dashboard({ countries, colorMap, dataset, events, lastUpdate}) {
+export default function Dashboard({ countries, colorMap, dataset, events, lastUpdate, mobile }) {
   const [suggestEventModalOpen, setSuggestEventModalOpen] = useState(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -39,40 +38,33 @@ export default function Dashboard({ countries, colorMap, dataset, events, lastUp
         'suggest-event-date': date,
         'suggest-event-description': description,
         'suggest-event-reference': reference,
-      })
+      }),
     });
 
     setPopoverOpen(true);
   };
 
-
   useEffect(() => {
-    const popoverTimeout = setTimeout(() => { setPopoverOpen(false); }, config.popoverTimeout);
+    const popoverTimeout = setTimeout(() => {
+      setPopoverOpen(false);
+    }, config.popoverTimeout);
+
     return () => clearTimeout(popoverTimeout);
   }, [popoverOpen]);
 
-
   const theme = createMuiTheme(bluGreen);
-
 
   return (
     <ThemeProvider theme={theme}>
       <TopBar
         handleClickSuggestEvent={handleClickSuggestEvent}
         lastUpdate={lastUpdate}
+        mobile={mobile}
       />
 
-      <Charts
-        countries={countries}
-        colorMap={colorMap}
-        dataset={dataset}
-      />
+      <Charts countries={countries} colorMap={colorMap} dataset={dataset} />
 
-      <Lists
-        dataset={dataset}
-        events={events}
-        lastUpdate={lastUpdate}
-      />
+      <Lists dataset={dataset} events={events} lastUpdate={lastUpdate} />
 
       <SuggestEventModal
         countries={countries}
@@ -98,6 +90,6 @@ export default function Dashboard({ countries, colorMap, dataset, events, lastUp
 
       <Footer />
       <CookieConsent />
-    </ThemeProvider >
+    </ThemeProvider>
   );
 }
