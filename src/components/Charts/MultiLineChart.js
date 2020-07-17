@@ -32,8 +32,10 @@ function MultiLineChart(props) {
   const h = height - (margin.top + margin.bottom);
   const { isMobile } = useChartSettings();
 
+  console.log('isMobile', isMobile);
+
   useEffect(() => {
-    const { dataset, maxY, type, show, mobile } = props;
+    const { dataset, maxY, type, show } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
     const focus = main.select('.focus');
@@ -42,7 +44,6 @@ function MultiLineChart(props) {
     if (!dataset.length) return;
 
     const dateRange = d3.extent(dataset[0].values, d => d.date);
-
 
     // scale domains
     const xScale = d3.scaleTime().range([0, w]).domain(dateRange);
@@ -55,14 +56,14 @@ function MultiLineChart(props) {
     const countryEventsGroup = main.select('.allcountryevents');
 
     // brush
-    const xBrush = d3.brushX().extent([[0, 0], [w, h]]).on('end', () => brushEnd());
+    const xBrush = !isMobile
+      ? d3.brushX().extent([[0, 0], [w, h]]).on('end', () => brushEnd())
+      : null;
 
-    if (!isMobile) {
-      CountryLinesGroup.select('.brush').remove();
-      CountryLinesGroup.append('g')
-        .attr('class', 'brush')
-        .call(xBrush);
-    }
+    CountryLinesGroup.select('.brush').remove();
+    CountryLinesGroup.append('g')
+      .attr('class', 'brush')
+      .call(xBrush);
 
     CountryLinesGroup.on('dblclick', () => resetZoom());
 
