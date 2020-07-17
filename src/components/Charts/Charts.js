@@ -12,8 +12,8 @@ export default function Dashboard({ countries, colorMap, dataset }) {
   const { showData, showType } = chartSettings;
 
   const searchParams = new URLSearchParams(location.search);
-  const multiCountrySelection = searchParams.get('msc').split(',') || config.defaultMultiCountriesNormalSelection;
-  const singleCountrySelection = searchParams.get('ssc').split(',') || config.defaultSingleCountrySelection;
+  const multiCountrySelection = searchParams.get('msc')?.split(',') || config.defaultMultiCountriesNormalSelection;
+  const singleCountrySelection = searchParams.get('ssc')?.split(',') || config.defaultSingleCountrySelection;
 
   return (
     <Grid container spacing={3} style={{margin: 0, width: '100%'}}>
