@@ -12,7 +12,7 @@ import config from '../config';
 import bluGreen from '../styles/theme';
 import { encode } from '../utils/utils';
 
-export default function Dashboard({ countries, colorMap, dataset, events, lastUpdate, mobile }) {
+export default function Dashboard({ countries, colorMap, dataset, events, lastUpdate }) {
   const [suggestEventModalOpen, setSuggestEventModalOpen] = useState(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -59,12 +59,19 @@ export default function Dashboard({ countries, colorMap, dataset, events, lastUp
       <TopBar
         handleClickSuggestEvent={handleClickSuggestEvent}
         lastUpdate={lastUpdate}
-        mobile={mobile}
       />
 
-      <Charts countries={countries} colorMap={colorMap} dataset={dataset} />
+      <Charts
+        countries={countries}
+        colorMap={colorMap}
+        dataset={dataset}
+      />
 
-      <Lists dataset={dataset} events={events} lastUpdate={lastUpdate} />
+      <Lists
+        dataset={dataset}
+        events={events}
+        lastUpdate={lastUpdate}
+      />
 
       <SuggestEventModal
         countries={countries}

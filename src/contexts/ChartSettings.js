@@ -1,5 +1,6 @@
 // Settings Context - src/context/Settings
 import React, { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import config from '../config';
 
@@ -24,7 +25,7 @@ export const ChartSettingsProvider = ({ children, chartSettings }) => {
 
    return (
       <ChartSettingsContext.Provider
-         value={{ chartSettings: currentChartSettings, saveChartSettings }}
+         value={{ chartSettings: currentChartSettings, isMobile, saveChartSettings }}
       >
          {children}
       </ChartSettingsContext.Provider>

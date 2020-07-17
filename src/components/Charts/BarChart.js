@@ -51,23 +51,23 @@ function BarChart(props) {
     function drawAxes() {
       // grids/axes
       main.select('.xaxis').call(d3.axisBottom(xScale)
-      .tickSize(5)
-      .tickFormat(d3.timeFormat('%-d/%-m')))
-      .selectAll('text')
-      .attr('class', 'xaxis count')
-      .attr('text-anchor', 'start')
-      .attr('pointer-events', 'none')
-      .attr('y', -2)
-      .attr('x', 6)
-      .attr('transform', 'rotate(90)');
+        .tickSize(5)
+        .tickFormat(d3.timeFormat(''))) // .tickFormat(d3.timeFormat('%-d/%-m')))
+        .selectAll('text')
+        .attr('class', 'xaxis count')
+        .attr('text-anchor', 'start')
+        .attr('pointer-events', 'none')
+        .attr('y', -2)
+        .attr('x', 6)
+        .attr('transform', 'rotate(90)');
 
       main.select('.ygrid').transition(tl).call(d3.axisLeft(yScale)
-      .ticks(10, 's')
-      .tickSize(-w)
-      .tickFormat(d3.format('.2s')))
-      .selectAll('line')
-      .attr('stroke-width', .33)
-      .attr('pointer-events', 'none');
+        .ticks(10, 's')
+        .tickSize(-w)
+        .tickFormat(d3.format('.2s')))
+        .selectAll('line')
+        .attr('stroke-width', .33)
+        .attr('pointer-events', 'none');
 
       main.select('.ygrid').select('.domain').remove();
 

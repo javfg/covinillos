@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
 import { isEqual } from 'lodash';
 
+import useChartSettings from '../../hooks/useChartSettings';
+import config from '../../config';
 import {
   cleanStr,
   dateFormat,
@@ -16,7 +18,6 @@ import {
   stringList,
   translate,
 } from '../../utils/utils';
-import config from '../../config';
 
 
 function MultiLineChart(props) {
@@ -29,9 +30,10 @@ function MultiLineChart(props) {
   const margin = {top: 10, right: 0, bottom: 40, left: 30};
   const w = width - (margin.left + margin.right);
   const h = height - (margin.top + margin.bottom);
+  const { isMobile } = useChartSettings();
 
   useEffect(() => {
-    const { dataset, maxY, type, show } = props;
+    const { dataset, maxY, type, show, mobile } = props;
     const svg = d3.select(svgRef.current);
     const main = svg.select('.main');
     const focus = main.select('.focus');
@@ -55,10 +57,12 @@ function MultiLineChart(props) {
     // brush
     const xBrush = d3.brushX().extent([[0, 0], [w, h]]).on('end', () => brushEnd());
 
-    CountryLinesGroup.select('.brush').remove();
-    CountryLinesGroup.append('g')
-      .attr('class', 'brush')
-      .call(xBrush);
+    if (!isMobile) {
+      CountryLinesGroup.select('.brush').remove();
+      CountryLinesGroup.append('g')
+        .attr('class', 'brush')
+        .call(xBrush);
+    }
 
     CountryLinesGroup.on('dblclick', () => resetZoom());
 
@@ -88,12 +92,13 @@ function MultiLineChart(props) {
         main.select('.xaxisday').call(d3.axisBottom(xScale)
           .ticks(d3.timeDay, 1)
           .tickSize(5)
-          .tickFormat(d3.timeFormat('%-d')))
-        .selectAll('text')
-          .attr('class', 'xaxis day')
-          .attr('text-anchor', 'center')
-          .attr('pointer-events', 'none')
-          .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
+          .tickFormat(''))
+        // No text!
+        // .selectAll('text')
+        //   .attr('class', 'xaxis day')
+        //   .attr('text-anchor', 'center')
+        //   .attr('pointer-events', 'none')
+        //   .attr('transform', `translate(${dayToPixels(xScale) / 2}, -4)`);
       }
 
       if (type === 'startAt100') {

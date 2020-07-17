@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
-import { isMobile } from 'react-device-detect';
 import { schemeTableau10 as st } from 'd3';
 
 import Dashboard from './components/Dashboard';
@@ -28,7 +27,6 @@ ReactDOM.render(
       dataset={preparedDataset}
       events={events}
       lastUpdate={lastUpdate}
-      mobile={isMobile}
     />
   </ChartSettingsProvider>,
   document.getElementById('app'),
