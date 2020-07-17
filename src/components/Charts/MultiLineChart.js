@@ -32,8 +32,6 @@ function MultiLineChart(props) {
   const h = height - (margin.top + margin.bottom);
   const { isMobile } = useChartSettings();
 
-  console.log('isMobile', isMobile);
-
   useEffect(() => {
     const { dataset, maxY, type, show } = props;
     const svg = d3.select(svgRef.current);
@@ -56,9 +54,7 @@ function MultiLineChart(props) {
     const countryEventsGroup = main.select('.allcountryevents');
 
     // brush
-    const xBrush = !isMobile
-      ? d3.brushX().extent([[0, 0], [w, h]]).on('end', () => brushEnd())
-      : null;
+    const xBrush = d3.brushX().extent([[0, 0], [w, h]]).on('end', () => brushEnd());
 
     CountryLinesGroup.select('.brush').remove();
     CountryLinesGroup.append('g')
