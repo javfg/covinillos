@@ -45,6 +45,7 @@ export default function DataSelector({ title, name = 'ds', items, handleChange, 
               label={<Typography className={classes.caps}>{item}</Typography>}
               value={item}
               checked={selection === item}
+              disabled={item === 'recovered'}
             />
           ))}
         </RadioGroup>

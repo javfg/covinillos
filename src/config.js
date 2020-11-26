@@ -37,6 +37,9 @@ const config = {
 
   // suggest event form
   popoverTimeout: 5000,
+
+  // data url
+  dataUrl: 'http://covid-data.meneillos.com'
 };
 
 export default config;

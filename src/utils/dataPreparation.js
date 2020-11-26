@@ -6,18 +6,18 @@ export const prepareDataset = dataset => {
   const dataMap = [
     'confirmed_total',
     'deaths_total',
-    'recovered_total',
+    // 'recovered_total',
     'confirmed_daily',
     'deaths_daily',
-    'recovered_daily',
+    // 'recovered_daily',
     'confirmed_pm_total',
     'confirmed_pm_daily',
     'deaths_pm_total',
     'deaths_pm_daily',
-    'tests_total',
-    'tests_daily',
-    'tests_pt_total',
-    'tests_pt_daily',
+    // 'tests_total',
+    // 'tests_daily',
+    // 'tests_pt_total',
+    // 'tests_pt_daily',
   ];
 
   Object.keys(dataset).forEach(country => {
@@ -128,28 +128,28 @@ export function prepareDataList(dataset) {
       const data = { ...dataset[d][dataset[d].length - 1] };
       const prev = dataset[d][dataset[d].length - 2] || {
         confirmed_total: 0,
-        recovered_total: 0,
-        recovered_daily: 0,
+        // recovered_total: 0,
+        // recovered_daily: 0,
       }
 
       data['country'] = d;
       data['growth'] = data.confirmed_daily / prev.confirmed_total * 100;
 
-      if (data.recovered_total === 0) {
-        data.recovered_total = prev.recovered_total;
-        data.recovered_daily = prev.recovered_daily;
-      }
+      // if (data.recovered_total === 0) {
+      //   data.recovered_total = prev.recovered_total;
+      //   data.recovered_daily = prev.recovered_daily;
+      // }
 
-      worldRecoveredTotal += data.recovered_total;
-      worldRecoveredDaily += data.recovered_daily;
+      // worldRecoveredTotal += data.recovered_total;
+      // worldRecoveredDaily += data.recovered_daily;
 
       return data;
     })
     .sort((a, b) => b.confirmed_total - a.confirmed_total);
 
   const world = preparedDataList.find(c => c.country === 'World');
-  world.recovered_total = worldRecoveredTotal;
-  world.recovered_daily = worldRecoveredDaily;
+  // world.recovered_total = worldRecoveredTotal;
+  // world.recovered_daily = worldRecoveredDaily;
 
 
   return preparedDataList;
