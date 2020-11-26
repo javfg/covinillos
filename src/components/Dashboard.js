@@ -26,7 +26,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function fetchData() {
-      const datasetRes = await fetch(`${config.dataUrl}/dataset-test.json`);
+      const datasetRes = await fetch(`${config.dataUrl}/dataset.json`);
       const datasetRaw = await datasetRes.json();
 
       const eventsRes = await fetch(`${config.dataUrl}/events.json`);

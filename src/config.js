@@ -39,7 +39,7 @@ const config = {
   popoverTimeout: 5000,
 
   // data url
-  dataUrl: 'http://covid-data.meneillos.com'
+  dataUrl: 'https://covid-data.meneillos.com'
 };
 
 export default config;
