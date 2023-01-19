@@ -297,7 +297,7 @@ function MultiLineChart(props) {
         .map(c => ({
           country: c.country,
           color: c.color,
-          value: c.values[i]?.value,
+          value: c.values[i] && c.values[i].value,
         }))
         .filter(c => exists(c.value))
         .sort((a, b) => b.value - a.value);
@@ -313,7 +313,7 @@ function MultiLineChart(props) {
         .attr(
           'transform',
           d => {
-            const y = d.values[i]?.value ? yScale(d.values[i].value) : -50;
+            const y = d.values[i] && d.values[i].value ? yScale(d.values[i].value) : -50;
             return `translate (${xScale(x)}, ${y})`;
           }
         );

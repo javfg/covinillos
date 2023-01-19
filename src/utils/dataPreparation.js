@@ -98,7 +98,8 @@ function prepareMultiCountryAlt(dataset, colorMap, selection, show) {
     pDataset.push({ country, color, values, events: [] });
   });
 
-  const dataLength = pDataset[longest(pDataset, 'values')]?.values.length;
+  const longestDataSet = pDataset[longest(pDataset, 'values')];
+  const dataLength = longestDataSet && longestDataSet.values.length;
 
   // fill null values
   pDataset.forEach(c => {
